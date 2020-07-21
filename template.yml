@@ -22,7 +22,7 @@ Resources:
   getAllItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handlers/get-all-items.getAllItemsHandler
+      Handler: dist/handlers/handlers.getAllItemsHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
@@ -48,7 +48,7 @@ Resources:
   getByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handlers/get-by-id.getByIdHandler
+      Handler: dist/handlers/handlers.getByIdHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
@@ -74,7 +74,7 @@ Resources:
   putItemFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handlers/put-item.putItemHandler
+      Handler: dist/handlers/handlers.putItemHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
