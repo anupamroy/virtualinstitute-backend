@@ -1,8 +1,13 @@
-import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+} from "aws-lambda/trigger/api-gateway-proxy";
 import { RequestMethod } from "../model/request-method.model";
 
 export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
-  return async (event: APIGatewayProxyEvent) => {
+  return async (
+    event: APIGatewayProxyEvent
+  ): Promise<APIGatewayProxyResult> => {
     if (event.httpMethod !== requestMethod) {
       throw new Error(
         `This API only accepts ${requestMethod} method, you tried: ${event.httpMethod}`
