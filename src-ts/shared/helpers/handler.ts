@@ -8,13 +8,14 @@ export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
   return async (
     event: APIGatewayProxyEvent
   ): Promise<APIGatewayProxyResult> => {
+    // All log statements are written to CloudWatch
+    console.info("received:", event);
     if (event.httpMethod !== requestMethod) {
       throw new Error(
         `This API only accepts ${requestMethod} method, you tried: ${event.httpMethod}`
       );
     }
-    // All log statements are written to CloudWatch
-    console.info("received:", event);
+
     const response = callback(event);
     // All log statements are written to CloudWatch
     console.info(
