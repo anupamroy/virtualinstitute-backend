@@ -4,7 +4,10 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "aws-sdk": "^2.437.0"
+        "@types/aws-lambda": "^8.10.59",
+        "@types/node": "^14.0.24",
+        "aws-sdk": "^2.437.0",
+        "typescript": "^3.9.7"
     },
     "devDependencies": {
         "jest": "^24.7.1"
