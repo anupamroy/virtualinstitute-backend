@@ -1,9 +1,5 @@
-import { AWSHandler } from "../shared/helpers/handler";
-import {
-  getAllItems,
-  getById,
-  putItem,
-} from "../shared/services/handlers.service";
+import { AWSHandler } from "../../shared/helpers/handler";
+import { getAllItems, getById, putItem } from "./handlers.service";
 
 const getAllItemsHandler = AWSHandler("GET", getAllItems);
 const getByIdHandler = AWSHandler("GET", getById);
