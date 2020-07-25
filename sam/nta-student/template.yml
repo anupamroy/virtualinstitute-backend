@@ -24,7 +24,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /student
             Method: GET
 
   getByIdFunction:
@@ -45,7 +45,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /{id}
+            Path: /student/{id}
             Method: GET
 
   putItemFunction:
@@ -66,7 +66,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /student
             Method: POST
 
   SampleTable:
@@ -82,4 +82,4 @@ Resources:
 Outputs:
   WebEndpoint:
     Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/student"

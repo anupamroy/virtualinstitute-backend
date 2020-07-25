@@ -1,0 +1,9 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "nta-master"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1sjfj49cbeqze"
+s3_prefix = "nta-master"
+region = "ap-south-1"
+capabilities = "CAPABILITY_IAM CAPABILITY_AUTO_EXPAND"
