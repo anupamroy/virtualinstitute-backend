@@ -9,7 +9,7 @@ Resources:
   getAllItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-student.handlers.getAllItemsHandler
+      Handler: src/handlers/nta-student.getAllItemsHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
@@ -24,13 +24,13 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /student
+            Path: /
             Method: GET
 
   getByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-student.handlers.getByIdHandler
+      Handler: src/handlers/nta-student.getByIdHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
@@ -51,7 +51,7 @@ Resources:
   putItemFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-student.handlers.putItemHandler
+      Handler: src/handlers/nta-student.putItemHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
