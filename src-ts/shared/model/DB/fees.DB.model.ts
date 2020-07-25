@@ -1,9 +1,10 @@
-import { GeneralDBItem, ObjectId } from "./DB.model";
 
 // export class FeeGroup {
 //   feeGroupName: FeeGroupName = "";
 //   fees: Fee[] = [];
 // }
+
+import { GeneralDBItem, ObjectId } from "./imports/DB.model";
 
 export class FeeType {
   feeTypeName: FeeTypeName = "";

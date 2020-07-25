@@ -1,4 +1,4 @@
-import { GeneralDBItem, ObjectId } from "./DB.model";
+import { GeneralDBItem, ObjectId } from './imports/DB.model';
 
 export class Course extends GeneralDBItem {
   courseName: string = "";

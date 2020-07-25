@@ -1,12 +1,12 @@
 import { GeneralDBItem } from "./DB.model";
-import { CourseType, CourseLevel, CourseStream } from "./course.DB.model";
+import { CourseType, CourseLevel, CourseStream } from "../course.DB.model";
 import {
   SubjectGroup,
   InstitutionType,
   AccountHead,
-} from "./institute.DB.model";
-import { FeeTypeName, FeesHeadName, FeeGroupName } from "./fees.DB.model";
-import { StudentType } from "./student.DB.model";
+} from "../institute.DB.model";
+import { FeeTypeName, FeesHeadName, FeeGroupName } from "../fees.DB.model";
+import { StudentType } from "../student.DB.model";
 
 export class Masters extends GeneralDBItem {
   courseTypes: CourseType[] = []; // UG PG Vocational

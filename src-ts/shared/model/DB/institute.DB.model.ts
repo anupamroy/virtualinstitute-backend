@@ -1,6 +1,6 @@
-import { GeneralDBItem, ObjectId } from "./DB.model";
-import { Masters } from "./masters.DB.model";
-import { SystemUser, LinkURL } from "./misc.DB.model";
+import { Masters } from "./imports/masters.DB.model";
+import { SystemUser, LinkURL } from "./imports/misc.DB.model";
+import { GeneralDBItem, ObjectId } from "./imports/DB.model";
 
 export class Institute extends GeneralDBItem {
   instituteName: string = "";
@@ -23,8 +23,10 @@ export class AccountHead extends GeneralDBItem {
 
 export class InstituteUser extends SystemUser {}
 
+export class NTA extends SystemUser {
+  masters: Masters = new Masters();
+}
+
 export type SubjectGroup = string; // PCM PCB
-
 export type InstituteAffiliation = string; // AICC CBSE...
-
 export type InstitutionType = string;
