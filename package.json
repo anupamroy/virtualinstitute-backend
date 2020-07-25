@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "cd sam-project && jest",
-    "build": "",
+    "build": "npm run build:tsc && npm run build:clean && npm run build:transfer",
     "build:tsc": "tsc",
     "build:clean": "scripts/build.clean.sh",
     "build:transfer": "scripts/build.transfer.sh",
