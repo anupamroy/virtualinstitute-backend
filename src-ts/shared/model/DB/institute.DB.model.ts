@@ -27,6 +27,10 @@ export class NTA extends SystemUser {
   masters: Masters = new Masters();
 }
 
+// User Types and Permission Model
+
+export class PermissionModel extends GeneralDBItem {}
+
 export type SubjectGroup = string; // PCM PCB
 export type InstituteAffiliation = string; // AICC CBSE...
 export type InstitutionType = string;
