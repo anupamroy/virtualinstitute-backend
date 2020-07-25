@@ -10,3 +10,7 @@ Resources:
     Type: AWS::Serverless::Application
     Properties:
       Location: 'nta-student/template.yml'
+  ntaFees:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: 'nta-fees/template.yml'

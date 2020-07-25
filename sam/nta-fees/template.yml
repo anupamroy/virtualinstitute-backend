@@ -16,15 +16,15 @@ Resources:
       Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref feesTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          FEES_TABLE: !Ref feesTable
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /fees
             Method: GET
 
   getByIdFunction:
@@ -37,15 +37,15 @@ Resources:
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref feesTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          FEES_TABLE: !Ref feesTable
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /{id}
+            Path: /fees/{id}
             Method: GET
 
   putItemFunction:
@@ -58,18 +58,18 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref feesTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          FEES_TABLE: !Ref feesTable
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /fees
             Method: POST
 
-  SampleTable:
+  feesTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
@@ -82,4 +82,4 @@ Resources:
 Outputs:
   WebEndpoint:
     Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/fees"
