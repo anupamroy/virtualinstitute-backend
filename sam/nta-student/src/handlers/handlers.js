@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.putItemHandler = exports.getByIdHandler = exports.getAllItemsHandler = void 0;
-const handler_1 = require("../shared/helpers/handler");
-const handlers_service_1 = require("../shared/services/handlers.service");
+const handler_1 = require("../../shared/helpers/handler");
+const handlers_service_1 = require("./handlers.service");
 const getAllItemsHandler = handler_1.AWSHandler("GET", handlers_service_1.getAllItems);
 exports.getAllItemsHandler = getAllItemsHandler;
 const getByIdHandler = handler_1.AWSHandler("GET", handlers_service_1.getById);

@@ -1,4 +1,4 @@
 node_modules
 .aws-sam
-sam/src
+sam/*/src
 src-js
