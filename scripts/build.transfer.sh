@@ -1,6 +1,8 @@
 cd sam;
 for d in */ ; do
     cd $d'src';
+    echo $d'src';
+    pwd
     mkdir handlers
     cp -r ../../../dist/shared ./
     cp ../../../dist/handlers/$(echo $d | sed 's:/*$::')'.js' handlers/$(echo $d | sed 's:/*$::')'.js'
