@@ -24,3 +24,22 @@ export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
     return response;
   };
 };
+
+export const parseBody = <T>(body: string | null): T | null => {
+  return body ? (JSON.parse(body) as T) : null;
+};
+
+
+export const createResponse = (
+  statusCode: number,
+  body: any | null | undefined,
+  headers?: any,
+  multiValueHeaders?: any,
+  isBase64Encoded?: any
+): APIGatewayProxyResult => ({
+  statusCode,
+  body: JSON.stringify(body),
+  headers,
+  multiValueHeaders,
+  isBase64Encoded
+});

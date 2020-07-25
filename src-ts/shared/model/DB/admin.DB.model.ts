@@ -1,4 +1,3 @@
-import { GeneralDBItem } from "./DB.model";
 import { Person } from "./misc.DB.model";
 import { Masters } from "./masters.DB.model";
 

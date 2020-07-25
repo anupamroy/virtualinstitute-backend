@@ -1,26 +1,36 @@
-import { GeneralDBItem } from "./DB.model";
+import { GeneralDBItem, ObjectId } from "./DB.model";
 
+// export class FeeGroup {
+//   feeGroupName: FeeGroupName = "";
+//   fees: Fee[] = [];
+// }
 
-
-export class FeeGroup {                       // Fee Tyoes are grouped together for a course.
-  feeGroupName = "";
-  feeStructures: FeesStructure[] = [];
-}
-
-export class FeesStructure extends GeneralDBItem {
+export class FeeType {
   feeTypeName: FeeTypeName = "";
-  feeHeads: FeeHead[] = [];
 }
 
-// Tuition fees, Development fees, Library caution deposits
-export class FeeHead {
-  feeHeadName = "";
-  modeOfpayment: FeesModeOfPayment = "BANK";
-  amount = {
-    nationals: 0,
-    foreign: 0,
-  };
+export class Fee extends GeneralDBItem {
+  instituteId: ObjectId = "";
+  subjectCombinationId: ObjectId = "";
+  feeHeadName: FeesHeadName = "";
+  feeTypeName: FeeTypeName = "";
+  academicYear: string = "";
+  modeOfpayment: FeesModeOfPayment = "MONTH";
+  amount: CourseAmount = new CourseAmount();
   concession: FeesConcession = new FeesConcession();
+  lateFine: FeesLateFine = new FeesLateFine();
+  accountHeads: FeesAccountHead[] = [];
+  concessionAccounts: FeesAccountHead[] = [];
+}
+
+export class CourseAmount {
+  nationals: FeeStudentCategory[] = [];
+  foreign = 0;
+}
+
+export class FeeStudentCategory {
+  studentCategory: string = "";
+  amount = 0;
 }
 
 export class FeesConcession {
@@ -37,6 +47,12 @@ export class FeesLateFine {
   maxRevocableAmount = 10;
 }
 
+export class FeesAccountHead {
+  accountHeadId = "";
+  amountPercent = 0;
+}
+
 export type FeeTypeName = string; // Application Fees Exam Fees
-export type FeesModeOfPayment = "BANK" | "CHALLAN";
-export type FeeGroupName = string; // SC ST
+export type FeesHeadName = string; // Tution Fees etc
+export type FeesModeOfPayment = "SEMESTER" | "MONTH" | "YEAR";
+export type FeeGroupName = string;

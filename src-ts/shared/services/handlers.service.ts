@@ -1,7 +1,6 @@
 import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { createResponse } from "../helpers/response";
-import { parseBody } from "../helpers/request";
 import { DynamoDBActions } from "../helpers/db-handler";
+import { createResponse, parseBody } from "../helpers/handler";
 
 export const getAllItems = async () => {
   const data = await DynamoDBActions.scan();

@@ -1,35 +1,17 @@
-import { Person } from "./misc.DB.model";
-import { GeneralDBItem } from "./DB.model";
+import { Person, LinkURL } from "./misc.DB.model";
+import { GeneralDBItem, ObjectId } from "./DB.model";
 
 export class Student extends Person {
   gender: Gender = "MALE";
-
   rollNo = "";
   registrationNo = "";
-  // S3 Links
-  photo = "";
-  signature = "";
-  courses: string[] = []; // Course Id's
-
+  photo: LinkURL = "";
+  signature: LinkURL = "";
+  subjectCombinationId: ObjectId[] = []; // Course Id's
   isForeignNational = true;
-
   studentType: StudentType = "";
-
-
-  // Institute Association
-  instituteId = '';
-  courseId = '';
-  // year = 1; and semester would have to updated for each student
-
-  // Whether the student is an applicant or a student
-  applicationStatus: ApplicationStatus = "ACCEPTED";
+  instituteId: ObjectId = "";
 }
-
-export type Gender = "MALE" | "FEMALE" | "OTHER";
-
-export type ApplicationStatus = "ACCEPTED" | "PENDING" | "REJECTED";
-
-export type StudentType = string;
 
 export class StudentApplication extends GeneralDBItem {
   studentId = "";
@@ -44,3 +26,6 @@ export class StudentApplication extends GeneralDBItem {
   month = "";
   year = "";
 }
+
+export type Gender = "MALE" | "FEMALE" | "OTHER";
+export type StudentType = string;
