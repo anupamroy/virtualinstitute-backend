@@ -20,7 +20,8 @@
     "build:tsc": "tsc",
     "build:clean": "scripts/build.clean.sh",
     "build:transfer": "scripts/build.transfer.sh",
-    "deploy": "cd sam-project && sam deploy && cd ..",
+    "build:sam": "cd sam && sam build && cd ..",
+    "deploy": "cd sam && sam deploy && cd ..",
     "release": "npm run build && npm run deploy"
   }
 }

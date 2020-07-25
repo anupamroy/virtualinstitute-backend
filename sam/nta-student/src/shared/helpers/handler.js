@@ -20,6 +20,7 @@ exports.AWSHandler = (requestMethod, callback) => {
         const response = callback(event);
         // All log statements are written to CloudWatch
         console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+        console.info(response);
         return response;
     });
 };
