@@ -8,6 +8,8 @@ import {
 } from '../imports/types.DB.model';
 import { InstituteItem } from '../institute.DB.model';
 
+// Fees Structure
+// fees.dt_fees-Structure
 export class Fee extends InstituteItem {
   instituteId: ObjectId = '';
   subjectCombinationId: ObjectId = '';
@@ -15,19 +17,24 @@ export class Fee extends InstituteItem {
   feesTypeId: ObjectId = '';
   academicYear: string = '';
   modeOfpayment: FeesModeOfPayment = 'MONTH';
-  // amount: FeeAmount = new FeeAmount();
+  amount: number = 0;
+  amountForeignNational: number = 0;
   concession: FeesConcession = new FeesConcession();
   lateFine: FeesLateFine = new FeesLateFine();
   accountHeads: FeesAccountHead[] = [];
   concessionAccounts: FeesAccountHead[] = [];
 }
 
-
+// Fees Structure
+// fees.dt_fees-Structure
 export class FeesConcession {
   canConcessionBeGiven: boolean = false;
   concessionUnit: Unit = 'PERCENT';
   maxConcession: Value | Percent = 50;
 }
+
+// Fees Structure
+// fees.dt_fees-Structure
 export class FeesLateFine {
   isLateFineApplicable: boolean = false;
   lateFineUnit: Unit = 'PERCENT';
@@ -37,6 +44,9 @@ export class FeesLateFine {
   maxRevocableAmount: Value | Percent = 10;
 }
 
+// Account Headwise Distribution
+// fees.dt_account_headwise_distribution
+// Here we don't need Institute Id as this is nested under fees
 export class FeesAccountHead extends GeneralDBItem {
   accountHeadParentId: ObjectId = '';
   amountPercent: Percent = 0;

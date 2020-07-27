@@ -15,6 +15,7 @@ export class StudentReligion extends GeneralMasterItem {}
 export class CourseType extends GeneralMasterItem {}
 
 // UG PG Vocational
+// students.dt_course_level
 export class CourseLevel extends GeneralMasterItem {}
 
 // Engg Arts Commerce
@@ -30,6 +31,8 @@ export class InstitutionType extends GeneralMasterItem {}
 export class UserType extends GeneralMasterItem {}
 
 // Fees
+// fees.dt_fees_group
 export class FeeGroup extends ChildMasterItem {}
+// fees.dt_fees_type
 export class FeeType extends GeneralMasterItem {}
 export class FeesHeadName extends GeneralMasterItem {}

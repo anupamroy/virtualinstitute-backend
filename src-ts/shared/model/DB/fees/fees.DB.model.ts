@@ -3,15 +3,16 @@ import { InstituteItem } from '../institute.DB.model';
 import { GeneralDBItem } from '../imports/DB.model';
 import { StudentItem } from '../student.DB.model';
 
+// fees.dt_ledger
 export class LedgerTransaction extends InstituteItem {
   accountHeadId: ObjectId = '';
   feeId: ObjectId = '';
   transactionId: ObjectId = '';
   feeHeadId: ObjectId = '';
-  feeSubHeadId: ObjectId = '';
   ledgerDate: Date = new Date();
 }
 
+// fees.dt-course_wise_fee_structure
 export class CourseWiseFeeStructutre extends InstituteItem {
   courseCombinationId: ObjectId = '';
 
@@ -26,6 +27,7 @@ export class CourseWiseFeeStructutre extends InstituteItem {
   monthToMonthPayment = 0;
 }
 
+// fees.dt_fees_monthly_breakup
 export class FeesMonthlyBreakup extends StudentItem {
   courseCombinationId: ObjectId = '';
   feeId: ObjectId = '';
@@ -42,6 +44,7 @@ export class FeesMonthlyBreakup extends StudentItem {
   paymentDate: Date = new Date();
 }
 
+// fees.dt_student_fees_details
 export class StudentFeeDetails extends InstituteItem {
   subjectCombinationId: ObjectId = '';
   feeId: ObjectId = '';

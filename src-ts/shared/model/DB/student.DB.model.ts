@@ -11,6 +11,7 @@ import {
 } from './imports/types.DB.model';
 import { InstituteItem } from './institute.DB.model';
 
+// students.dt_students
 export class Student extends Person {
   gender: Gender = 'MALE';
   rollNo: string = '';
@@ -24,7 +25,7 @@ export class Student extends Person {
   status: string = '';
 
   instituteId: ObjectId = '';
-  subjectCombinationId: ObjectId[] = []; // Course Id's photo: LinkURL = "";
+  subjectCombinationId: ObjectId[] = []; // Course Id's
   studentTypeId: ObjectId = '';
   courseCategoryId: ObjectId = '';
   courseLevelId: ObjectId = '';
@@ -37,6 +38,9 @@ export class StudentItem extends InstituteItem {
   studentId: ObjectId = '';
 }
 
+
+// Student Concession late Fine Application
+// students.dt_student_latefine_application
 export class StudentApplication extends StudentItem {
   feesTypeId: ObjectId = '';
   feeStructureId: ObjectId = '';

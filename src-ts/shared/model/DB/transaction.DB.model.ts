@@ -13,6 +13,7 @@ export class Reciept extends GeneralDBItem {
   transactionId: ObjectId = '';
 }
 
+// fees.dt_transaction
 export class Transation extends GeneralDBItem {
   transactionNumber: string = '';
   modeOfPayment: string = '';  // Online Offline
@@ -31,8 +32,6 @@ export class Transation extends GeneralDBItem {
 
   feesId: Object = '';
   feesHeadId: Object = '';
-
-  month: Month = '';
 }
 
 // Pre Transaction

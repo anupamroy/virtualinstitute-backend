@@ -2,24 +2,24 @@ import { ObjectId, Year } from './imports/types.DB.model';
 import { InstituteItem } from './institute.DB.model';
 import { StudentItem } from './student.DB.model';
 
+// students.dt_course
 export class Course extends InstituteItem {
   instituteId: ObjectId = '';
   courseTypeId: ObjectId = '';
-  courselevel: ObjectId = '';
+  courseLevel: ObjectId = '';
   courseStream: ObjectId = '';
 
   courseName: string = '';
   courseCode: string = '';
 
-  subjectCombinationIds: ObjectId[] = [];
 
   courseCredits: number = 0;
   maxStudentsCanBeTaken: number = 0;
   minStudentsCanBeTaken: number = 0;
 }
 
-export class SubjectCombination extends InstituteItem {}
 
+// students.dt_course_combiation_details
 export class CourseCombination extends InstituteItem {
   courseId: ObjectId = '';
   semesterYear: Year = '';
@@ -29,25 +29,10 @@ export class CourseCombination extends InstituteItem {
   semesterYearWisemaxSubject: number = 0;
 }
 
+// students.dt_course_combination_subject_group
 export class CourseCombinationSubjectGroup extends InstituteItem {
   courseCombinationId: ObjectId = '';
-}
-
-// TBD
-// export class Semester extends InstituteItem {
-//   subjects: Subject[] = [];
-// }
-
-export class Subject extends InstituteItem {
-  subjectName: string = '';
-  subjectCode: string = '';
-  islabBased: boolean = true;
-  islanguage: boolean = true;
-}
-
-export class SubjectGroup extends InstituteItem {
-  subjectGroupName: string = '';
-  subjectGroupAbbrName: string = '';
+  subjectGroupId: ObjectId = '';
   maxSubjectFromGroup: number = 0;
   minSubjectFromGroup: number = 0;
   minSubjectsFromSameStream: number = 0;
@@ -55,6 +40,29 @@ export class SubjectGroup extends InstituteItem {
   subJectDetails: string = '';
 }
 
+// TBD
+// export class Semester extends InstituteItem {
+//   subjects: Subject[] = [];
+// }
+
+// students.dt_subjects
+export class Subject extends InstituteItem {
+  subjectName: string = '';
+  subjectCode: string = '';
+  islabBased: boolean = true;
+  islanguage: boolean = true;
+}
+
+// students.dt_subject_group
+export class SubjectGroup extends InstituteItem {
+  subjectGroupName: string = '';
+  subjectGroupAbbrName: string = '';
+
+  // students.dt_groupwise_subjects
+  subjectIds: ObjectId[] = [];
+}
+
+// students.dt_course_subject_combination
 export class CourseSubjectCombination extends StudentItem {
   semester: string = '';
   academic_year: Year = '';
