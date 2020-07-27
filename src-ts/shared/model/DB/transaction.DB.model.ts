@@ -11,10 +11,11 @@ export class Transation extends GeneralDBItem {
   transactionNumber: string = "";
   modeOfPayment: string = "";
   amountPaid: number = 0;
-  studentId: string = "";
+  userId: string = "";        // id of the user/student/institute payer
+  forUserId: string = "";       // id of the user/student/institute reciever
   instituteId: string = "";
-  fromAcc: string = "";
-  toAcc: string = "";
+  userType: string = '';   // STUDENT | APPLICANT | ADMIN ....   // The person who actually commits this trasaction 
+  forUserType: string = '';     // STUDENT | APPLICANT | ADMIN ....   // The person who recieves this transaction
   transactionStatus: TransactionStatus = "CLOSED";
 }
 

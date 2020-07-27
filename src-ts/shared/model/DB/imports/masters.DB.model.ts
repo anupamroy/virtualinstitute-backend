@@ -5,7 +5,7 @@ import {
   InstitutionType,
   AccountHead,
 } from "../institute.DB.model";
-import { FeeTypeName, FeesHeadName, FeeGroupName } from "../fees.DB.model";
+import { FeeTypeName, FeeGroupName } from "../fees.DB.model";
 import { StudentType } from "../student.DB.model";
 
 export class Masters extends GeneralDBItem {
@@ -15,10 +15,10 @@ export class Masters extends GeneralDBItem {
   subjectGroups: SubjectGroup[] = []; // PCM PCMB ...
   institutionType: InstitutionType[] = []; // School College...
   accountHeads: AccountHead[] = []; // Sports Development ..
-  feeTypeNames: FeeTypeName[] = []; // Application Fee, Exam Fees
   feesHeadNames: FeesHeadName[] = []; // Tution Fees etc
   studentTypeNames: StudentType[] = []; // SC ST ...
 
   // Institute level
   feeGroupNames: FeeGroupName[] = [];
+  feeTypeNames: FeeTypeName[] = []; // Application Fee, Exam Fees
 }
