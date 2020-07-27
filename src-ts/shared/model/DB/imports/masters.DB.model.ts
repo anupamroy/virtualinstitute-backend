@@ -22,10 +22,7 @@ export class Masters extends GeneralDBItem {
   studentTypeNames: StudentType[] = []; // SC ST ...
   feesHeadNames: FeesHeadName[] = []; // Tution Fees etc
 }
-// We can Hard Delete Masters from the NTA Level, but not from the Institute Level
-
-// When a new institute is created, the above masters are copied into the institute masters (Those that are active and not soft deleted).
-// Later when the NTA adds/edits/activates another entry, they are copied here if the name does not exist. If they are inactivated from the NTA, no effect is observed here
+// When we create a new Institute, it refers the masters already in the NTA Masters
 // Masters in the Institute level are not Hard Deleted since they have other references to them.
 // These are all names, since actual data is added later per structure
 export class InstituteMasters extends Masters {
