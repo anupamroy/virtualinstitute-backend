@@ -1,5 +1,4 @@
 import { Person } from './imports/misc.DB.model';
-import { GeneralDBItem } from './imports/DB.model';
 import {
   Gender,
   Month,

@@ -1,6 +1,5 @@
 import { ObjectId, Month, FeeStatus } from '../imports/types.DB.model';
 import { InstituteItem } from '../institute.DB.model';
-import { GeneralDBItem } from '../imports/DB.model';
 import { StudentItem } from '../student.DB.model';
 
 // fees.dt_ledger
