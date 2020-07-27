@@ -27,12 +27,12 @@ export class AccountHead extends GeneralDBItem {
 
 export class InstituteUser extends SystemUser {}
 
-export class NTA extends SystemUser {
-  masters: Masters = new Masters();
-}
+export class NTAUser extends SystemUser {}
+
+export class NTAMasters extends Masters {}
 
 export class InstituteItem extends GeneralDBItem {
-  instituteId: ObjectId = '';
+  instituteId: ObjectId = "";
 }
 
 // User Types and Permission Model
