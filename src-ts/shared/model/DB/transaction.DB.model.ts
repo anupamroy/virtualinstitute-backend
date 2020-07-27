@@ -9,7 +9,7 @@ import {
 // Generated only after completion - Reciept
 export class Reciept extends GeneralDBItem {
   recieptNumber: string = '';
-  transaction: Transation = new Transation();
+  transactionId: ObjectId = '';
 }
 
 export class Transation extends GeneralDBItem {
