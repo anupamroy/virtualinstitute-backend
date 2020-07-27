@@ -9,6 +9,7 @@ import {
   ObjectId,
   ApplicationType,
 } from './imports/types.DB.model';
+import { InstituteItem } from './institute.DB.model';
 
 export class Student extends Person {
   gender: Gender = 'MALE';
@@ -32,9 +33,11 @@ export class Student extends Person {
   courseCombinationId: ObjectId = '';
 }
 
-export class StudentApplication extends GeneralDBItem {
+export class StudentItem extends InstituteItem {
   studentId: ObjectId = '';
-  instituteId: ObjectId = '';
+}
+
+export class StudentApplication extends StudentItem {
   feesTypeId: ObjectId = '';
   feeStructureId: ObjectId = '';
   semesterId: ObjectId = '';

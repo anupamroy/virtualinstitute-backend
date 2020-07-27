@@ -5,6 +5,7 @@ import {
   ObjectId,
   Month,
 } from './imports/types.DB.model';
+import { StudentItem } from './student.DB.model';
 
 // Generated only after completion - Reciept
 export class Reciept extends GeneralDBItem {
@@ -14,7 +15,7 @@ export class Reciept extends GeneralDBItem {
 
 export class Transation extends GeneralDBItem {
   transactionNumber: string = '';
-  modeOfPayment: string = '';
+  modeOfPayment: string = '';  // Online Offline
   amountPaid: number = 0;
   transactionStatus: TransactionStatus = 'CLOSED';
 
@@ -27,11 +28,15 @@ export class Transation extends GeneralDBItem {
   userTypeId: ObjectId = ''; // STUDENT | APPLICANT | ADMIN ....   // The person who actually commits this trasaction
   forUserType: ObjectId = ''; // STUDENT | APPLICANT | ADMIN ....   // The person who recieves this transaction
 
+
+  feesId: Object = '';
+  feesHeadId: Object = '';
+
   month: Month = '';
 }
 
 // Pre Transaction
-export class Challan extends GeneralDBItem {
+export class Challan extends StudentItem {
   challanNumber: string = ''; // StudentId + Institute Code + Date
   trasactionId: ObjectId = '';
   status: ChallanStatus = 'OPEN';

@@ -21,6 +21,7 @@ export type DayMonth = string;
 // export type FeeTypeName = string; // Application Fees Exam Fees
 // export type FeesHeadName = string; // Tution Fees etc
 export type FeesModeOfPayment = "SEMESTER" | "MONTH" | "YEAR";
+export type FeeStatus = 'PAID' | "DUE";
 // export type FeeGroupName = string;
 
 // Units

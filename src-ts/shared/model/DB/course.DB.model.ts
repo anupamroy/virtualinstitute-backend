@@ -1,5 +1,6 @@
 import { ObjectId, Year } from './imports/types.DB.model';
 import { InstituteItem } from './institute.DB.model';
+import { StudentItem } from './student.DB.model';
 
 export class Course extends InstituteItem {
   instituteId: ObjectId = '';
@@ -54,8 +55,7 @@ export class SubjectGroup extends InstituteItem {
   subJectDetails: string = '';
 }
 
-export class CourseSubjectCombination extends InstituteItem {
-  studentId: ObjectId = '';
+export class CourseSubjectCombination extends StudentItem {
   semester: string = '';
   academic_year: Year = '';
 
