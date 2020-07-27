@@ -33,5 +33,6 @@ export class Transation extends GeneralDBItem {
 // Pre Transaction
 export class Challan extends GeneralDBItem {
   challanNumber: string = ''; // StudentId + Institute Code + Date
+  trasactionId: ObjectId = '';
   status: ChallanStatus = 'OPEN';
 }

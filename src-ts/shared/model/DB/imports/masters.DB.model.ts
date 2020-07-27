@@ -20,6 +20,7 @@ export class Masters extends GeneralDBItem {
   institutionType: InstitutionType[] = []; // School College...
   accountHeads: AccountHead[] = []; // Sports Development ..
   studentTypeNames: StudentType[] = []; // SC ST ...
+  feesHeadNames: FeesHeadName[] = []; // Tution Fees etc
 }
 // We can Hard Delete Masters from the NTA Level, but not from the Institute Level
 
@@ -30,5 +31,4 @@ export class Masters extends GeneralDBItem {
 export class InstituteMasters extends Masters {
   feeGroupNames: FeeGroup[] = []; // Combine Fees into Groups to search for them faster
   feeTypeNames: FeeType[] = []; // Application Fee, Exam Fees
-  feesHeadNames: FeesHeadName[] = []; // Tution Fees etc
 }
