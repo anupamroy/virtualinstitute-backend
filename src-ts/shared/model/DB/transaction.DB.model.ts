@@ -1,27 +1,40 @@
-import { GeneralDBItem } from "./imports/DB.model";
+import { GeneralDBItem } from './imports/DB.model';
+import {
+  TransactionStatus,
+  ChallanStatus,
+  ObjectId,
+} from './imports/types.DB.model';
+import { StudentItem } from './student.DB.model';
 
 // Generated only after completion - Reciept
 export class Reciept extends GeneralDBItem {
-    recieptNumber: string = '';
-    transaction: Transation = new Transation();
+  recieptNumber: string = '';
+  transactionId: ObjectId = '';
 }
 
-
+// fees.dt_transaction
 export class Transation extends GeneralDBItem {
-  transactionNumber: string = "";
-  modeOfPayment: string = "";
+  transactionNumber: string = '';
+  modeOfPayment: string = ''; // Online Offline
   amountPaid: number = 0;
-  studentId: string = "";
-  instituteId: string = "";
-  fromAcc: string = "";
-  toAcc: string = "";
-  transactionStatus: TransactionStatus = "CLOSED";
+  transactionStatus: TransactionStatus = 'CLOSED';
+
+  paymentGatewayTransactionId: string = '';
+  paymentGatewayMode: string = '';
+
+  userId: ObjectId = ''; // id of the user/student/institute payer
+  forUserId: ObjectId = ''; // id of the user/student/institute reciever
+  instituteId: ObjectId = '';
+  userTypeId: ObjectId = ''; // STUDENT | APPLICANT | ADMIN ....   // The person who actually commits this trasaction
+  forUserType: ObjectId = ''; // STUDENT | APPLICANT | ADMIN ....   // The person who recieves this transaction
+
+  feesId: Object = '';
+  feesHeadId: Object = '';
 }
 
 // Pre Transaction
-export class Challan extends GeneralDBItem {
-  challanNumber: string = ""; // StudentId + Institute Code + Date
-  status: "PROGRESS" | "OPEN" | "CLOSED" = "OPEN";
+export class Challan extends StudentItem {
+  challanNumber: string = ''; // StudentId + Institute Code + Date
+  trasactionId: ObjectId = '';
+  status: ChallanStatus = 'OPEN';
 }
-
-export type TransactionStatus = "IN_PROGRESS" | "CLOSED" | "FAILED";
