@@ -1,6 +1,7 @@
-import { Masters } from "./imports/masters.DB.model";
-import { SystemUser, LinkURL } from "./imports/misc.DB.model";
-import { GeneralDBItem, ObjectId } from "./imports/DB.model";
+import { Masters, InstituteMasters } from "./imports/masters.DB.model";
+import { SystemUser } from "./imports/misc.DB.model";
+import { GeneralDBItem } from "./imports/DB.model";
+import { InstitutionType, LinkURL, ObjectId } from "./imports/types.DB.model";
 
 export class Institute extends GeneralDBItem {
   instituteName: string = "";
@@ -13,7 +14,7 @@ export class Institute extends GeneralDBItem {
   logo: LinkURL = "";
   favIcon: LinkURL = "";
   ledgerIds: ObjectId[] = [];
-  masters: Masters = new Masters();
+  masters: Masters = new InstituteMasters();
 }
 
 export class AccountHead extends GeneralDBItem {
@@ -28,9 +29,4 @@ export class NTA extends SystemUser {
 }
 
 // User Types and Permission Model
-
 export class PermissionModel extends GeneralDBItem {}
-
-export type SubjectGroup = string; // PCM PCB
-export type InstituteAffiliation = string; // AICC CBSE...
-export type InstitutionType = string;

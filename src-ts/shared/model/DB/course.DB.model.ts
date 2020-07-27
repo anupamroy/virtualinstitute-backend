@@ -1,4 +1,10 @@
-import { GeneralDBItem, ObjectId } from './imports/DB.model';
+import { GeneralDBItem } from "./imports/DB.model";
+import {
+  CourseType,
+  CourseLevel,
+  CourseStream,
+  ObjectId,
+} from "./imports/types.DB.model";
 
 export class Course extends GeneralDBItem {
   courseName: string = "";
@@ -8,10 +14,6 @@ export class Course extends GeneralDBItem {
   courseStream: CourseStream = "";
   subjectCombinationIds: ObjectId[] = [];
 }
-
-export type CourseType = string; // UG PG Vocational
-export type CourseLevel = string; // BSC, MA, BE, ME
-export type CourseStream = string; // Science Arts Commerce
 
 export class SubjectCombination extends GeneralDBItem {}
 

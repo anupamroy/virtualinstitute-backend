@@ -1,12 +1,16 @@
 import { GeneralDBItem } from "./DB.model";
-import { CourseType, CourseLevel, CourseStream } from "../course.DB.model";
 import {
+  CourseType,
+  CourseLevel,
+  CourseStream,
   SubjectGroup,
   InstitutionType,
-  AccountHead,
-} from "../institute.DB.model";
-import { FeeTypeName, FeeGroupName } from "../fees.DB.model";
-import { StudentType } from "../student.DB.model";
+  StudentType,
+  FeeGroupName,
+  FeeTypeName,
+  FeesHeadName,
+} from "./types.DB.model";
+import { AccountHead } from "../institute.DB.model";
 
 export class Masters extends GeneralDBItem {
   courseTypes: CourseType[] = []; // UG PG Vocational
@@ -15,10 +19,11 @@ export class Masters extends GeneralDBItem {
   subjectGroups: SubjectGroup[] = []; // PCM PCMB ...
   institutionType: InstitutionType[] = []; // School College...
   accountHeads: AccountHead[] = []; // Sports Development ..
-  feesHeadNames: FeesHeadName[] = []; // Tution Fees etc
   studentTypeNames: StudentType[] = []; // SC ST ...
+}
 
-  // Institute level
-  feeGroupNames: FeeGroupName[] = [];
+export class InstituteMasters extends Masters {
+  feeGroupNames: FeeGroupName[] = []; // Combine Fees into Groups to search for them faster
   feeTypeNames: FeeTypeName[] = []; // Application Fee, Exam Fees
+  feesHeadNames: FeesHeadName[] = []; // Tution Fees etc
 }

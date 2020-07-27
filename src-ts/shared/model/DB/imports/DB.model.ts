@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { ObjectId } from "./types.DB.model";
 
 export class GeneralDBItem {
   id: ObjectId = uuidv4();
@@ -11,5 +12,3 @@ export class GeneralDBItem {
   updated_at = new Date();
 }
 
-
-export type ObjectId = string;
