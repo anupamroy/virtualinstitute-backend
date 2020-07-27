@@ -8,3 +8,9 @@ export const CommonItems = {
   // Get the DynamoDB table name from environment variables
   tableName: process.env.STUDENT_TABLE,
 };
+
+export const CORS_HEADERS = {
+  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
+};

@@ -3,6 +3,7 @@ import {
   APIGatewayProxyResult,
 } from "aws-lambda/trigger/api-gateway-proxy";
 import { RequestMethod } from "../model/request-method.model";
+import { CORS_HEADERS } from "../constants/common-vars";
 
 export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
   return async (
@@ -30,7 +31,6 @@ export const parseBody = <T>(body: string | null): T | null => {
   return body ? (JSON.parse(body) as T) : null;
 };
 
-
 export const createResponse = (
   statusCode: number,
   body: any | null | undefined,
@@ -40,7 +40,7 @@ export const createResponse = (
 ): APIGatewayProxyResult => ({
   statusCode,
   body: JSON.stringify(body),
-  headers,
+  headers: { ...CORS_HEADERS, ...headers },
   multiValueHeaders,
-  isBase64Encoded
+  isBase64Encoded,
 });
