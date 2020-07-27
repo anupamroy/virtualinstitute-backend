@@ -2,7 +2,6 @@ import { Masters, InstituteMasters } from "./imports/masters.DB.model";
 import { SystemUser } from "./imports/misc.DB.model";
 import { GeneralDBItem } from "./imports/DB.model";
 import { LinkURL, ObjectId } from "./imports/types.DB.model";
-import { InstitutionType } from "./imports/masters.model";
 
 export class Institute extends GeneralDBItem {
   instituteName: string = "";

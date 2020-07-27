@@ -1,4 +1,3 @@
-import { GeneralDBItem } from '../imports/DB.model';
 import { ObjectId } from '../imports/types.DB.model';
 import { InstituteItem } from '../institute.DB.model';
 
