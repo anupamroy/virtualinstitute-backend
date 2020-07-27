@@ -26,6 +26,7 @@ Resources:
           Properties:
             Path: /student
             Method: GET
+            Cors: true
 
   getByIdFunction:
     Type: AWS::Serverless::Function
@@ -47,6 +48,8 @@ Resources:
           Properties:
             Path: /student/{id}
             Method: GET
+            Cors: true
+
 
   putItemFunction:
     Type: AWS::Serverless::Function
@@ -68,6 +71,8 @@ Resources:
           Properties:
             Path: /student
             Method: POST
+            Cors: true
+
 
   SampleTable:
     Type: AWS::Serverless::SimpleTable
