@@ -1,7 +1,7 @@
 import { AWSHandler } from "../shared/helpers/handler";
-import { getAllItems, getById, putItem } from "./nta-institute.handlers.service";
+import { createNTAUser } from "./nta-institute.handlers.service";
 
-const getAllItemsHandler = AWSHandler("GET", getAllItems);
-const getByIdHandler = AWSHandler("GET", getById);
-const putItemHandler = AWSHandler("POST", putItem);
-export { getAllItemsHandler, getByIdHandler, putItemHandler };
+// Actual Functions
+const createNTAUserHandler = AWSHandler("POST", createNTAUser);
+
+export { createNTAUserHandler };

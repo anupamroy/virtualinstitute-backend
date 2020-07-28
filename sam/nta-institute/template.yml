@@ -10,23 +10,24 @@ Globals:
     EndpointConfiguration: REGIONAL
     Cors: "'*'"
   Function:
-     Runtime: nodejs12.x
-     MemorySize: 128
-     Timeout: 100
-     Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref InstituteTable
-      Environment:
-        Variables:
-          INSTITUTE_TABLE: !Ref InstituteTable
+    Runtime: nodejs12.x
+    MemorySize: 128
+    Timeout: 100
+    
+      
 
 Resources:
   createNTAUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.createNTAUser
+      Handler: src/handlers/nta-institute.createNTAUserHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      
+      Environment:
+        Variables:
+          INSTITUTE_TABLE: !Ref InstituteTable
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref InstituteTable
       Events:
         Api:
           Type: Api
