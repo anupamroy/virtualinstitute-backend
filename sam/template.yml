@@ -6,6 +6,10 @@ Transform:
   - AWS::Serverless-2016-10-31
 
 Resources:
+  ntaInstitute:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: 'nta-institute/template.yml'
   ntaStudent:
     Type: AWS::Serverless::Application
     Properties:
