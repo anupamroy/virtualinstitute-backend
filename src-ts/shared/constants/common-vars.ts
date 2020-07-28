@@ -18,7 +18,8 @@ export const CORS_HEADERS = {
 export const CognitoConfig = {
   studentInstituteUserPoolId: "ap-south-1_75LKZuJ8p",
   ntaUserPoolId: "ap-south-1_qhEXlobaj",
-  ntaAPIPasskey: '426b5e01-ba0f-42bf-8da9-2143f19ec57a-c909bce0-f3a4-4e67-8a3f-63958c77fdc8'
+  ntaAPIPasskey: '426b5e01-ba0f-42bf-8da9-2143f19ec57a-c909bce0-f3a4-4e67-8a3f-63958c77fdc8',
+  ntaAppId: '1sg9rfttg59hf5r8ee9en037sd'
 };
 
 

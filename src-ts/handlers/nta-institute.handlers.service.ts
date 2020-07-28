@@ -26,3 +26,6 @@ import { cognitoActions } from "../shared/helpers/cognito.helper";
 
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addNTA(event);
+
+export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
+  await cognitoActions.deleteNTA(event);

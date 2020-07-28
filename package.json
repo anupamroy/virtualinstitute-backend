@@ -16,6 +16,7 @@
   },
   "scripts": {
     "test": "cd sam-project && jest",
+    "sam:institute": "cd sam/nta-institute && sam local start-api",
     "build": "npm run build:tsc && npm run build:clean && npm run build:transfer",
     "build:tsc": "tsc",
     "build:clean": "scripts/build.clean.sh",

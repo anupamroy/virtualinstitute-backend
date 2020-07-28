@@ -35,6 +35,24 @@ Resources:
             Path: /NTA
             Method: POST
 
+  deleteNTAUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteNTAUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Environment:
+        Variables:
+          INSTITUTE_TABLE: !Ref InstituteTable
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/{mobile}
+            Method: DELETE
+
   InstituteTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
