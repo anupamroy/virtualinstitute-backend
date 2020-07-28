@@ -5,8 +5,6 @@
     "private": true,
     "dependencies": {
         "@types/aws-lambda": "^8.10.59",
-        "aws-amplify": "^3.0.21",
-        "node-fetch": "^2.6.0",
         "uuid": "^8.2.0"
     },
     "devDependencies": {
