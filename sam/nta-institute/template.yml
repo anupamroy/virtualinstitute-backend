@@ -5,6 +5,11 @@ Description: >-
 Transform:
   - AWS::Serverless-2016-10-31
 
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: "'*'"
+
 Resources:
   getAllItemsFunction:
     Type: AWS::Serverless::Function
@@ -16,10 +21,10 @@ Resources:
       Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref InstituteTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          INSTITUTE_TABLE: !Ref InstituteTable
       Events:
         Api:
           Type: Api
@@ -37,10 +42,10 @@ Resources:
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref InstituteTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          INSTITUTE_TABLE: !Ref InstituteTable
       Events:
         Api:
           Type: Api
@@ -58,10 +63,10 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref InstituteTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          INSTITUTE_TABLE: !Ref InstituteTable
       Events:
         Api:
           Type: Api
@@ -69,7 +74,7 @@ Resources:
             Path: /
             Method: POST
 
-  SampleTable:
+  InstituteTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:

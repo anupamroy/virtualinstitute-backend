@@ -5,6 +5,11 @@ Description: >-
 Transform:
   - AWS::Serverless-2016-10-31
 
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: "'*'"
+    
 Resources:
   getAllItemsFunction:
     Type: AWS::Serverless::Function
