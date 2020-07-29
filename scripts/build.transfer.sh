@@ -5,7 +5,8 @@ for d in */ ; do
     pwd
     mkdir handlers
     cp -r ../../../dist/shared ./
-    cp ../../../dist/handlers/$(echo $d | sed 's:/*$::')'.js' handlers/$(echo $d | sed 's:/*$::')'.js'
-    cp ../../../dist/handlers/$(echo $d | sed 's:/*$::')'.handlers.service.js' handlers/$(echo $d | sed 's:/*$::')'.handlers.service.js'
+    cp -r ../../../dist/handlers ./
+    # cp ../../../dist/handlers/$(echo $d | sed 's:/*$::')'.js' handlers/$(echo $d | sed 's:/*$::')'.js'
+    # cp ../../../dist/handlers/$(echo $d | sed 's:/*$::')'.handlers.service.js' handlers/$(echo $d | sed 's:/*$::')'.handlers.service.js'
     cd ../..
 done

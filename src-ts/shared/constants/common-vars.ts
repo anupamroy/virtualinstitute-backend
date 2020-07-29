@@ -6,7 +6,8 @@ const dynamodb = require("aws-sdk/clients/dynamodb");
 export const CommonItems = {
   documentClient: new dynamodb.DocumentClient(),
   // Get the DynamoDB table name from environment variables
-  tableName: process.env.STUDENT_TABLE,
+  studentTable: process.env.STUDENT_TABLE,
+  institutetable: process.env.
 };
 
 export const CORS_HEADERS = {

@@ -1,7 +1,7 @@
 import { CommonItems } from "../constants/common-vars";
 
 // import { documentClient } from "../constants/common-vars";
-const TableName = CommonItems.tableName;
+const TableName = CommonItems.studentTable;
 export const DynamoDBActions = {
   putItem: (Item: any): Promise<any> =>
     CommonItems.documentClient.put({ TableName, Item }).promise(),

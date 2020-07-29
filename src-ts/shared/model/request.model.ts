@@ -1,4 +1,4 @@
-export class CreateNTAUserRequest {
+export class CreatePersonRequest {
   mobile: string = "";
   password: string = "";
   email: string = "";
@@ -8,6 +8,5 @@ export class CreateNTAUserRequest {
   middle_name: string = "";
 }
 
-export interface DeleteNTAUserRequest {
-  mobile: string;
-}
+
+

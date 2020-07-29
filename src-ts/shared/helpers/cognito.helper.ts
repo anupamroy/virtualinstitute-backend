@@ -8,7 +8,7 @@ import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
 import { CognitoConfig, REQUEST_HEADERS, CORS_HEADERS } from '../constants/common-vars';
 import { parseBody, createResponse } from "./handler";
 import { APIResponse } from "../model/request-method.model";
-import { CreateNTAUserRequest } from "../model/request.model";
+import { CreatePersonRequest } from "../model/request.model";
 import { DynamoDBActions } from "./db-handler";
 import { keysMissingResponse, unauthorisedAccessResponse } from './response.helper';
 
@@ -32,11 +32,11 @@ export class CognitoActions {
     const ntaAPIPasskey = event.headers[REQUEST_HEADERS.ntaAPIPasskey];
     console.log("ntaAPIPasskey", ntaAPIPasskey, event.headers);
     if (ntaAPIPasskey === CognitoConfig.ntaAPIPasskey) {
-      const body = parseBody<CreateNTAUserRequest>(event.body);
+      const body = parseBody<CreatePersonRequest>(event.body);
       if (
         body &&
-        Object.keys(new CreateNTAUserRequest()).every(
-          (key) => body[key as keyof CreateNTAUserRequest]
+        Object.keys(new CreatePersonRequest()).every(
+          (key) => body[key as keyof CreatePersonRequest]
         )
       ) {
         const request: AdminCreateUserRequest = {
@@ -91,6 +91,7 @@ export class CognitoActions {
       return keysMissingResponse();
     }
   }
+ 
 
   deleteNTA(event: APIGatewayProxyEvent) {
     const ntaAPIPasskey = event.headers[REQUEST_HEADERS.ntaAPIPasskey];
