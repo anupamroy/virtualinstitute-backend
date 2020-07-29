@@ -41,8 +41,8 @@ export const createNTAUser = async (event: APIGatewayProxyEvent) =>
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
 
-
-  
+export const createStudent = async (event: APIGatewayProxyEvent) =>
+  await cognitoActions.addStudent(event);
 
 export const checkToken = async (event: APIGatewayProxyEvent) => {
   console.log("checkToken");

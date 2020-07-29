@@ -10,7 +10,10 @@ import {
   createAccountHead,
   createFeeType,
 } from "./nta-fees.handlers.service";
-import { createFeesHead } from "./nta-institute.handlers.service";
+import {
+  createFeesHead,
+  createStudent,
+} from "./nta-institute.handlers.service";
 import {
   createNTAUser,
   deleteNTAUser,
@@ -21,7 +24,7 @@ import {
 const createNTAUserHandler = AWSHandler("POST", createNTAUser);
 const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
 
-// const createStudentHandler = AWSHandler('POST')
+const createStudentHandler = AWSHandler("POST", createStudent);
 
 const checkTokenHandler = AWSHandler("GET", checkToken);
 const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);

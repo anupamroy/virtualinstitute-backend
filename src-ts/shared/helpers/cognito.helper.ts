@@ -5,12 +5,19 @@ import {
   RespondToAuthChallengeRequest,
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { CognitoConfig, REQUEST_HEADERS, CORS_HEADERS } from '../constants/common-vars';
+import {
+  CognitoConfig,
+  REQUEST_HEADERS,
+  CORS_HEADERS,
+} from "../constants/common-vars";
 import { parseBody, createResponse } from "./handler";
 import { APIResponse } from "../model/request-method.model";
 import { CreatePersonRequest } from "../model/request.model";
 import { DynamoDBActions } from "./db-handler";
-import { keysMissingResponse, unauthorisedAccessResponse } from './response.helper';
+import {
+  keysMissingResponse,
+  unauthorisedAccessResponse,
+} from "./response.helper";
 
 const cognito = new aws.CognitoIdentityServiceProvider();
 
@@ -18,14 +25,36 @@ export class CognitoActions {
   constructor() {
     this.setNTAPassword = this.setNTAPassword.bind(this);
   }
-  async addStudent() {
-    const request: AdminCreateUserRequest = {
-      UserPoolId: CognitoConfig.ntaUserPoolId,
-      Username: "9422086010",
-      UserAttributes: [{ Name: "email", Value: "aditya18thm@gmail.com" }],
-    };
-    const user = await cognito.adminCreateUser(request).promise();
-    return user.User;
+  async addStudent(event: APIGatewayProxyEvent) {
+    const body = parseBody<CreatePersonRequest>(event.body);
+    if (
+      body &&
+      Object.keys(new CreatePersonRequest()).every(
+        (key) => body[key as keyof CreatePersonRequest]
+      )
+    ) {
+      const request: AdminCreateUserRequest = {
+        UserPoolId: CognitoConfig.studentInstituteUserPoolId,
+        Username: body.mobile,
+        TemporaryPassword: body.password,
+        UserAttributes: [
+          { Name: "email", Value: body.email },
+          { Name: "gender", Value: body.gender },
+          { Name: "name", Value: body.name },
+          { Name: "family_name", Value: body.family_name },
+          { Name: "middle_name", Value: body.middle_name },
+        ],
+      };
+      return cognito
+        .adminCreateUser(request)
+        .promise()
+        .then((user) =>
+          createResponse(200, new APIResponse(false, "", user.User))
+        )
+        .catch((e) => createResponse(422, new APIResponse(true, e.message, e)));
+    } else {
+      return keysMissingResponse();
+    }
   }
 
   async addNTAUser(event: APIGatewayProxyEvent) {
@@ -91,7 +120,6 @@ export class CognitoActions {
       return keysMissingResponse();
     }
   }
- 
 
   deleteNTA(event: APIGatewayProxyEvent) {
     const ntaAPIPasskey = event.headers[REQUEST_HEADERS.ntaAPIPasskey];
@@ -124,6 +152,9 @@ export class CognitoActions {
 
   createNTA(event: APIGatewayProxyEvent) {
     const NTA = DynamoDBActions.get({ type: "NTA" });
+    if(!NTA) {
+      
+    }
   }
 }
 
