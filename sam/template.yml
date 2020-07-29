@@ -1,0 +1,208 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nta-master
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: "'*'"
+    Auth:
+      DefaultAuthorizer: InstituteCognitoAuthorizer
+      Authorizers:
+        InstituteCognitoAuthorizer:
+          UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+  Function:
+    Runtime: nodejs12.x
+    MemorySize: 128
+    Timeout: 100
+    Environment:
+      Variables:
+        INSTITUTE_TABLE: !Ref InstituteTable
+
+Resources:
+  # NTA Section
+  createNTAUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createNTAUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/user
+            Method: POST
+
+  deleteNTAUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteNTAUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/user/{mobile}
+            Method: DELETE
+
+  CheckFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/user/check
+            Method: GET
+
+  SetNTAPassword:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.newPasswordChallengeHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/user/challenge
+            Method: POST
+
+  CreateFeesHead:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createFeesHeadHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/head
+            Method: POST
+
+  CreateAccountHead:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createAccountHeadHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/accounts/head
+            Method: POST
+
+  CreateFeesType:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createFeeTypeHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/type
+            Method: POST
+
+    # OptionsHandler:
+    #   Type: AWS::Serverless::Function
+    #   Properties:
+    #     Handler: src/handlers/nta-institute.optionsHandler
+    #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+    #     Policies:
+    #       - DynamoDBCrudPolicy:
+    #           TableName: !Ref InstituteTable
+    #     Events:
+    #       Api:
+    #         Type: Api
+    #         Properties:
+    #           Path: /NTA/user/check
+    #           Method: OPTIONS
+
+  # End NTA
+
+  # Tables
+  InstituteTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: InstituteTable
+
+  TransactionsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: TransactionsTable
+
+  StudentsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: StudentsTable
+
+  FeesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: FeesTable
+
+  CourseTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: CourseTable
+
+Outputs:
+  WebEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
