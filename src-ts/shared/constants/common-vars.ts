@@ -7,7 +7,7 @@ export const CommonItems = {
   documentClient: new dynamodb.DocumentClient(),
   // Get the DynamoDB table name from environment variables
   studentTable: process.env.STUDENT_TABLE,
-  institutetable: process.env.
+  // institutetable: process.env.
 };
 
 export const CORS_HEADERS = {

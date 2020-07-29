@@ -21,7 +21,7 @@ import {
 const createNTAUserHandler = AWSHandler("POST", createNTAUser);
 const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
 
-const createStudentHandler = AWSHandler('POST')
+// const createStudentHandler = AWSHandler('POST')
 
 const checkTokenHandler = AWSHandler("GET", checkToken);
 const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);
