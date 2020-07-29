@@ -152,7 +152,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
-      TableName: InstituteTableDev
+      TableName: InstituteTable
 
 Outputs:
   WebEndpoint:
