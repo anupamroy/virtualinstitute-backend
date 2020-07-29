@@ -11,7 +11,7 @@ export class Person extends GeneralDBItem {
 
 export class SystemUser extends Person {
   username: string = '';
-  type: PersonType = 'INSTITUTE_USER';
+  userType: PersonType = 'INSTITUTE_USER';
 }
 
 export class GeneralMasterItem extends GeneralDBItem {

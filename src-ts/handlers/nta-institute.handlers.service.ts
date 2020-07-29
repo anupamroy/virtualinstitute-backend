@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
 import { DynamoDBActions } from "../shared/helpers/db-handler";
 import { createResponse, parseBody } from "../shared/helpers/handler";
 import { cognitoActions } from "../shared/helpers/cognito.helper";
+import { APIResponse } from "../shared/model/request-method.model";
 
 // export const getAllItems = async () => {
 //   const data = await DynamoDBActions.scan();
@@ -25,7 +26,16 @@ import { cognitoActions } from "../shared/helpers/cognito.helper";
 // };
 
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
-  await cognitoActions.addNTA(event);
+  await cognitoActions.addNTAUser(event);
 
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
+
+export const checkToken = async (event: APIGatewayProxyEvent) => {
+  console.log('checkToken');
+  console.log(event.requestContext);
+  return createResponse(200, new APIResponse(false, "", event));
+};
+
+export const newPasswordChallenge = async (event: APIGatewayProxyEvent) =>
+  await cognitoActions.setNTAPassword(event);

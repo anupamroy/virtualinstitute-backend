@@ -26,3 +26,7 @@ export const CognitoConfig = {
 export const REQUEST_HEADERS = {
   ntaAPIPasskey: 'Nta-Api-Pass-Key'
 }
+
+
+export const USER_PASSWORD =
+  'e9dd7046-d1af-11ea-b33d-976e79865d9c-eaf73d4a-d1af-11ea-bb68-6350c5c6f354';

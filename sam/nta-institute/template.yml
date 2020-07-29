@@ -48,6 +48,36 @@ Resources:
             Path: /NTA/user/{mobile}
             Method: DELETE
 
+  CheckFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/user/check
+            Method: GET
+
+  SetNTAPassword:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.newPasswordChallengeHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/user/challenge
+            Method: POST
+
   InstituteTable:
     Type: AWS::Serverless::SimpleTable
     Properties:

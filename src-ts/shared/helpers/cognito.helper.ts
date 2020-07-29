@@ -5,10 +5,11 @@ import {
   RespondToAuthChallengeRequest,
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { CognitoConfig, REQUEST_HEADERS } from "../constants/common-vars";
+import { CognitoConfig, REQUEST_HEADERS, CORS_HEADERS } from '../constants/common-vars';
 import { parseBody, createResponse } from "./handler";
 import { APIResponse } from "../model/request-method.model";
 import { CreateNTAUserRequest } from "../model/request.model";
+import { DynamoDBActions } from "./db-handler";
 
 const cognito = new aws.CognitoIdentityServiceProvider();
 
@@ -26,7 +27,7 @@ export class CognitoActions {
     return user.User;
   }
 
-  async addNTA(event: APIGatewayProxyEvent) {
+  async addNTAUser(event: APIGatewayProxyEvent) {
     const ntaAPIPasskey = event.headers[REQUEST_HEADERS.ntaAPIPasskey];
     console.log("ntaAPIPasskey", ntaAPIPasskey, event.headers);
     if (ntaAPIPasskey === CognitoConfig.ntaAPIPasskey) {
@@ -53,38 +54,41 @@ export class CognitoActions {
           .adminCreateUser(request)
           .promise()
           .then((user) =>
-            this.setNTAPassword(body.mobile)
-              .then(() =>
-                createResponse(200, new APIResponse(false, "", user.User))
-              )
-              .catch((e) =>
-                createResponse(422, new APIResponse(true, e.message, e))
-              )
+            createResponse(200, new APIResponse(false, "", user.User))
           )
           .catch((e) =>
             createResponse(422, new APIResponse(true, e.message, e))
           );
       } else {
-        return createResponse(
-          400,
-          new APIResponse(true, "Key mobile/password Missing")
-        );
+        return createResponse(400, new APIResponse(true, "Some keys Missing"));
       }
     } else {
       return createResponse(403, new APIResponse(true, "Unauthorised Access"));
     }
   }
 
-  setNTAPassword(mobile: string) {
-    const object: RespondToAuthChallengeRequest = {
-      ChallengeName: "NEW_PASSWORD_REQUIRED",
-      ChallengeResponses: {
-        NEW_PASSWORD: "12345678",
-        USERNAME: mobile,
-      },
-      ClientId: CognitoConfig.ntaAppId,
-    };
-    return cognito.respondToAuthChallenge(object).promise();
+  setNTAPassword(event: APIGatewayProxyEvent) {
+    const body = parseBody<{ mobile: string; session: string }>(event.body);
+    const mobile = body?.mobile;
+    const session = body?.session;
+    if (mobile && session) {
+      const object: RespondToAuthChallengeRequest = {
+        ChallengeName: "NEW_PASSWORD_REQUIRED",
+        ChallengeResponses: {
+          NEW_PASSWORD: "12345678",
+          USERNAME: mobile,
+        },
+        ClientId: CognitoConfig.ntaAppId,
+        Session: session,
+      };
+      return cognito
+        .respondToAuthChallenge(object)
+        .promise()
+        .then((data) => createResponse(200, new APIResponse(false, "", data)))
+        .catch((error) => createResponse(422, error.message, error));
+    } else {
+      return createResponse(400, new APIResponse(true, "Some keys Missing"));
+    }
   }
 
   deleteNTA(event: APIGatewayProxyEvent) {
@@ -114,6 +118,10 @@ export class CognitoActions {
     } else {
       return createResponse(403, new APIResponse(true, "Unauthorised Access"));
     }
+  }
+
+  createNTA(event: APIGatewayProxyEvent) {
+    const NTA = DynamoDBActions.get({ type: "NTA" });
   }
 }
 
