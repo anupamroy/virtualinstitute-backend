@@ -21,6 +21,6 @@ export const putItem = async (event: APIGatewayProxyEvent) => {
   // const id = body.id;
   // const name = body.name;
   // const result = await DynamoDBActions.putItem({ id, name });
-  const result = await cognitoActions.addStudent()
+  const result = await cognitoActions.addStudent(event)
   return createResponse(200, result);
 };

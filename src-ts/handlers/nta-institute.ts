@@ -10,10 +10,7 @@ import {
   createAccountHead,
   createFeeType,
 } from "./nta-fees.service";
-import {
-  createFeesHead,
-  createStudent,
-} from "./nta-institute.service";
+import { createFeesHead, createStudent } from "./nta-institute.service";
 import {
   createNTAUser,
   deleteNTAUser,
@@ -55,4 +52,5 @@ export {
   createFeesHeadHandler,
   createAccountHeadHandler,
   createFeeTypeHandler,
+  createStudentHandler,
 };
