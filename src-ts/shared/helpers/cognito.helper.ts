@@ -14,6 +14,7 @@ import { parseBody, createResponse } from "./handler";
 import { APIResponse } from "../model/request-method.model";
 import { CreatePersonRequest } from "../model/request.model";
 import { DynamoDBActions } from "./db-handler";
+import { TABLE_NAMES } from "../constants/common-vars";
 import {
   keysMissingResponse,
   unauthorisedAccessResponse,
@@ -151,9 +152,11 @@ export class CognitoActions {
   }
 
   createNTA(event: APIGatewayProxyEvent) {
-    const NTA = DynamoDBActions.get({ type: "NTA" });
-    if(!NTA) {
-      
+    const NTA = DynamoDBActions.get(
+      { type: "NTA" },
+      TABLE_NAMES.instituteTable
+    );
+    if (!NTA) {
     }
   }
 }

@@ -13,6 +13,7 @@ import {
 import { requestValidator } from "../shared/helpers/request.helper";
 import { keysMissingResponse } from "../shared/helpers/response.helper";
 import { CreateFeesMasterRequest } from "../shared/model/request-method.model";
+import { TABLE_NAMES } from "../shared/constants/common-vars";
 
 // export const getAllItems = async () => {
 //   const data = await DynamoDBActions.scan();
@@ -64,7 +65,7 @@ export const createFeesHead = async (event: APIGatewayProxyEvent) => {
     feesHead.name = body.name;
     feesHead.parentId = body.parentId;
     feesHead.instituteTypeId = body.institutionTypeId;
-    return await DynamoDBActions.putItem(feesHead)
+    return await DynamoDBActions.putItem(feesHead, TABLE_NAMES.feesTable)
       .then((data) => createResponse(200, new APIResponse(false, "", data)))
       .catch((error) =>
         createResponse(
@@ -78,7 +79,15 @@ export const createFeesHead = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
-  return await DynamoDBActions.batchGet({})
+  return await DynamoDBActions.batchGet({
+    [TABLE_NAMES.feesTable]: {
+      Keys: [
+        {
+          type: "FEE_HEAD_MASTER",
+        },
+      ],
+    },
+  })
     .then((data) => createResponse(200, new APIResponse(false, "", data)))
     .catch((error) =>
       createResponse(
@@ -97,7 +106,7 @@ export const createFeesMaster = async (event: APIGatewayProxyEvent) => {
     feeType.created_by = userId;
     feeType.updated_by = userId;
     feeType.name = body.name;
-    return await DynamoDBActions.putItem(feeType)
+    return await DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
       .then((data) => createResponse(200, new APIResponse(false, "", data)))
       .catch((error) =>
         createResponse(
@@ -130,7 +139,7 @@ export const createAccountHeadMaster = async (event: APIGatewayProxyEvent) => {
     feeType.created_by = userId;
     feeType.updated_by = userId;
     feeType.name = body.name;
-    return await DynamoDBActions.putItem(feeType)
+    return await DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
       .then((data) => createResponse(200, new APIResponse(false, "", data)))
       .catch((error) =>
         createResponse(
