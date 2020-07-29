@@ -83,6 +83,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
+      TableName: CourseTable
 
 Outputs:
   WebEndpoint:

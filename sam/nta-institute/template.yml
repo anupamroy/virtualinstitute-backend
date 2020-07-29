@@ -13,26 +13,24 @@ Globals:
     Runtime: nodejs12.x
     MemorySize: 128
     Timeout: 100
+    Environment:
+        Variables:
+          INSTITUTE_TABLE: !Ref InstituteTable
     
-      
-
 Resources:
   createNTAUserFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.createNTAUserHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Environment:
-        Variables:
-          INSTITUTE_TABLE: !Ref InstituteTable
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref InstituteTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /NTA
+            Path: /NTA/user
             Method: POST
 
   deleteNTAUserFunction:
@@ -40,17 +38,14 @@ Resources:
     Properties:
       Handler: src/handlers/nta-institute.deleteNTAUserHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Environment:
-        Variables:
-          INSTITUTE_TABLE: !Ref InstituteTable
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref InstituteTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/{mobile}
+            Path: /NTA/user/{mobile}
             Method: DELETE
 
   InstituteTable:
@@ -62,6 +57,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
+      TableName: InstituteTable
 
 Outputs:
   WebEndpoint:
