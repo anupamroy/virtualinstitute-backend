@@ -2,6 +2,7 @@ node_modules
 .aws-sam
 sam/*/src
 sam/*/package-lock.json
-sam/src/*
+sam/src
+sam/node-modules
 sam/package-lock.json
 dist
