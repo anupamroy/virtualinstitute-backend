@@ -1,6 +1,7 @@
 // This file Contains just the model for all the masters
 
-import { GeneralMasterItem, ChildMasterItem } from './misc.DB.model';
+import { GeneralMasterItem, ChildMasterItem } from "./misc.DB.model";
+import { TableName, ObjectId } from "./types.DB.model";
 
 // Students
 
@@ -34,5 +35,10 @@ export class UserType extends GeneralMasterItem {}
 // fees.dt_fees_group
 export class FeeGroup extends ChildMasterItem {}
 // fees.dt_fees_type
-export class FeeType extends GeneralMasterItem {}
-export class FeesHeadName extends GeneralMasterItem {}
+export class FeeType extends GeneralMasterItem {
+  type: TableName = "FEE_TYPE_MASTER";
+}
+export class FeesHeadName extends ChildMasterItem {
+  type: TableName = "FEE_HEAD_MASTER";
+  instituteTypeId: ObjectId = "";
+}

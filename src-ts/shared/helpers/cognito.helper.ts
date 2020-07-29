@@ -10,6 +10,7 @@ import { parseBody, createResponse } from "./handler";
 import { APIResponse } from "../model/request-method.model";
 import { CreateNTAUserRequest } from "../model/request.model";
 import { DynamoDBActions } from "./db-handler";
+import { keysMissingResponse, unauthorisedAccessResponse } from './response.helper';
 
 const cognito = new aws.CognitoIdentityServiceProvider();
 
@@ -60,10 +61,10 @@ export class CognitoActions {
             createResponse(422, new APIResponse(true, e.message, e))
           );
       } else {
-        return createResponse(400, new APIResponse(true, "Some keys Missing"));
+        return keysMissingResponse();
       }
     } else {
-      return createResponse(403, new APIResponse(true, "Unauthorised Access"));
+      return unauthorisedAccessResponse();
     }
   }
 
@@ -87,7 +88,7 @@ export class CognitoActions {
         .then((data) => createResponse(200, new APIResponse(false, "", data)))
         .catch((error) => createResponse(422, error.message, error));
     } else {
-      return createResponse(400, new APIResponse(true, "Some keys Missing"));
+      return keysMissingResponse();
     }
   }
 
