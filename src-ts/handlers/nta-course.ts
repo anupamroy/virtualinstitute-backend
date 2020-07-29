@@ -1,5 +1,5 @@
 import { AWSHandler } from "../shared/helpers/handler";
-import { getAllItems, getById, putItem } from "./nta-course.handlers.service";
+import { getAllItems, getById, putItem } from "./nta-course.service";
 
 const getAllItemsHandler = AWSHandler("GET", getAllItems);
 const getByIdHandler = AWSHandler("GET", getById);

@@ -3,22 +3,22 @@ import {
   newPasswordChallenge,
   getFeesHeadList,
   getAccountHeadList,
-} from "./nta-institute.handlers.service";
+} from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
 import {
   getFeeTypeList,
   createAccountHead,
   createFeeType,
-} from "./nta-fees.handlers.service";
+} from "./nta-fees.service";
 import {
   createFeesHead,
   createStudent,
-} from "./nta-institute.handlers.service";
+} from "./nta-institute.service";
 import {
   createNTAUser,
   deleteNTAUser,
   checkToken,
-} from "./nta-institute.handlers.service";
+} from "./nta-institute.service";
 
 // Actual Functions
 const createNTAUserHandler = AWSHandler("POST", createNTAUser);
