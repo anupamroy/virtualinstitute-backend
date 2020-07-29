@@ -21,7 +21,7 @@ export type DayMonth = string;
 // export type FeeTypeName = string; // Application Fees Exam Fees
 // export type FeesHeadName = string; // Tution Fees etc
 export type FeesModeOfPayment = "SEMESTER" | "MONTH" | "YEAR";
-export type FeeStatus = 'PAID' | "DUE";
+export type FeeStatus = "PAID" | "DUE";
 // export type FeeGroupName = string;
 
 // Units
@@ -41,3 +41,14 @@ export type ChallanStatus = "PROGRESS" | "OPEN" | "CLOSED";
 // Person
 export type PersonType = "INSTITUTE_USER" | "ADMIN" | "STUDENT";
 export type LinkURL = string;
+
+export type TableName =
+  | NTATableName
+  | StudentTableName
+  | InstituteTableName
+  | FeeTableName;
+
+export type NTATableName = "NTA" | "NTA_USER";
+export type InstituteTableName = "INSTITUTE" | "INSTITUTE_USER";
+export type StudentTableName = "STUDENT" | "STUDENT_APPLICATION";
+export type FeeTableName = "FEE";
