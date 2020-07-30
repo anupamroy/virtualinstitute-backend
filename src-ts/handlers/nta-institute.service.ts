@@ -1,5 +1,8 @@
 import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { DynamoDBActions } from "../shared/helpers/db-handler";
+import {
+  DynamoDBActions,
+  processDynamoDBResponse,
+} from "../shared/helpers/db-handler";
 import { createResponse, parseBody } from "../shared/helpers/handler";
 import { cognitoActions } from "../shared/helpers/cognito.helper";
 import {
@@ -12,8 +15,12 @@ import {
 } from "../shared/model/DB/imports/masters.model";
 import { requestValidator } from "../shared/helpers/request.helper";
 import { keysMissingResponse } from "../shared/helpers/response.helper";
-import { CreateFeesMasterRequest } from "../shared/model/request-method.model";
-import { TABLE_NAMES } from "../shared/constants/common-vars";
+import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
+import {
+  TABLE_NAMES,
+  NTA_MASTER_SET_ID,
+} from "../shared/constants/common-vars";
+import { NTAMasters, AccountHead } from "../shared/model/DB/institute.DB.model";
 
 // export const getAllItems = async () => {
 //   const data = await DynamoDBActions.scan();
@@ -42,6 +49,33 @@ export const createNTAUser = async (event: APIGatewayProxyEvent) =>
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
 
+export const checkIFNTAMastersExist = () =>
+  DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
+
+export const createNTAMasters = async (event: APIGatewayProxyEvent) => {
+  const ntaMasters = new NTAMasters();
+  ntaMasters.id = NTA_MASTER_SET_ID;
+  return await checkIFNTAMastersExist()
+    .then((data) =>
+      data
+        ? createResponse(
+            200,
+            new APIResponse(true, "NTA Master Data Already exists", data)
+          )
+        : processDynamoDBResponse(
+            DynamoDBActions.putItem(ntaMasters, TABLE_NAMES.instituteTable)
+          )
+    )
+    .catch(() =>
+      processDynamoDBResponse(
+        DynamoDBActions.putItem(ntaMasters, TABLE_NAMES.instituteTable)
+      )
+    );
+};
+
+export const listNTAMasters = async () =>
+  DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
+
 export const createStudent = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addStudent(event);
 
@@ -63,30 +97,27 @@ export const createFeesHead = async (event: APIGatewayProxyEvent) => {
     feesHead.name = body.name;
     feesHead.parentId = body.parentId;
     feesHead.instituteTypeId = body.institutionTypeId;
-    return await DynamoDBActions.putItem(feesHead, TABLE_NAMES.feesTable)
-      .then((data) => createResponse(200, new APIResponse(false, "", data)))
-      .catch((error) =>
-        createResponse(
-          422,
-          new APIResponse(false, error.message || "An Error Occured", error)
-        )
-      );
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesHead, TABLE_NAMES.feesTable)
+    );
   } else {
     return keysMissingResponse();
   }
 };
 
 export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
-  // return await DynamoDBActions.batchGet({
-  //   [TABLE_NAMES.feesTable]: {
-  //     Keys: [
-  //       {
-  //         type: "FEE_HEAD_MASTER",
-  //       },
-  //     ],
-  //   },
-  // })
-  return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
+  console.log("ConsistentRead: true");
+  return await DynamoDBActions.batchGet({
+    [TABLE_NAMES.feesTable]: {
+      Keys: [
+        {
+          id: "456a1546-d33c-42ff-a34b-24ec072cddc5",
+        },
+      ],
+      ConsistentRead: true,
+    },
+  })
+    // return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
     .then((data) => createResponse(200, new APIResponse(false, "", data)))
     .catch((error) =>
       createResponse(
@@ -97,68 +128,43 @@ export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
 };
 
 // Fees Type master
-export const createFeesMaster = async (event: APIGatewayProxyEvent) => {
-  const body = parseBody<CreateFeesMasterRequest>(event.body);
-  if (body && requestValidator(body, CreateFeesMasterRequest)) {
+export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
+  const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
+  if (body && requestValidator(body, CreateFeesTypeMasterRequest)) {
     const userId = event.headers.username;
     const feeType = new FeeType();
     feeType.created_by = userId;
     feeType.updated_by = userId;
     feeType.name = body.name;
-    return await DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
-      .then((data) => createResponse(200, new APIResponse(false, "", data)))
-      .catch((error) =>
-        createResponse(
-          422,
-          new APIResponse(false, error.message || "An Error Occured", error)
-        )
-      );
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
+    );
   } else {
     return keysMissingResponse();
   }
 };
 
 export const getFeesMasterList = async (event: APIGatewayProxyEvent) => {
-  return await DynamoDBActions.batchGet({})
-    .then((data) => createResponse(200, new APIResponse(false, "", data)))
-    .catch((error) =>
-      createResponse(
-        422,
-        new APIResponse(false, error.message || "An Error Occured", error)
-      )
-    );
+  return await processDynamoDBResponse(DynamoDBActions.batchGet({}));
 };
 
 // AccountsHead Master
 export const createAccountHeadMaster = async (event: APIGatewayProxyEvent) => {
-  const body = parseBody<CreateFeesMasterRequest>(event.body);
-  if (body && requestValidator(body, CreateFeesMasterRequest)) {
+  const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
+  if (body && requestValidator(body, CreateFeesTypeMasterRequest)) {
     const userId = event.headers.username;
-    const feeType = new FeeType();
+    const feeType = new AccountHead();
     feeType.created_by = userId;
     feeType.updated_by = userId;
-    feeType.name = body.name;
-    return await DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
-      .then((data) => createResponse(200, new APIResponse(false, "", data)))
-      .catch((error) =>
-        createResponse(
-          422,
-          new APIResponse(false, error.message || "An Error Occured", error)
-        )
-      );
+    feeType.accountHead = body.name;
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
+    );
   } else {
     return keysMissingResponse();
   }
 };
 
 export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
-  return await DynamoDBActions.batchGet({})
-    .then((data) => createResponse(200, new APIResponse(false, "", data)))
-    .catch((error) =>
-      createResponse(
-        422,
-        new APIResponse(false, error.message || "An Error Occured", error)
-      )
-    );
+  return await processDynamoDBResponse(DynamoDBActions.batchGet({}));
 };
-

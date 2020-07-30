@@ -1,4 +1,6 @@
 import { CommonItems } from "../constants/common-vars";
+import { createResponse } from "./handler";
+import { APIResponse } from "../model/request-method.model";
 
 // import { documentClient } from "../constants/common-vars";
 export const DynamoDBActions = {
@@ -11,3 +13,13 @@ export const DynamoDBActions = {
   batchGet: (params: any): Promise<any> =>
     CommonItems.documentClient.batchGet({ RequestItems: params }).promise(),
 };
+
+export const processDynamoDBResponse = (event: Promise<any>) =>
+  event
+    .then((data) => createResponse(200, new APIResponse(false, "", data)))
+    .catch((error) =>
+      createResponse(
+        422,
+        new APIResponse(false, error.message || "An Error Occured", error)
+      )
+    );

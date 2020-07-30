@@ -54,6 +54,36 @@ Resources:
             Path: /NTA/user/{mobile}
             Method: DELETE
 
+  CreateNTAMastersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createNTAMastersHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters
+            Method: POST
+
+  ListNTAMastersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listNTAMastersHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters
+            Method: GET
+
   CheckFunction:
     Type: AWS::Serverless::Function
     Properties:
