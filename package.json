@@ -16,11 +16,12 @@
   },
   "scripts": {
     "test": "cd sam-project && jest",
-    "sam:local": "cd sam && sam build && sam local start-api && cd ..",
     "build": "npm run build:tsc && npm run build:sam",
     "build:tsc": "tsc",
     "build:install:dep": "cd sam && npm i && cd ..",
     "build:sam": "cd sam && sam build && cd ..",
+    "sam:local": "cd sam && sam local start-api && cd ..",
+    "sam:build:local": "npm run build:sam && npm run sam:local",
     "deploy": "cd sam && sam deploy && cd ..",
     "release": "npm run build && npm run deploy"
   }
