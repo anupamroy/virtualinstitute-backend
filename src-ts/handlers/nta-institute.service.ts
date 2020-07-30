@@ -46,8 +46,6 @@ export const createStudent = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addStudent(event);
 
 export const checkToken = async (event: APIGatewayProxyEvent) => {
-  console.log("checkToken");
-  console.log(event.requestContext);
   return createResponse(200, new APIResponse(false, "", event));
 };
 
@@ -79,15 +77,16 @@ export const createFeesHead = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
-  return await DynamoDBActions.batchGet({
-    [TABLE_NAMES.feesTable]: {
-      Keys: [
-        {
-          type: "FEE_HEAD_MASTER",
-        },
-      ],
-    },
-  })
+  // return await DynamoDBActions.batchGet({
+  //   [TABLE_NAMES.feesTable]: {
+  //     Keys: [
+  //       {
+  //         type: "FEE_HEAD_MASTER",
+  //       },
+  //     ],
+  //   },
+  // })
+  return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
     .then((data) => createResponse(200, new APIResponse(false, "", data)))
     .catch((error) =>
       createResponse(
@@ -162,3 +161,4 @@ export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
       )
     );
 };
+
