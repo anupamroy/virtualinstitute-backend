@@ -3,8 +3,12 @@
 // Create a DocumentClient that represents the query to add an item
 const dynamodb = require("aws-sdk/clients/dynamodb");
 
+export const DYNAMO_DB_URL = "http://127.0.0.1:8000";
+
 export const CommonItems = {
-  documentClient: new dynamodb.DocumentClient(),
+  documentClient: DYNAMO_DB_URL
+    ? new dynamodb.DocumentClient({ endpoint_url: "DYNAMO_DB_URL" })
+    : new dynamodb.DocumentClient(),
   // Get the DynamoDB table name from environment variables
   studentTable: process.env.STUDENT_TABLE,
   // institutetable: process.env.
