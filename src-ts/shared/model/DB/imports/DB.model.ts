@@ -10,7 +10,7 @@ export class GeneralDBItem {
   isDeleted: boolean = false;
 
   created_by: ObjectId = "";
-  created_at = new Date();
+  created_at = new Date().getTime();
   updated_by: ObjectId = "";
-  updated_at = new Date();
+  updated_at = new Date().getTime();
 }
