@@ -1,7 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { CognitoConfig, TABLE_NAMES } from '../../constants/common-vars';
+import { CognitoConfig } from '../../constants/common-vars';
 import { keysMissingResponse } from '../response.helper';
-import { requestValidator } from '../requests/request.helper';
 import { parseBody, createResponse } from '../handler';
 import {
   CreatePersonRequest,
@@ -9,7 +8,6 @@ import {
 } from '../../model/request.model';
 import { AdminCreateUserRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import {
-  createCognitoUserObject,
   createCognitoStudentObject,
   createCognitoNTAUserObject,
 } from '../../transforms/cognito.transform';
@@ -19,7 +17,6 @@ import {
   deleteCognitoUser,
 } from '../../functions/cognito.functions';
 import { APIResponse } from '../../model/request-method.model';
-import { DynamoDBActions } from '../db-handler';
 import { NTATokenGuard, requestValidatorGuard } from '../requests/guard';
 
 export class CognitoActions {
