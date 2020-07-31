@@ -3,10 +3,10 @@ import {
   AdminCreateUserRequest,
   RespondToAuthChallengeRequest,
 } from 'aws-sdk/clients/cognitoidentityserviceprovider';
-import { createResponse } from '../handler';
-import { APIResponse } from '../../model/request-method.model';
-import { CognitoConfig } from '../../constants/common-vars';
-import { processDynamoDBResponse } from '../db-handler';
+import { createResponse } from '../helpers/handler';
+import { APIResponse } from '../model/request-method.model';
+import { CognitoConfig } from '../constants/common-vars';
+import { processDynamoDBResponse } from '../helpers/db-handler';
 import { PromiseResult } from 'aws-sdk/lib/request';
 
 const cognito = new aws.CognitoIdentityServiceProvider();

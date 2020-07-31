@@ -17,7 +17,7 @@ import {
   createCognitoUser,
   setUserPassword,
   deleteCognitoUser,
-} from './cognito.service';
+} from '../../functions/cognito.functions';
 import { APIResponse } from '../../model/request-method.model';
 import { DynamoDBActions } from '../db-handler';
 import { NTATokenGuard, requestValidatorGuard } from '../requests/guard';
