@@ -4,7 +4,7 @@ import {
   getFeesHeadList,
   getAccountHeadList,
 } from "./nta-institute.service";
-import { optionsResponse } from "../shared/helpers/request/response.helper";
+import { optionsResponse } from "../shared/helpers/response.helper";
 import { listNTAMasters } from "./nta-institute.service";
 import {
   getFeeTypeList,

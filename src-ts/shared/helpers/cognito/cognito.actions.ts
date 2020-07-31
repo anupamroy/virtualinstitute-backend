@@ -8,7 +8,7 @@ import {
 import {
   unauthorisedAccessResponse,
   keysMissingResponse,
-} from '../request/response.helper';
+} from '../response.helper';
 import { requestValidator } from '../request.helper';
 import { parseBody, createResponse } from '../handler';
 import {
