@@ -20,6 +20,7 @@
     "build:tsc": "tsc",
     "build:install:dep": "cd sam && npm i && cd ..",
     "build:sam": "cd sam && sam build && cd ..",
+    "build:sam:local": "npm run build:tsc && npm run sam:local",
     "sam:local": "cd sam && sam local start-api && cd ..",
     "sam:build:local": "npm run build:sam && npm run sam:local",
     "deploy": "cd sam && sam deploy && cd ..",
