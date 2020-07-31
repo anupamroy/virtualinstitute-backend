@@ -20,7 +20,8 @@ import {
   TABLE_NAMES,
   NTA_MASTER_SET_ID,
 } from "../shared/constants/common-vars";
-import { NTAMasters, AccountHead } from "../shared/model/DB/institute.DB.model";
+import { NTAMasters } from "../shared/model/DB/nta.DB.model";
+import { AccountHead } from "../shared/model/DB/institute.DB.model";
 
 // export const getAllItems = async () => {
 //   const data = await DynamoDBActions.scan();
