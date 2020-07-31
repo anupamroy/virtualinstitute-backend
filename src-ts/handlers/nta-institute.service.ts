@@ -1,34 +1,31 @@
-import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
+import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import {
   DynamoDBActions,
   processDynamoDBResponse,
-} from "../shared/helpers/db-handler";
-import { createResponse, parseBody } from "../shared/helpers/handler";
-import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
+} from '../shared/helpers/db-handler';
+import { createResponse, parseBody } from '../shared/helpers/handler';
+import { cognitoActions } from '../shared/helpers/cognito/cognito.actions';
 import {
   APIResponse,
   CreateFeesHeadRequest,
-} from "../shared/model/request-method.model";
-import {
-  FeesHeadName,
-  FeeType,
-} from "../shared/model/DB/imports/masters.model";
-import { requestValidator } from "../shared/helpers/requests/request.helper";
-import { keysMissingResponse } from "../shared/helpers/response.helper";
-import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
+} from '../shared/model/request-method.model';
+import { FeeType } from '../shared/model/DB/imports/masters.model';
+import { requestValidator } from '../shared/helpers/requests/request.helper';
+import { keysMissingResponse } from '../shared/helpers/response.helper';
+import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from '../shared/model/request-method.model';
 import {
   TABLE_NAMES,
   NTA_MASTER_SET_ID,
-} from "../shared/constants/common-vars";
-import { AccountHead } from "../shared/model/DB/institute.DB.model";
+} from '../shared/constants/common-vars';
+import { AccountHead } from '../shared/model/DB/institute.DB.model';
 import {
   checkIFNTAMastersExist,
   getNTAMasters,
-  createNewFeesHead,
   addItemToNTAMasters,
   setNTAMasters,
-} from "../shared/helpers/general.helpers";
-import { NTAMasters } from "../shared/model/DB/nta.DB.model";
+} from '../shared/helpers/general.helpers';
+import { NTAMasters } from '../shared/model/DB/nta.DB.model';
+import { createNewFeesHead } from '../shared/helpers/requests/requests.transform';
 
 // Handler helpers
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
@@ -37,7 +34,7 @@ export const createNTAUser = async (event: APIGatewayProxyEvent) =>
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
 
-export const createNTAMasters = async (event: APIGatewayProxyEvent) => {
+export const createNTAMasters = async () => {
   const ntaMasters = new NTAMasters();
   ntaMasters.id = NTA_MASTER_SET_ID;
   return await checkIFNTAMastersExist()
@@ -45,7 +42,7 @@ export const createNTAMasters = async (event: APIGatewayProxyEvent) => {
       data?.id
         ? createResponse(
             200,
-            new APIResponse(true, "NTA Master Data Already exists", data)
+            new APIResponse(true, 'NTA Master Data Already exists', data)
           )
         : processDynamoDBResponse(
             DynamoDBActions.putItem(ntaMasters, TABLE_NAMES.instituteTable)
@@ -59,13 +56,13 @@ export const createNTAMasters = async (event: APIGatewayProxyEvent) => {
 };
 
 export const listNTAMasters = async () =>
-  createResponse(200, new APIResponse(false, "", await getNTAMasters()));
+  createResponse(200, new APIResponse(false, '', await getNTAMasters()));
 
 export const createStudent = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addStudent(event);
 
 export const checkToken = async (event: APIGatewayProxyEvent) => {
-  return createResponse(200, new APIResponse(false, "", event));
+  return createResponse(200, new APIResponse(false, '', event));
 };
 
 export const newPasswordChallenge = async (event: APIGatewayProxyEvent) =>
@@ -81,16 +78,16 @@ export const createFeesHead = async (event: APIGatewayProxyEvent) => {
     const userId = event.headers.username;
     const feesHead = createNewFeesHead(userId, body);
     const NTAMasters = await getNTAMasters();
-    console.log("addItemToNTAMasters");
-    addItemToNTAMasters(feesHead, "feesHeadNames", NTAMasters);
+    console.log('addItemToNTAMasters');
+    addItemToNTAMasters(feesHead, 'feesHeadNames', NTAMasters);
     return await processDynamoDBResponse(setNTAMasters(NTAMasters));
   } else {
     return keysMissingResponse();
   }
 };
 
-export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
-  console.log("query: true");
+export const getFeesHeadList = async () => {
+  console.log('query: true');
   return await DynamoDBActions.query({
     // [TABLE_NAMES.feesTable]: {
     //   Keys: [
@@ -101,20 +98,20 @@ export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
     //   ConsistentRead: true,
     // },
     TableName: TABLE_NAMES.feesTable,
-    FilterExpression: "#type = :type",
+    FilterExpression: '#type = :type',
     ExpressionAttributeNames: {
-      "#type": "type",
+      '#type': 'type',
     },
     ExpressionAttributeValues: {
-      ":type": TABLE_NAMES.feesTable,
+      ':type': TABLE_NAMES.feesTable,
     },
   })
     // return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
-    .then((data) => createResponse(200, new APIResponse(false, "", data)))
+    .then((data) => createResponse(200, new APIResponse(false, '', data)))
     .catch((error) =>
       createResponse(
         422,
-        new APIResponse(false, error.message || "An Error Occured", error)
+        new APIResponse(false, error.message || 'An Error Occured', error)
       )
     );
 };
@@ -136,7 +133,7 @@ export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
   }
 };
 
-export const getFeesMasterList = async (event: APIGatewayProxyEvent) => {
+export const getFeesMasterList = async () => {
   return await processDynamoDBResponse(DynamoDBActions.batchGet({}));
 };
 
@@ -157,6 +154,6 @@ export const createAccountHeadMaster = async (event: APIGatewayProxyEvent) => {
   }
 };
 
-export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
+export const getAccountHeadList = async () => {
   return await processDynamoDBResponse(DynamoDBActions.batchGet({}));
 };

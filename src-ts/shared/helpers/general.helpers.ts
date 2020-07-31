@@ -1,7 +1,6 @@
 import { DynamoDBActions } from "./db-handler";
 import { NTA_MASTER_SET_ID, TABLE_NAMES } from "../constants/common-vars";
-import { FeesHeadName } from "../model/DB/imports/masters.model";
-import { NTAMasters } from "../model/DB/institute.DB.model";
+import { NTAMasters } from "../model/DB/nta.DB.model";
 
 // General Helpers
 export const checkIFNTAMastersExist = () =>
@@ -13,15 +12,6 @@ export const getNTAMasters = () =>
 export const setNTAMasters = (NTAMasters: NTAMasters) =>
   DynamoDBActions.putItem(NTAMasters, TABLE_NAMES.instituteTable);
 
-export const createNewFeesHead = (userId: string, body: any) => {
-  const feesHead = new FeesHeadName();
-  feesHead.created_by = userId;
-  feesHead.updated_by = userId;
-  feesHead.name = body.name;
-  feesHead.parentId = body.parentId;
-  feesHead.instituteTypeId = body.institutionTypeId;
-  return feesHead;
-};
 
 export const addItemToNTAMasters = <T>(
   item: T,
