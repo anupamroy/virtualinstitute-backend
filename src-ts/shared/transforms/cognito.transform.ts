@@ -1,5 +1,5 @@
-import { CreatePersonRequest } from '../../model/request.model';
-import { CognitoConfig } from '../../constants/common-vars';
+import { CreatePersonRequest } from '../model/request.model';
+import { CognitoConfig } from '../constants/common-vars';
 import { AdminCreateUserRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
 export const createCognitoUserObject = (

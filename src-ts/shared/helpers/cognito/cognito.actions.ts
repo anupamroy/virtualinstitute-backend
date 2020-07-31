@@ -12,7 +12,7 @@ import {
   createCognitoUserObject,
   createCognitoStudentObject,
   createCognitoNTAUserObject,
-} from './cognito.objects.service';
+} from '../../transforms/cognito.transform';
 import {
   createCognitoUser,
   setUserPassword,
@@ -83,15 +83,6 @@ export class CognitoActions {
         400,
         new APIResponse(true, 'Key mobile Missing in URL')
       );
-    }
-  }
-
-  createNTA() {
-    const NTA = DynamoDBActions.get(
-      { type: 'NTA' },
-      TABLE_NAMES.instituteTable
-    );
-    if (!NTA) {
     }
   }
 }
