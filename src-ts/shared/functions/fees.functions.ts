@@ -4,7 +4,7 @@ import {
   createNewFeesHead,
   createNewFeesType,
   createNewAccountHead,
-} from '../helpers/requests/requests.transform';
+} from '../transforms/fees.transform';
 import {
   getNTAMasters,
   addItemToNTAMasters,

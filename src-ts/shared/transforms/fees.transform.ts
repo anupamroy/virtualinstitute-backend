@@ -1,5 +1,5 @@
-import { FeesHeadName, FeeType } from '../../model/DB/imports/masters.model';
-import { AccountHead } from '../../model/DB/institute.DB.model';
+import { FeesHeadName, FeeType } from '../model/DB/imports/masters.model';
+import { AccountHead } from '../model/DB/institute.DB.model';
 
 export const createNewFeesHead = (userId: string, body: any) => {
   const feesHead = new FeesHeadName();
