@@ -1,41 +1,33 @@
-import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
+// Handler helpers
+
+import { APIGatewayProxyEvent } from "aws-lambda";
+import { parseBody, createResponse } from "../shared/helpers/handler";
 import {
-  DynamoDBActions,
-  processDynamoDBResponse,
-} from "../shared/helpers/db-handler";
-import { createResponse, parseBody } from "../shared/helpers/handler";
-import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
-import {
+  CreateNTAAuthorityRequest,
   APIResponse,
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,
 } from "../shared/model/request-method.model";
 import {
-  CreateFeesMasterRequest as CreateFeesTypeMasterRequest,
-  CreateNTAAuthorityRequest,
-} from "../shared/model/request-method.model";
-import {
-  TABLE_NAMES,
-  NTA_MASTER_SET_ID,
-} from "../shared/constants/common-vars";
-import {
-  checkIFNTAMastersExist,
-  getNTAMasters,
-} from "../shared/helpers/general.helpers";
-import { NTAMasters } from "../shared/model/DB/nta.DB.model";
-import {
-  requestValidatorGuard,
   NTATokenGuard,
+  requestValidatorGuard,
 } from "../shared/helpers/requests/guard";
 import {
-  createFeesHeadFunction,
+  createNTAAuthorityFunction,
+  listNTAAuthorityFunction,
+} from "../shared/functions/nta.functions";
+import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
+import { NTAMasters } from "../shared/model/DB/nta.DB.model";
+import {
+  processDynamoDBResponse,
+  DynamoDBActions,
+} from "../shared/helpers/db-handler";
+import { TABLE_NAMES } from "../shared/constants/common-vars";
+import { getUserFromToken, checkIFNTAMastersExist, getNTAMasters } from "../shared/helpers/general.helpers";
+import {
   createFeesTypeFunction,
   createAccountHeadFunction,
 } from "../shared/functions/fees.functions";
-import { CreatePersonRequest } from "../shared/model/request.model";
-import { createNTAAuthorityFunction, listNTAAuthorityFunction } from '../shared/functions/nta.functions';
-
-// Handler helpers
 
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateNTAAuthorityRequest>(event.body);
@@ -51,7 +43,10 @@ export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
 };
 
 export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
-  return await NTATokenGuard(event, async () => await listNTAAuthorityFunction());
+  return await NTATokenGuard(
+    event,
+    async () => await listNTAAuthorityFunction()
+  );
 };
 
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
@@ -96,12 +91,20 @@ export const newPasswordChallenge = async (event: APIGatewayProxyEvent) =>
 // Fees Head Master
 export const createFeesHead = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesHeadRequest>(event.body);
-  return requestValidatorGuard(
-    body,
-    new CreateFeesHeadRequest(),
-    createFeesHeadFunction,
-    [body, event]
+  console.log(
+    "---------------------------getUserFromToken---------------------------------"
   );
+  // console.log(await getUserFromToken(event));
+  return createResponse(
+    200,
+    new APIResponse(false, "", await getUserFromToken(event))
+  );
+  // requestValidatorGuard(
+  //   body,
+  //   new CreateFeesHeadRequest(),
+  //   createFeesHeadFunction,
+  //   [body, event]
+  // );
 };
 
 export const getFeesHeadList = async () => {
@@ -136,13 +139,13 @@ export const getFeesHeadList = async () => {
 
 // Fees Type master
 export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
-  const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
-  return requestValidatorGuard(
-    body,
-    new CreateFeesTypeMasterRequest(),
-    createFeesTypeFunction,
-    [body, event]
-  );
+  // const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
+  // return requestValidatorGuard(
+  //   body,
+  //   new CreateFeesTypeMasterRequest(),
+  //   createFeesTypeFunction,
+  //   [body, event]
+  // );
 };
 
 export const getFeesMasterList = async () => {

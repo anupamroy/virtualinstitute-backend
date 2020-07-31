@@ -1,7 +1,14 @@
 import { DynamoDBActions } from "./db-handler";
-import { NTA_MASTER_SET_ID, TABLE_NAMES } from "../constants/common-vars";
+import {
+  NTA_MASTER_SET_ID,
+  TABLE_NAMES,
+  cognito,
+  CognitoConfig,
+} from "../constants/common-vars";
 import { NTAMasters } from "../model/DB/nta.DB.model";
 import { TableName } from "../model/DB/imports/types.DB.model";
+import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
+import AWS from "aws-sdk";
 
 // General Helpers
 export const checkIFNTAMastersExist = () =>
@@ -68,4 +75,12 @@ export const getContentsByType = (tablename: string, tableType: TableName) => {
     },
   };
   return DynamoDBActions.scan(tablename, params);
+};
+
+export const getUserFromToken = (event: APIGatewayProxyEvent) => {
+  return cognito
+    .getUser({
+      AccessToken: event.headers["Access-Token"] /* required */,
+    })
+    .promise();
 };

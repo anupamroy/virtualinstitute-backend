@@ -38,7 +38,7 @@ export const createCognitoStudentObject = (
 
 export const createCognitoNTAUserObject = (body: CreatePersonRequest) =>
   createCognitoUserObject(
-    CognitoConfig.studentInstituteUserPoolId,
+    CognitoConfig.ntaUserPoolId,
     body.mobile,
     body.password,
     ['email', 'gender', 'name', 'family_name', 'middle_name'],

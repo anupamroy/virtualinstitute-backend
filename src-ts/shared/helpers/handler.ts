@@ -22,7 +22,7 @@ export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
     // console.info(
     //   `response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`
     // );
-    console.log(response);
+    // console.log(response);
     return response;
   };
 };

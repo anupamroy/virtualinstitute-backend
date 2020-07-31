@@ -5,11 +5,10 @@ import {
 } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import { createResponse } from '../helpers/handler';
 import { APIResponse } from '../model/request-method.model';
-import { CognitoConfig } from '../constants/common-vars';
+import { CognitoConfig, cognito } from '../constants/common-vars';
 import { processDynamoDBResponse } from '../helpers/db-handler';
 import { PromiseResult } from 'aws-sdk/lib/request';
 
-const cognito = new aws.CognitoIdentityServiceProvider();
 
 export const ProcessCognitoUserResponse = (
   event: Promise<
@@ -25,8 +24,8 @@ export const ProcessCognitoUserResponse = (
     )
     .catch((e) => createResponse(422, new APIResponse(true, e.message, e)));
 
-export const createCognitoUser = (user: AdminCreateUserRequest) =>
-  ProcessCognitoUserResponse(cognito.adminCreateUser(user).promise());
+// export const createCognitoUser = (user: AdminCreateUserRequest) =>
+//   ProcessCognitoUserResponse(cognito.adminCreateUser(user).promise());
 
 export const deleteCognitoUser = (UserPoolId: string, Username: string) =>
   processDynamoDBResponse(
