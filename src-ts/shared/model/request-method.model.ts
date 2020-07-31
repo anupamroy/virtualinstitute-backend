@@ -25,6 +25,8 @@ export class CreateFeesHeadRequest extends ChildMasterItemRequest {
   institutionTypeId: ObjectId = "";
 }
 
+export class CreateFeesTypeMasterRequest extends GeneralMasterItemRequest {}
+
 export class CreateFeesMasterRequest extends ChildMasterItemRequest {}
 
 export class CreateAccountsHeadMasterRequest extends ChildMasterItemRequest {}

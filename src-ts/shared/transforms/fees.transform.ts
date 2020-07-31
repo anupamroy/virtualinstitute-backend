@@ -24,4 +24,5 @@ export const createNewAccountHead = (userId: string, body: any) => {
   accountHead.created_by = userId;
   accountHead.updated_by = userId;
   accountHead.accountHead = body.name;
+  return accountHead;
 };

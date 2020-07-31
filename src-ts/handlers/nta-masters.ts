@@ -18,6 +18,16 @@ import {
 import { getNTAofUser, getNTAById } from "../shared/functions/nta.functions";
 import { createNewFeesHead } from "../shared/transforms/fees.transform";
 import { NTA } from "../shared/model/DB/nta.DB.model";
+import { CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
+import {
+  createFeesTypeFunction,
+  getFeesHeadListFunction,
+} from "../shared/functions/fees.functions";
+import { keysMissingResponse } from "../shared/helpers/response.helper";
+import {
+  getFeesTypeListFunction,
+  getAccountsHeadListFunction,
+} from "../shared/functions/fees.functions";
 
 // Fees Head Master
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
@@ -30,65 +40,45 @@ export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
   // );
   if (body) {
     return createFeesHeadFunction(body, event);
+  } else {
+    return keysMissingResponse();
   }
 };
 
-export const getFeesHeadMastersList = async () => {
-  console.log("query: true");
-  return await DynamoDBActions.query({
-    // [TABLE_NAMES.feesTable]: {
-    //   Keys: [
-    //     {
-    //       type: "456a1546-d33c-42ff-a34b-24ec072cddc5",
-    //     },
-    //   ],
-    //   ConsistentRead: true,
-    // },
-    TableName: TABLE_NAMES.feesTable,
-    FilterExpression: "#type = :type",
-    ExpressionAttributeNames: {
-      "#type": "type",
-    },
-    ExpressionAttributeValues: {
-      ":type": TABLE_NAMES.feesTable,
-    },
-  })
-    // return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
-    .then((data) => createResponse(200, new APIResponse(false, "", data)))
-    .catch((error) =>
-      createResponse(
-        422,
-        new APIResponse(false, error.message || "An Error Occured", error)
-      )
-    );
+export const getFeesHeadMastersList = async (event: APIGatewayProxyEvent) => {
+  return await getFeesHeadListFunction(event);
 };
 
 // Fees Type master
-export const createFeesTypeMaster = async () => {
-  // const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
-  // return requestValidatorGuard(
-  //   body,
-  //   new CreateFeesTypeMasterRequest(),
-  //   createFeesTypeFunction,
-  //   [body, event]
-  // );
+export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
+  const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
+  if (body) {
+    return createFeesTypeFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
 };
 
-export const getFeesMasterList = async () => {
-  return await processDynamoDBResponse(DynamoDBActions.batchGet({}));
+export const getFeesMasterList = async (event: APIGatewayProxyEvent) => {
+  return await getFeesTypeListFunction(event);
 };
 
 // AccountsHead Master
 export const createAccountHeadMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateAccountsHeadMasterRequest>(event.body);
-  return requestValidatorGuard(
-    body,
-    new CreateAccountsHeadMasterRequest(),
-    createAccountHeadFunction,
-    [body, event]
-  );
+  // return requestValidatorGuard(
+  //   body,
+  //   new CreateAccountsHeadMasterRequest(),
+  //   createAccountHeadFunction,
+  //   [body, event]
+  // );
+  if (body) {
+    return createAccountHeadFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
 };
 
-export const getAccountHeadList = async () => {
-  return await processDynamoDBResponse(DynamoDBActions.batchGet({}));
+export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
+  return await getAccountsHeadListFunction(event);
 };
