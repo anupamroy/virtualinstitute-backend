@@ -9,7 +9,7 @@ import {
   unauthorisedAccessResponse,
   keysMissingResponse,
 } from '../response.helper';
-import { requestValidator } from '../request.helper';
+import { requestValidator } from '../requests/request.helper';
 import { parseBody, createResponse } from '../handler';
 import {
   CreatePersonRequest,
