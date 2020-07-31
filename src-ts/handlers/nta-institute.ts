@@ -5,7 +5,11 @@ import {
   getAccountHeadList,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
-import { listNTAMasters } from "./nta-institute.service";
+import {
+  listNTAMasters,
+  createNTAAuthority,
+  listNTAAuthority,
+} from "./nta-institute.service";
 import {
   getFeeTypeList,
   createAccountHead,
@@ -23,11 +27,15 @@ import {
 } from "./nta-institute.service";
 
 // Actual Functions
-const createNTAUserHandler = AWSHandler("POST", createNTAUser);
-const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
+
+const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
+const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
 
 const createNTAMastersHandler = AWSHandler("POST", createNTAMasters);
 const listNTAMastersHandler = AWSHandler("GET", listNTAMasters);
+
+const createNTAUserHandler = AWSHandler("POST", createNTAUser);
+const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
 
 const createStudentHandler = AWSHandler("POST", createStudent);
 
@@ -49,6 +57,8 @@ const createAccountHeadHandler = AWSHandler("POST", createAccountHead);
 const createFeeTypeHandler = AWSHandler("POST", createFeeType);
 
 export {
+  listNTAAuthorityHandler,
+  createNTAAuthorityHandler,
   createNTAUserHandler,
   deleteNTAUserHandler,
   checkTokenHandler,

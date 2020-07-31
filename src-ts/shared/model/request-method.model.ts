@@ -28,3 +28,7 @@ export class CreateFeesHeadRequest extends ChildMasterItemRequest {
 export class CreateFeesMasterRequest extends ChildMasterItemRequest {}
 
 export class CreateAccountsHeadMasterRequest extends ChildMasterItemRequest {}
+
+export class CreateNTAAuthorityRequest {
+  ntaName: string = "";
+}

@@ -18,6 +18,7 @@
     "test": "cd sam-project && jest",
     "build": "npm run build:tsc && npm run build:sam",
     "build:tsc": "tsc",
+    "tsc:watch": "tsc --watch",
     "build:install:dep": "cd sam && npm i && cd ..",
     "build:sam": "cd sam && sam build && cd ..",
     "build:sam:local": "npm run build:tsc && npm run sam:local",

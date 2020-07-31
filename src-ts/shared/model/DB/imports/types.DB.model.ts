@@ -48,7 +48,7 @@ export type TableName =
   | InstituteTableName
   | FeeTableName;
 
-export type NTATableName = "NTA" | "NTA_USER";
+export type NTATableName = "NTA_AUTHORITY" | "NTA_USER";
 export type InstituteTableName = "INSTITUTE" | "INSTITUTE_USER";
 export type StudentTableName = "STUDENT" | "STUDENT_APPLICATION";
 export type FeeTableName =

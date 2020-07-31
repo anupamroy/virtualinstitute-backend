@@ -1,33 +1,59 @@
-import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
+import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
 import {
   DynamoDBActions,
   processDynamoDBResponse,
-} from '../shared/helpers/db-handler';
-import { createResponse, parseBody } from '../shared/helpers/handler';
-import { cognitoActions } from '../shared/helpers/cognito/cognito.actions';
+} from "../shared/helpers/db-handler";
+import { createResponse, parseBody } from "../shared/helpers/handler";
+import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
 import {
   APIResponse,
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,
-} from '../shared/model/request-method.model';
-import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from '../shared/model/request-method.model';
+} from "../shared/model/request-method.model";
+import {
+  CreateFeesMasterRequest as CreateFeesTypeMasterRequest,
+  CreateNTAAuthorityRequest,
+} from "../shared/model/request-method.model";
 import {
   TABLE_NAMES,
   NTA_MASTER_SET_ID,
-} from '../shared/constants/common-vars';
+} from "../shared/constants/common-vars";
 import {
   checkIFNTAMastersExist,
   getNTAMasters,
-} from '../shared/helpers/general.helpers';
-import { NTAMasters } from '../shared/model/DB/nta.DB.model';
-import { requestValidatorGuard } from '../shared/helpers/requests/guard';
+} from "../shared/helpers/general.helpers";
+import { NTAMasters } from "../shared/model/DB/nta.DB.model";
+import {
+  requestValidatorGuard,
+  NTATokenGuard,
+} from "../shared/helpers/requests/guard";
 import {
   createFeesHeadFunction,
   createFeesTypeFunction,
   createAccountHeadFunction,
-} from '../shared/functions/fees.functions';
+} from "../shared/functions/fees.functions";
+import { CreatePersonRequest } from "../shared/model/request.model";
+import { createNTAAuthorityFunction, listNTAAuthorityFunction } from '../shared/functions/nta.functions';
 
 // Handler helpers
+
+export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
+  const body = parseBody<CreateNTAAuthorityRequest>(event.body);
+  return await NTATokenGuard(
+    event,
+    await requestValidatorGuard(
+      body,
+      new CreateNTAAuthorityRequest(),
+      createNTAAuthorityFunction,
+      [body]
+    )
+  );
+};
+
+export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
+  return await NTATokenGuard(event, async () => await listNTAAuthorityFunction());
+};
+
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addNTAUser(event);
 
@@ -42,7 +68,7 @@ export const createNTAMasters = async () => {
       data?.id
         ? createResponse(
             200,
-            new APIResponse(true, 'NTA Master Data Already exists', data)
+            new APIResponse(true, "NTA Master Data Already exists", data)
           )
         : processDynamoDBResponse(
             DynamoDBActions.putItem(ntaMasters, TABLE_NAMES.instituteTable)
@@ -56,13 +82,13 @@ export const createNTAMasters = async () => {
 };
 
 export const listNTAMasters = async () =>
-  createResponse(200, new APIResponse(false, '', await getNTAMasters()));
+  createResponse(200, new APIResponse(false, "", await getNTAMasters()));
 
 export const createStudent = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addStudent(event);
 
 export const checkToken = async (event: APIGatewayProxyEvent) => {
-  return createResponse(200, new APIResponse(false, '', event));
+  return createResponse(200, new APIResponse(false, "", event));
 };
 
 export const newPasswordChallenge = async (event: APIGatewayProxyEvent) =>
@@ -80,7 +106,7 @@ export const createFeesHead = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getFeesHeadList = async () => {
-  console.log('query: true');
+  console.log("query: true");
   return await DynamoDBActions.query({
     // [TABLE_NAMES.feesTable]: {
     //   Keys: [
@@ -91,20 +117,20 @@ export const getFeesHeadList = async () => {
     //   ConsistentRead: true,
     // },
     TableName: TABLE_NAMES.feesTable,
-    FilterExpression: '#type = :type',
+    FilterExpression: "#type = :type",
     ExpressionAttributeNames: {
-      '#type': 'type',
+      "#type": "type",
     },
     ExpressionAttributeValues: {
-      ':type': TABLE_NAMES.feesTable,
+      ":type": TABLE_NAMES.feesTable,
     },
   })
     // return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
-    .then((data) => createResponse(200, new APIResponse(false, '', data)))
+    .then((data) => createResponse(200, new APIResponse(false, "", data)))
     .catch((error) =>
       createResponse(
         422,
-        new APIResponse(false, error.message || 'An Error Occured', error)
+        new APIResponse(false, error.message || "An Error Occured", error)
       )
     );
 };

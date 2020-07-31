@@ -40,9 +40,9 @@ export class CognitoActions {
 
   async addNTAUser(event: APIGatewayProxyEvent) {
     const body = parseBody<CreateStudentRequest>(event.body);
-    return NTATokenGuard(
+    return await NTATokenGuard(
       event,
-      requestValidatorGuard(
+      await requestValidatorGuard(
         body,
         new CreatePersonRequest(),
         this.addNTAUserFunction,

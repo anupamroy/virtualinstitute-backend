@@ -1,19 +1,25 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { checkIfNTATokenValid, requestValidator } from "./request.helper";
-import { unauthorisedAccessResponse, keysMissingResponse } from "../response.helper";
+import {
+  unauthorisedAccessResponse,
+  keysMissingResponse,
+} from "../response.helper";
 
-export const NTATokenGuard = (
+export const NTATokenGuard = async (
   event: APIGatewayProxyEvent,
   callback: Function
-) =>
-  checkIfNTATokenValid(event) ? callback(event) : unauthorisedAccessResponse();
+) => {
+  return checkIfNTATokenValid(event)
+    ? await callback(event)
+    : unauthorisedAccessResponse();
+};
 
-export const requestValidatorGuard = (
+export const requestValidatorGuard = async (
   body: any,
   classInstance: any,
   callback: Function,
   callbackParams: any[]
 ) =>
   body && requestValidator(body, classInstance)
-    ? callback(...callbackParams)
-    : keysMissingResponse();
+    ? async () => await callback(...callbackParams)
+    : () => keysMissingResponse();
