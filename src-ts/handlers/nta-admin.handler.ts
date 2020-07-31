@@ -50,25 +50,3 @@ export const createNTAUser = async (event: APIGatewayProxyEvent) =>
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
 
-export const createNTAMasters = async () => {
-  const ntaMasters = new NTAMasters();
-  return await checkIFNTAMastersExist()
-    .then((data) =>
-      data?.id
-        ? createResponse(
-            200,
-            new APIResponse(true, "NTA Master Data Already exists", data)
-          )
-        : processDynamoDBResponse(
-            DynamoDBActions.putItem(ntaMasters, TABLE_NAMES.instituteTable)
-          )
-    )
-    .catch(() =>
-      processDynamoDBResponse(
-        DynamoDBActions.putItem(ntaMasters, TABLE_NAMES.instituteTable)
-      )
-    );
-};
-
-export const listNTAMasters = async () =>
-  createResponse(200, new APIResponse(false, "", await getNTAMasters()));
