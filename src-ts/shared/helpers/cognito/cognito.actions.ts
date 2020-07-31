@@ -11,6 +11,7 @@ import { AdminCreateUserRequest } from 'aws-sdk/clients/cognitoidentityservicepr
 import {
   createCognitoUserObject,
   createCognitoStudentObject,
+  createCognitoNTAUserObject,
 } from './cognito.objects.service';
 import {
   createCognitoUser,
@@ -22,23 +23,14 @@ import { DynamoDBActions } from '../db-handler';
 import { NTATokenGuard, requestValidatorGuard } from '../requests/guard';
 
 export class CognitoActions {
-  constructor() {
-    this.setNTAPassword = this.setNTAPassword.bind(this);
-  }
   async addStudent(event: APIGatewayProxyEvent) {
-    const body = parseBody<CreatePersonRequest>(event.body);
-    if (body && requestValidator(body, new CreatePersonRequest())) {
-      const request: AdminCreateUserRequest = createCognitoUserObject(
-        CognitoConfig.studentInstituteUserPoolId,
-        body.mobile,
-        body.password,
-        ['email', 'gender', 'name', 'family_name', 'middle_name'],
-        body
-      );
-      return createCognitoUser(request);
-    } else {
-      return keysMissingResponse();
-    }
+    const body = parseBody<CreateStudentRequest>(event.body);
+    return requestValidatorGuard(
+      body,
+      new CreateStudentRequest(),
+      this.addStudentFunction,
+      body
+    );
   }
 
   async addStudentFunction(body: CreateStudentRequest) {
@@ -55,7 +47,7 @@ export class CognitoActions {
       event,
       requestValidatorGuard(
         body,
-        new CreateStudentRequest(),
+        new CreatePersonRequest(),
         this.addNTAUserFunction,
         body
       )
@@ -63,13 +55,7 @@ export class CognitoActions {
   }
 
   async addNTAUserFunction(body: CreateStudentRequest) {
-    const request: AdminCreateUserRequest = createCognitoUserObject(
-      CognitoConfig.studentInstituteUserPoolId,
-      body.mobile,
-      body.password,
-      ['email', 'gender', 'name', 'family_name', 'middle_name'],
-      body
-    );
+    const request: AdminCreateUserRequest = createCognitoNTAUserObject(body);
     return createCognitoUser(request);
   }
 

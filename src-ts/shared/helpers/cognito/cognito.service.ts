@@ -2,12 +2,10 @@ import * as aws from 'aws-sdk';
 import {
   AdminCreateUserRequest,
   RespondToAuthChallengeRequest,
-  AdminDeleteUserRequest,
 } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import { createResponse } from '../handler';
 import { APIResponse } from '../../model/request-method.model';
 import { CognitoConfig } from '../../constants/common-vars';
-import { CreatePersonRequest } from '../../model/request.model';
 import { processDynamoDBResponse } from '../db-handler';
 import { PromiseResult } from 'aws-sdk/lib/request';
 
@@ -35,11 +33,7 @@ export const deleteCognitoUser = (UserPoolId: string, Username: string) =>
     cognito.adminDeleteUser({ UserPoolId, Username }).promise()
   );
 
-
-
 // Password Challenge
-export const respondToAuthChallenge = () => {};
-
 export const setUserPassword = (USERNAME: string, Session: string) => {
   const object: RespondToAuthChallengeRequest = {
     ChallengeName: 'NEW_PASSWORD_REQUIRED',
