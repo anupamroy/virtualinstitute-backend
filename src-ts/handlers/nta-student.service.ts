@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
 import { DynamoDBActions } from "../shared/helpers/db-handler";
 import { createResponse } from "../shared/helpers/handler";
-import { cognitoActions } from '../shared/helpers/cognito.helper';
+import { cognitoActions } from '../shared/helpers/cognito/cognito.actions';
 
 // export const getAllItems = async () => {
 //   const data = await DynamoDBActions.scan();

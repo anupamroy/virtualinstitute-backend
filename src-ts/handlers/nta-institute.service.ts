@@ -4,7 +4,7 @@ import {
   processDynamoDBResponse,
 } from "../shared/helpers/db-handler";
 import { createResponse, parseBody } from "../shared/helpers/handler";
-import { cognitoActions } from "../shared/helpers/cognito.helper";
+import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
 import {
   APIResponse,
   CreateFeesHeadRequest,
