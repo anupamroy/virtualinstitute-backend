@@ -21,43 +21,27 @@ import {
   NTA_MASTER_SET_ID,
 } from "../shared/constants/common-vars";
 import { NTAMasters, AccountHead } from "../shared/model/DB/institute.DB.model";
+import {
+  checkIFNTAMastersExist,
+  getNTAMasters,
+  createNewFeesHead,
+  addItemToNTAMasters,
+  setNTAMasters,
+} from "../shared/helpers/general.helpers";
 
-// export const getAllItems = async () => {
-//   const data = await DynamoDBActions.scan();
-//   const items = data.Items;
-//   return createResponse(200, items);
-// };
-
-// export const getById = async (event: APIGatewayProxyEvent) => {
-//   const id = event.pathParameters?.id;
-//   const data = await DynamoDBActions.get({ id });
-//   const item = data.Item;
-//   return createResponse(200, item);
-// };
-
-// export const putItem = async (event: APIGatewayProxyEvent) => {
-//   const body = parseBody<any>(event.body);
-//   const id = body.id;
-//   const name = body.name;
-//   const result = await DynamoDBActions.putItem({ id, name });
-//   return createResponse(200, result);
-// };
-
+// Handler helpers
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addNTAUser(event);
 
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
 
-export const checkIFNTAMastersExist = () =>
-  DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
-
 export const createNTAMasters = async (event: APIGatewayProxyEvent) => {
   const ntaMasters = new NTAMasters();
   ntaMasters.id = NTA_MASTER_SET_ID;
   return await checkIFNTAMastersExist()
     .then((data) =>
-      data
+      data?.id
         ? createResponse(
             200,
             new APIResponse(true, "NTA Master Data Already exists", data)
@@ -74,7 +58,7 @@ export const createNTAMasters = async (event: APIGatewayProxyEvent) => {
 };
 
 export const listNTAMasters = async () =>
-  DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
+  createResponse(200, new APIResponse(false, "", await getNTAMasters()));
 
 export const createStudent = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addStudent(event);
@@ -89,32 +73,39 @@ export const newPasswordChallenge = async (event: APIGatewayProxyEvent) =>
 // Fees Head Master
 export const createFeesHead = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesHeadRequest>(event.body);
-  if (body && requestValidator(body, CreateFeesHeadRequest)) {
+  if (
+    body
+    // && requestValidator(body, CreateFeesHeadRequest)
+  ) {
     const userId = event.headers.username;
-    const feesHead = new FeesHeadName();
-    feesHead.created_by = userId;
-    feesHead.updated_by = userId;
-    feesHead.name = body.name;
-    feesHead.parentId = body.parentId;
-    feesHead.instituteTypeId = body.institutionTypeId;
-    return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesHead, TABLE_NAMES.feesTable)
-    );
+    const feesHead = createNewFeesHead(userId, body);
+    const NTAMasters = await getNTAMasters();
+    console.log("addItemToNTAMasters");
+    addItemToNTAMasters(feesHead, "feesHeadNames", NTAMasters);
+    return await processDynamoDBResponse(setNTAMasters(NTAMasters));
   } else {
     return keysMissingResponse();
   }
 };
 
 export const getFeesHeadList = async (event: APIGatewayProxyEvent) => {
-  console.log("ConsistentRead: true");
-  return await DynamoDBActions.batchGet({
-    [TABLE_NAMES.feesTable]: {
-      Keys: [
-        {
-          id: "456a1546-d33c-42ff-a34b-24ec072cddc5",
-        },
-      ],
-      ConsistentRead: true,
+  console.log("query: true");
+  return await DynamoDBActions.query({
+    // [TABLE_NAMES.feesTable]: {
+    //   Keys: [
+    //     {
+    //       type: "456a1546-d33c-42ff-a34b-24ec072cddc5",
+    //     },
+    //   ],
+    //   ConsistentRead: true,
+    // },
+    TableName: TABLE_NAMES.feesTable,
+    FilterExpression: "#type = :type",
+    ExpressionAttributeNames: {
+      "#type": "type",
+    },
+    ExpressionAttributeValues: {
+      ":type": TABLE_NAMES.feesTable,
     },
   })
     // return await DynamoDBActions.scan(TABLE_NAMES.feesTable)
