@@ -27,7 +27,7 @@ Resources:
   CreateNTAAuthorityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.createNTAMastersHandler
+      Handler: src/handlers/nta-institute.createNTAAuthorityHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:

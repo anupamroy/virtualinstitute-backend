@@ -12,7 +12,7 @@ import {
   FeesHeadName,
 } from './masters.model';
 
-export class Masters extends GeneralDBItem {
+export class Masters {
   courseTypes: CourseType[] = []; // UG PG Vocational
   courseLevels: CourseLevel[] = []; // BE ME
   courseStreams: CourseStream[] = []; // Computer Mechanical

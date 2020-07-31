@@ -62,7 +62,6 @@ export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
 
 export const createNTAMasters = async () => {
   const ntaMasters = new NTAMasters();
-  ntaMasters.id = NTA_MASTER_SET_ID;
   return await checkIFNTAMastersExist()
     .then((data) =>
       data?.id
