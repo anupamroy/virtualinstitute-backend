@@ -1,12 +1,7 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import {
-  CognitoConfig,
-  TABLE_NAMES,
-} from '../../constants/common-vars';
-import {
-  keysMissingResponse,
-} from '../response.helper';
-import { requestValidator, NTATokenGuard, requestValidatorGuard } from '../requests/request.helper';
+import { CognitoConfig, TABLE_NAMES } from '../../constants/common-vars';
+import { keysMissingResponse } from '../response.helper';
+import { requestValidator } from '../requests/request.helper';
 import { parseBody, createResponse } from '../handler';
 import {
   CreatePersonRequest,
@@ -24,8 +19,7 @@ import {
 } from './cognito.service';
 import { APIResponse } from '../../model/request-method.model';
 import { DynamoDBActions } from '../db-handler';
-
-
+import { NTATokenGuard, requestValidatorGuard } from '../requests/guard';
 
 export class CognitoActions {
   constructor() {
