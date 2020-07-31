@@ -11,8 +11,13 @@ import {
 } from "../shared/helpers/db-handler";
 import { TABLE_NAMES } from "../shared/constants/common-vars";
 import { requestValidatorGuard } from "../shared/helpers/requests/guard";
-import { createAccountHeadFunction } from "../shared/functions/fees.functions";
-import { getNTAofUser } from '../shared/functions/nta.functions';
+import {
+  createAccountHeadFunction,
+  createFeesHeadFunction,
+} from "../shared/functions/fees.functions";
+import { getNTAofUser, getNTAById } from "../shared/functions/nta.functions";
+import { createNewFeesHead } from "../shared/transforms/fees.transform";
+import { NTA } from "../shared/model/DB/nta.DB.model";
 
 // Fees Head Master
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
@@ -23,15 +28,9 @@ export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
   //   createFeesHeadFunction,
   //   [body, event]
   // );
-  return createFeesHeadFunction(event);
-};
-
-export const createFeesHeadFunction = async (event: APIGatewayProxyEvent) => {
-  console.log("createFeesHeadFunction");
-  const nta = await getNTAofUser(event);
-  // const feesHead = createNewFeesHead(userId, body);
-  // addItemToNTAMasters(feesHead, "feesHeadNames", nta);
-  // return await processDynamoDBResponse(saveNTAAuthority(nta));
+  if (body) {
+    return createFeesHeadFunction(body, event);
+  }
 };
 
 export const getFeesHeadMastersList = async () => {

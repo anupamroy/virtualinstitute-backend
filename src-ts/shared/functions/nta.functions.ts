@@ -33,7 +33,8 @@ export const listNTAAuthorityFunction = async () => {
   );
 };
 
-export const saveNTAAuthority = (ntaAuthority: NTA) => DynamoDBActions.putItem(ntaAuthority, TABLE_NAMES.instituteTable)
+export const saveNTAAuthority = (ntaAuthority: NTA) =>
+  DynamoDBActions.putItem(ntaAuthority, TABLE_NAMES.instituteTable);
 
 export const getNTAByIDFunction = (ntaId: string) => {
   return DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable);
@@ -59,6 +60,8 @@ export const getNTAIdofUser = async (event: APIGatewayProxyEvent) => {
     { id: userId },
     TABLE_NAMES.instituteTable
   );
+  console.log("---------------user------------------", userId, user);
+
   return user.ntaId;
 };
 
@@ -70,3 +73,6 @@ export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
   );
   return nta;
 };
+
+export const getNTAById = (ntaId: string) =>
+  DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable).then(nta => nta.Item);

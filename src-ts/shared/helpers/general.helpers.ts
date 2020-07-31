@@ -26,18 +26,27 @@ export const addItemToNTAMasters = <T>(
   nta: NTA
 ) => {
   const masterArray = nta.masters[masterArrayName] as any;
-  console.log("masterArray");
-  console.log(masterArray);
-  //   const matchedItem = masterArray.find(
-  //     (arrayItem: T) => (arrayItem as any).id === (item as any).id
-  //   );
-  //   if (matchedItem) {
-  //     Object.keys(matchedItem).forEach((key) => {
-  //       (matchedItem as any)[key] = (item as any)[key];
-  //     });
-  //   } else {
-  //     masterArray.push(item);
-  //   }
+  const matchedItem = masterArray.find(
+    (arrayItem: T) => (arrayItem as any).id === (item as any).id
+  );
+  if (matchedItem) {
+    Object.keys(matchedItem).forEach((key) => {
+      (matchedItem as any)[key] = (item as any)[key];
+    });
+  } else {
+    masterArray.push(item);
+  }
+};
+
+export const deleteItemFromNTAMasters = (
+  itemId: string,
+  masterArrayName: keyof NTAMasters,
+  nta: NTA
+) => {
+  const masterArray = nta.masters[masterArrayName] as any;
+  nta.masters[masterArrayName] = masterArray.filter(
+    (masterItem: any) => masterItem.id !== itemId
+  );
 };
 
 export const runDynamoDBQuery = (
