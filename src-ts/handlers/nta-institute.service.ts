@@ -4,7 +4,7 @@ import {
   processDynamoDBResponse,
 } from "../shared/helpers/db-handler";
 import { createResponse, parseBody } from "../shared/helpers/handler";
-import { cognitoActions } from "../shared/helpers/cognito.helper";
+import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
 import {
   APIResponse,
   CreateFeesHeadRequest,
@@ -13,14 +13,14 @@ import {
   FeesHeadName,
   FeeType,
 } from "../shared/model/DB/imports/masters.model";
-import { requestValidator } from "../shared/helpers/request.helper";
+import { requestValidator } from "../shared/helpers/requests/request.helper";
 import { keysMissingResponse } from "../shared/helpers/response.helper";
 import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
 import {
   TABLE_NAMES,
   NTA_MASTER_SET_ID,
 } from "../shared/constants/common-vars";
-import { NTAMasters, AccountHead } from "../shared/model/DB/institute.DB.model";
+import { AccountHead } from "../shared/model/DB/institute.DB.model";
 import {
   checkIFNTAMastersExist,
   getNTAMasters,
@@ -28,6 +28,7 @@ import {
   addItemToNTAMasters,
   setNTAMasters,
 } from "../shared/helpers/general.helpers";
+import { NTAMasters } from "../shared/model/DB/nta.DB.model";
 
 // Handler helpers
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
