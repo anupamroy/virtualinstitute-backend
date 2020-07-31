@@ -1,5 +1,5 @@
-import { createResponse } from "./handler";
-import { APIResponse } from "../model/request-method.model";
+import { createResponse } from "../handler";
+import { APIResponse } from "../../model/request-method.model";
 
 export const unauthorisedAccessResponse = () =>
   createResponse(403, new APIResponse(true, "Unauthorised Access"));

@@ -14,7 +14,7 @@ import {
   FeeType,
 } from "../shared/model/DB/imports/masters.model";
 import { requestValidator } from "../shared/helpers/request.helper";
-import { keysMissingResponse } from "../shared/helpers/response.helper";
+import { keysMissingResponse } from "../shared/helpers/request/response.helper";
 import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
 import {
   TABLE_NAMES,
