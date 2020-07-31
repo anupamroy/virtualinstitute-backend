@@ -36,9 +36,9 @@ export class UserType extends GeneralMasterItem {}
 export class FeeGroup extends ChildMasterItem {}
 // fees.dt_fees_type
 export class FeeType extends GeneralMasterItem {
-  type: TableName = "FEE_TYPE_MASTER";
+  tableType: TableName = "FEE_TYPE_MASTER";
 }
 export class FeesHeadName extends ChildMasterItem {
-  type: TableName = "FEE_HEAD_MASTER";
+  tableType: TableName = "FEE_HEAD_MASTER";
   instituteTypeId: ObjectId = "";
 }
