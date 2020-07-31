@@ -29,7 +29,7 @@ export class CognitoActions {
       body,
       new CreateStudentRequest(),
       this.addStudentFunction,
-      body
+      [body]
     );
   }
 
@@ -49,7 +49,7 @@ export class CognitoActions {
         body,
         new CreatePersonRequest(),
         this.addNTAUserFunction,
-        body
+        [body]
       )
     );
   }

@@ -12,8 +12,8 @@ export const requestValidatorGuard = (
   body: any,
   classInstance: any,
   callback: Function,
-  callbackParams: any
+  callbackParams: any[]
 ) =>
   body && requestValidator(body, classInstance)
-    ? callback(callbackParams)
+    ? callback(...callbackParams)
     : keysMissingResponse();

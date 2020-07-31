@@ -8,24 +8,24 @@ import { cognitoActions } from '../shared/helpers/cognito/cognito.actions';
 import {
   APIResponse,
   CreateFeesHeadRequest,
+  CreateAccountsHeadMasterRequest,
 } from '../shared/model/request-method.model';
-import { FeeType } from '../shared/model/DB/imports/masters.model';
-import { requestValidator } from '../shared/helpers/requests/request.helper';
-import { keysMissingResponse } from '../shared/helpers/response.helper';
 import { CreateFeesMasterRequest as CreateFeesTypeMasterRequest } from '../shared/model/request-method.model';
 import {
   TABLE_NAMES,
   NTA_MASTER_SET_ID,
 } from '../shared/constants/common-vars';
-import { AccountHead } from '../shared/model/DB/institute.DB.model';
 import {
   checkIFNTAMastersExist,
   getNTAMasters,
-  addItemToNTAMasters,
-  setNTAMasters,
 } from '../shared/helpers/general.helpers';
 import { NTAMasters } from '../shared/model/DB/nta.DB.model';
-import { createNewFeesHead } from '../shared/helpers/requests/requests.transform';
+import { requestValidatorGuard } from '../shared/helpers/requests/guard';
+import {
+  createFeesHeadFunction,
+  createFeesTypeFunction,
+  createAccountHeadFunction,
+} from '../shared/functions/fees.functions';
 
 // Handler helpers
 export const createNTAUser = async (event: APIGatewayProxyEvent) =>
@@ -71,19 +71,12 @@ export const newPasswordChallenge = async (event: APIGatewayProxyEvent) =>
 // Fees Head Master
 export const createFeesHead = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesHeadRequest>(event.body);
-  if (
-    body
-    // && requestValidator(body, CreateFeesHeadRequest)
-  ) {
-    const userId = event.headers.username;
-    const feesHead = createNewFeesHead(userId, body);
-    const NTAMasters = await getNTAMasters();
-    console.log('addItemToNTAMasters');
-    addItemToNTAMasters(feesHead, 'feesHeadNames', NTAMasters);
-    return await processDynamoDBResponse(setNTAMasters(NTAMasters));
-  } else {
-    return keysMissingResponse();
-  }
+  return requestValidatorGuard(
+    body,
+    new CreateFeesHeadRequest(),
+    createFeesHeadFunction,
+    [body, event]
+  );
 };
 
 export const getFeesHeadList = async () => {
@@ -119,18 +112,12 @@ export const getFeesHeadList = async () => {
 // Fees Type master
 export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
-  if (body && requestValidator(body, CreateFeesTypeMasterRequest)) {
-    const userId = event.headers.username;
-    const feeType = new FeeType();
-    feeType.created_by = userId;
-    feeType.updated_by = userId;
-    feeType.name = body.name;
-    return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
-    );
-  } else {
-    return keysMissingResponse();
-  }
+  return requestValidatorGuard(
+    body,
+    new CreateFeesTypeMasterRequest(),
+    createFeesTypeFunction,
+    [body, event]
+  );
 };
 
 export const getFeesMasterList = async () => {
@@ -139,19 +126,13 @@ export const getFeesMasterList = async () => {
 
 // AccountsHead Master
 export const createAccountHeadMaster = async (event: APIGatewayProxyEvent) => {
-  const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
-  if (body && requestValidator(body, CreateFeesTypeMasterRequest)) {
-    const userId = event.headers.username;
-    const feeType = new AccountHead();
-    feeType.created_by = userId;
-    feeType.updated_by = userId;
-    feeType.accountHead = body.name;
-    return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feeType, TABLE_NAMES.feesTable)
-    );
-  } else {
-    return keysMissingResponse();
-  }
+  const body = parseBody<CreateAccountsHeadMasterRequest>(event.body);
+  return requestValidatorGuard(
+    body,
+    new CreateAccountsHeadMasterRequest(),
+    createAccountHeadFunction,
+    [body, event]
+  );
 };
 
 export const getAccountHeadList = async () => {
