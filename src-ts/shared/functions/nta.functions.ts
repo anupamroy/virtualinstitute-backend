@@ -5,8 +5,12 @@ import {
 } from "../helpers/db-handler";
 import { TABLE_NAMES } from "../constants/common-vars";
 import { CreateNTAAuthorityRequest } from "../model/request-method.model";
-import { getContentsByType } from "../helpers/general.helpers";
+import {
+  getContentsByType,
+  getCognitoUserFromToken,
+} from "../helpers/general.helpers";
 import { createResponse } from "../helpers/handler";
+import { APIGatewayProxyEvent } from "aws-lambda";
 
 export const createNTAAuthorityFunction = async (
   body: CreateNTAAuthorityRequest
@@ -29,6 +33,8 @@ export const listNTAAuthorityFunction = async () => {
   );
 };
 
+export const saveNTAAuthority = (ntaAuthority: NTA) => DynamoDBActions.putItem(ntaAuthority, TABLE_NAMES.instituteTable)
+
 export const getNTAByIDFunction = (ntaId: string) => {
   return DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable);
 };
@@ -43,4 +49,24 @@ export const insertCognitoUserInNTAFunction = async (
   return processDynamoDBResponse(
     DynamoDBActions.putItem(ntaUser, TABLE_NAMES.instituteTable)
   );
+};
+
+export const getNTAIdofUser = async (event: APIGatewayProxyEvent) => {
+  const cognitoUser = await getCognitoUserFromToken(event);
+  const userId =
+    cognitoUser.UserAttributes.find((attr) => attr.Name === "sub")?.Value + "";
+  const user: NTAUser = await DynamoDBActions.get(
+    { id: userId },
+    TABLE_NAMES.instituteTable
+  );
+  return user.ntaId;
+};
+
+export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
+  const ntaId = getNTAIdofUser(event);
+  const nta: NTA = await DynamoDBActions.get(
+    { id: ntaId },
+    TABLE_NAMES.instituteTable
+  );
+  return nta;
 };

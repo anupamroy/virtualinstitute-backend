@@ -1,31 +1,16 @@
-import { CreateFeesHeadRequest } from '../model/request-method.model';
-import { APIGatewayProxyEvent } from 'aws-lambda';
+import { CreateFeesHeadRequest } from "../model/request-method.model";
+import { APIGatewayProxyEvent } from "aws-lambda";
 import {
-  createNewFeesHead,
   createNewFeesType,
   createNewAccountHead,
-} from '../transforms/fees.transform';
-import {
-  getNTAMasters,
-  addItemToNTAMasters,
-  setNTAMasters,
-} from '../helpers/general.helpers';
+} from "../transforms/fees.transform";
 import {
   processDynamoDBResponse,
   DynamoDBActions,
-} from '../helpers/db-handler';
-import { TABLE_NAMES } from '../constants/common-vars';
+} from "../helpers/db-handler";
+import { TABLE_NAMES } from "../constants/common-vars";
 
-export const createFeesHeadFunction = async (
-  body: CreateFeesHeadRequest,
-  event: APIGatewayProxyEvent
-) => {
-  const userId = event.headers.username;
-  const feesHead = createNewFeesHead(userId, body);
-  const nTAMasters = await getNTAMasters();
-  addItemToNTAMasters(feesHead, 'feesHeadNames', nTAMasters);
-  return await processDynamoDBResponse(setNTAMasters(nTAMasters));
-};
+
 
 export const createFeesTypeFunction = async (
   body: CreateFeesHeadRequest,

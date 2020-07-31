@@ -47,3 +47,8 @@ export const TABLE_NAMES = {
 export const NTA_MASTER_SET_ID = 'debe7d4a-d29a-11ea-b256-073ae46f3a1a'
 
 export const cognito = new aws.CognitoIdentityServiceProvider();
+
+
+export const EVENT_HEADERS = {
+  accessToken: 'Access-Token'
+}

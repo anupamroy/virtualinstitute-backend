@@ -7,21 +7,10 @@ import {
   listNTAAuthorityFunction,
 } from "../shared/functions/nta.functions";
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody, createResponse } from "../shared/helpers/handler";
+import { parseBody } from "../shared/helpers/handler";
 import {
   CreateNTAAuthorityRequest,
-  APIResponse,
 } from "../shared/model/request-method.model";
-import { NTAMasters } from "../shared/model/DB/nta.DB.model";
-import {
-  checkIFNTAMastersExist,
-  getNTAMasters,
-} from "../shared/helpers/general.helpers";
-import {
-  processDynamoDBResponse,
-  DynamoDBActions,
-} from "../shared/helpers/db-handler";
-import { TABLE_NAMES } from "../shared/constants/common-vars";
 import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
 
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {

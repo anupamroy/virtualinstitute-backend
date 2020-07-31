@@ -1,9 +1,7 @@
 import { AWSHandler } from "../shared/helpers/handler";
 import {
-  createNTAMasters,
   createNTAAuthority,
   listNTAAuthority,
-  listNTAMasters,
   createNTAUser,
   deleteNTAUser,
 } from "./nta-admin.handler";
@@ -11,16 +9,10 @@ import {
   createStudent,
   checkToken,
   newPasswordChallenge,
-  getFeesHeadList,
-  getAccountHeadList,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
-import {
-  getFeeTypeList,
-  createFeesHead,
-  createAccountHead,
-  createFeeType,
-} from "./nta-fees.service";
+import { getFeesHeadMastersList, getAccountHeadList, createFeesHeadMaster, createFeesTypeMaster, createAccountHeadMaster, getFeesMasterList } from './nta-masters';
+
 
 // Actual Functions
 
@@ -44,13 +36,13 @@ const optionsHandler = AWSHandler("OPTIONS", optionsResponse);
 
 // const createFeesHead = AWSHandler('POST')
 
-const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadList);
+const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
 const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
-const getFeeTypeListHandler = AWSHandler("GET", getFeeTypeList);
+const getFeeTypeListHandler = AWSHandler("GET", getFeesMasterList);
 
-const createFeesHeadHandler = AWSHandler("POST", createFeesHead);
-const createAccountHeadHandler = AWSHandler("POST", createAccountHead);
-const createFeeTypeHandler = AWSHandler("POST", createFeeType);
+const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
+const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
+const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
 
 export {
   listNTAAuthorityHandler,
@@ -66,5 +58,5 @@ export {
   createFeesHeadHandler,
   createAccountHeadHandler,
   createFeeTypeHandler,
-  createStudentHandler
+  createStudentHandler,
 };
