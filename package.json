@@ -23,6 +23,7 @@
     "build:sam:local": "npm run build:tsc && npm run sam:local",
     "sam:local": "cd sam && sam local start-api && cd ..",
     "sam:build:local": "npm run build:sam && npm run sam:local",
+    "dynamoDB": "docker run -p 8000:8000 amazon/dynamodb-local",
     "deploy": "cd sam && sam deploy && cd ..",
     "release": "npm run build && npm run deploy"
   }
