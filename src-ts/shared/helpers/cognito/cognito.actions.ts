@@ -1,15 +1,12 @@
-import * as aws from 'aws-sdk';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import {
-  REQUEST_HEADERS,
   CognitoConfig,
   TABLE_NAMES,
 } from '../../constants/common-vars';
 import {
-  unauthorisedAccessResponse,
   keysMissingResponse,
 } from '../response.helper';
-import { requestValidator } from '../requests/request.helper';
+import { requestValidator, NTATokenGuard, requestValidatorGuard } from '../requests/request.helper';
 import { parseBody, createResponse } from '../handler';
 import {
   CreatePersonRequest,
@@ -28,24 +25,7 @@ import {
 import { APIResponse } from '../../model/request-method.model';
 import { DynamoDBActions } from '../db-handler';
 
-export const checkIfNTATokenValid = (event: APIGatewayProxyEvent) =>
-  event.headers[REQUEST_HEADERS.ntaAPIPasskey] === CognitoConfig.ntaAPIPasskey;
 
-export const NTATokenGuard = (
-  event: APIGatewayProxyEvent,
-  callback: Function
-) =>
-  checkIfNTATokenValid(event) ? callback(event) : unauthorisedAccessResponse();
-
-export const requestValidatorGuard = (
-  body: any,
-  classInstance: any,
-  callback: Function,
-  callbackParams: any
-) =>
-  body && requestValidator(body, classInstance)
-    ? callback(callbackParams)
-    : keysMissingResponse();
 
 export class CognitoActions {
   constructor() {
