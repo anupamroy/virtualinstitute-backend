@@ -12,7 +12,7 @@ Globals:
       AllowCredentials: true
       AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
       AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"
-      AllowOrigin: "'*'"
+      AllowOrigin: "'https://dev.admin.nta-sys.tk'"
     Auth:
       DefaultAuthorizer: InstituteCognitoAuthorizer
       Authorizers:
