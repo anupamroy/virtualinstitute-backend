@@ -12,7 +12,7 @@ import {
   processDynamoDBResponse,
   DynamoDBActions,
 } from "../helpers/db-handler";
-import { TABLE_NAMES } from "../constants/common-vars";
+import { TABLE_NAMES, EVENT_HEADERS } from '../constants/common-vars';
 import { getNTAById, saveNTAAuthority } from "./nta.functions";
 import { NTA } from "../model/DB/nta.DB.model";
 import { addItemToNTAMasters } from "./nta-masters.functions";
@@ -28,7 +28,7 @@ export const createFeesHeadFunction = async (
 ) => {
   const userId = event.headers.username;
   const feesHead = createNewFeesHead(userId, body);
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   addItemToNTAMasters(feesHead, "feesHeadNames", nta);
   return await processDynamoDBResponse(saveNTAAuthority(nta));
@@ -40,7 +40,7 @@ export const createFeesTypeFunction = async (
 ) => {
   const userId = event.headers.username;
   const feeType = createNewFeesType(userId, body);
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   addItemToNTAMasters(feeType, "feeTypeNames", nta);
   return await processDynamoDBResponse(saveNTAAuthority(nta));
@@ -52,14 +52,14 @@ export const createAccountHeadFunction = async (
 ) => {
   const userId = event.headers.username;
   const accountHead = createNewAccountHead(userId, body);
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   addItemToNTAMasters(accountHead, "accountHeads", nta);
   return await processDynamoDBResponse(saveNTAAuthority(nta));
 };
 
 export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   return createResponse(
     200,
@@ -67,7 +67,7 @@ export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
   );
 };
 export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   return createResponse(
     200,
@@ -77,7 +77,7 @@ export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {
 export const getAccountsHeadListFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   return createResponse(
     200,
@@ -86,7 +86,7 @@ export const getAccountsHeadListFunction = async (
 };
 
 export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
-  const ntaId = event.headers["Nta-Authority-Id"];
+  const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
   const nta: NTA = await getNTAById(ntaId);
   const feesHeadId = event.pathParameters?.id;
   return createResponse(

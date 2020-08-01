@@ -4,21 +4,18 @@ import * as aws from "aws-sdk";
 // Create a DocumentClient that represents the query to add an item
 const dynamodb = require("aws-sdk/clients/dynamodb");
 
-export const DYNAMO_DB_URL = "http://127.0.0.1:8000";
+export const DYNAMO_DB_URL = "";
 
 export const CommonItems = {
-  documentClient: DYNAMO_DB_URL
-    ? new dynamodb.DocumentClient({ endpoint_url: "DYNAMO_DB_URL" })
-    : new dynamodb.DocumentClient(),
+  documentClient: new dynamodb.DocumentClient(),
   // Get the DynamoDB table name from environment variables
   studentTable: process.env.STUDENT_TABLE,
   // institutetable: process.env.
 };
 
 export const CORS_HEADERS = {
-  "Access-Control-Allow-Headers":
-    "Content-Type, Authorization",
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Origin": "https://dev.admin.nta-sys.tk",
   "Access-Control-Allow-Methods": "POST,GET,PATCH,PUT,DELETE",
   // "Access-Control-Allow-Credentials": "true",
 };
@@ -50,5 +47,6 @@ export const NTA_MASTER_SET_ID = "debe7d4a-d29a-11ea-b256-073ae46f3a1a";
 export const cognito = new aws.CognitoIdentityServiceProvider();
 
 export const EVENT_HEADERS = {
-  accessToken: "Access-Token",
+  accessToken: "access-token",
+  ntaAuthorityId: "nta-authority-id",
 };

@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../shared/helpers/handler";
+import { parseBody, createResponse } from "../shared/helpers/handler";
 import {
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,
@@ -8,7 +8,10 @@ import {
   createAccountHeadFunction,
   createFeesHeadFunction,
 } from "../shared/functions/fees.functions";
-import { CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
+import {
+  CreateFeesTypeMasterRequest,
+  APIResponse,
+} from "../shared/model/request-method.model";
 import {
   createFeesTypeFunction,
   getFeesHeadListFunction,
@@ -30,7 +33,8 @@ export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getFeesHeadMastersList = async (event: APIGatewayProxyEvent) => {
-  return await getFeesHeadListFunction(event);
+  return createResponse(200, new APIResponse(false, "", []));
+  // return await getFeesHeadListFunction(event);
 };
 
 export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
