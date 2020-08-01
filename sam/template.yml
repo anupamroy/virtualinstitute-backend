@@ -74,45 +74,6 @@ Resources:
               InstituteCognitoAuthorizer:
                 UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
-  CreateNTAMastersFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.createNTAMastersHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters
-            Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
-
-  ListNTAMastersFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.listNTAMastersHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters
-            Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   CreateNTAUserFunction:
     Type: AWS::Serverless::Function

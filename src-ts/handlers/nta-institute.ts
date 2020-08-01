@@ -26,9 +26,6 @@ import {
 const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
 const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
 
-// const createNTAMastersHandler = AWSHandler("POST", createNTAMasters);
-// const listNTAMastersHandler = AWSHandler("GET", listNTAMasters);
-
 const createNTAUserHandler = AWSHandler("POST", createNTAUser);
 const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
 
