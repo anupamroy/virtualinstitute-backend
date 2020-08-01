@@ -1,38 +1,37 @@
-import { Masters, InstituteMasters } from './imports/masters.DB.model';
-import { SystemUser } from './imports/misc.DB.model';
-import { GeneralDBItem } from './imports/DB.model';
-import { LinkURL, ObjectId } from './imports/types.DB.model';
-import { NTAItem } from './nta.DB.model';
+import { Masters, InstituteMasters } from "./imports/masters.DB.model";
+import { SystemUser, ChildMasterItem } from "./imports/misc.DB.model";
+import { GeneralDBItem } from "./imports/DB.model";
+import { LinkURL, ObjectId, TableName } from "./imports/types.DB.model";
+import { NTAItem } from "./nta.DB.model";
 
 export class Institute extends NTAItem {
-  ntaId: ObjectId = '';
+  ntaId: ObjectId = "";
 
-  instituteName: string = '';
-  instituteAddress: string = '';
-  primaryPhone: string = '';
+  instituteName: string = "";
+  instituteAddress: string = "";
+  primaryPhone: string = "";
   alternatePhones: string[] = [];
-  primaryEmail: string = '';
+  primaryEmail: string = "";
   alternateEmails: string[] = [];
 
   masters: Masters = new InstituteMasters();
 
-  instituteTypeId: ObjectId = '';
+  instituteTypeId: ObjectId = "";
   ledgerIds: ObjectId[] = [];
 
-  logo: LinkURL = '';
-  favIcon: LinkURL = '';
+  logo: LinkURL = "";
+  favIcon: LinkURL = "";
 }
 
-export class AccountHead extends GeneralDBItem {
-  accountHead: string = '';
+export class AccountHead extends ChildMasterItem {
+  tableType: TableName = "ACCOUNTS_HEAD_MASTER";
   balance: number = 0;
 }
 
 export class InstituteUser extends SystemUser {
-  instituteId: ObjectId = '';
+  instituteId: ObjectId = "";
 }
 
 export class InstituteItem extends GeneralDBItem {
-  instituteId: ObjectId = '';
+  instituteId: ObjectId = "";
 }
-
