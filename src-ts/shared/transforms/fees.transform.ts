@@ -23,6 +23,6 @@ export const createNewAccountHead = (userId: string, body: any) => {
   const accountHead = new AccountHead();
   accountHead.created_by = userId;
   accountHead.updated_by = userId;
-  accountHead.accountHead = body.name;
+  accountHead.name = body.name;
   return accountHead;
 };
