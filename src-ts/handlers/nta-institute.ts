@@ -45,7 +45,7 @@ const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
 // const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
 
 // // Get by ID
-// const getFeesHeadMasterByIdHandler = AWSHandler('GET', getFeesHeadMasterById);
+const getFeesHeadMasterByIdHandler = AWSHandler('GET', getFeesHeadMasterById);
 
 export {
   // listNTAAuthorityHandler,
@@ -62,5 +62,5 @@ export {
   // createAccountHeadHandler,
   // createFeeTypeHandler,
   // createStudentHandler,
-  // getFeesHeadMasterByIdHandler
+  getFeesHeadMasterByIdHandler
 };

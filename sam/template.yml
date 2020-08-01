@@ -41,6 +41,21 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head
             Method: GET
+  
+  GetFeesHeadByIDFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/head/{id}
+            Method: GET
   # End NTA
 
   # Tables

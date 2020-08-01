@@ -12,7 +12,7 @@ import {
   processDynamoDBResponse,
   DynamoDBActions,
 } from "../helpers/db-handler";
-import { TABLE_NAMES, EVENT_HEADERS } from '../constants/common-vars';
+import { TABLE_NAMES, EVENT_HEADERS } from "../constants/common-vars";
 import { getNTAById, saveNTAAuthority } from "./nta.functions";
 import { NTA } from "../model/DB/nta.DB.model";
 import { addItemToNTAMasters } from "./nta-masters.functions";

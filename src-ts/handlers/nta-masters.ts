@@ -33,8 +33,7 @@ export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getFeesHeadMastersList = async (event: APIGatewayProxyEvent) => {
-  return createResponse(200, new APIResponse(false, "", []));
-  // return await getFeesHeadListFunction(event);
+  return await getFeesHeadListFunction(event);
 };
 
 export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
