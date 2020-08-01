@@ -11,56 +11,60 @@ import {
   newPasswordChallenge,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
-import { getFeesHeadMastersList, getAccountHeadList, createFeesHeadMaster, createFeesTypeMaster, createAccountHeadMaster, getFeesMasterList, getFeesHeadMasterById } from './nta-masters';
-
+import {
+  getFeesHeadMastersList,
+  getAccountHeadList,
+  createFeesHeadMaster,
+  createFeesTypeMaster,
+  createAccountHeadMaster,
+  getFeesMasterList,
+  getFeesHeadMasterById,
+} from "./nta-masters";
 
 // Actual Functions
 
-// const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
-// const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
+const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
+const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
 
-// // const createNTAMastersHandler = AWSHandler("POST", createNTAMasters);
-// // const listNTAMastersHandler = AWSHandler("GET", listNTAMasters);
+// const createNTAMastersHandler = AWSHandler("POST", createNTAMasters);
+// const listNTAMastersHandler = AWSHandler("GET", listNTAMasters);
 
-// const createNTAUserHandler = AWSHandler("POST", createNTAUser);
-// const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
+const createNTAUserHandler = AWSHandler("POST", createNTAUser);
+const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
 
-// const createStudentHandler = AWSHandler("POST", createStudent);
+const createStudentHandler = AWSHandler("POST", createStudent);
 
-// const checkTokenHandler = AWSHandler("GET", checkToken);
-// const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);
+const checkTokenHandler = AWSHandler("GET", checkToken);
+const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);
 
-// const optionsHandler = AWSHandler("OPTIONS", optionsResponse);
+const optionsHandler = AWSHandler("OPTIONS", optionsResponse);
 
 // Fees Head
-
-// const createFeesHead = AWSHandler('POST')
-
 const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
-// const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
-// const getFeeTypeListHandler = AWSHandler("GET", getFeesMasterList);
+const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
+const getFeeTypeListHandler = AWSHandler("GET", getFeesMasterList);
 
-// const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
-// const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
-// const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
+const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
+const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
+const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
 
 // // Get by ID
-const getFeesHeadMasterByIdHandler = AWSHandler('GET', getFeesHeadMasterById);
+const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
 
 export {
-  // listNTAAuthorityHandler,
-  // createNTAAuthorityHandler,
-  // createNTAUserHandler,
-  // deleteNTAUserHandler,
-  // checkTokenHandler,
-  // newPasswordChallengeHandler,
-  // optionsHandler,
+  listNTAAuthorityHandler,
+  createNTAAuthorityHandler,
+  createNTAUserHandler,
+  deleteNTAUserHandler,
+  checkTokenHandler,
+  newPasswordChallengeHandler,
+  optionsHandler,
   getFeesHeadListHandler,
-  // getAccountHeadListHandler,
-  // getFeeTypeListHandler,
-  // createFeesHeadHandler,
-  // createAccountHeadHandler,
-  // createFeeTypeHandler,
-  // createStudentHandler,
-  getFeesHeadMasterByIdHandler
+  getAccountHeadListHandler,
+  getFeeTypeListHandler,
+  createFeesHeadHandler,
+  createAccountHeadHandler,
+  createFeeTypeHandler,
+  createStudentHandler,
+  getFeesHeadMasterByIdHandler,
 };
