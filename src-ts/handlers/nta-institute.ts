@@ -11,6 +11,11 @@ import {
   newPasswordChallenge,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
+import { statusChangeOfAccountHeadMaster } from "./nta-masters";
+import {
+  statusChangeOfFeesHeadMaster,
+  statusChangeOfFeesTypeMaster,
+} from "./nta-masters";
 import {
   editFeesTypeMasterById,
   editFeesHeadMasterById,
@@ -64,6 +69,19 @@ const deleteAccountsHeadHandler = AWSHandler(
   deleteAccountsHeadMasterById
 );
 
+const statusChangeFeesHeadHandler = AWSHandler(
+  "POST",
+  statusChangeOfFeesHeadMaster
+);
+const statusChangeFeesTypeHandler = AWSHandler(
+  "POST",
+  statusChangeOfFeesTypeMaster
+);
+const statusChangeAccountsHeadHandler = AWSHandler(
+  "POST",
+  statusChangeOfAccountHeadMaster
+);
+
 // // Get by ID
 
 export {
@@ -88,4 +106,7 @@ export {
   deleteFeesHeadHandler,
   deleteFeesTypeHandler,
   deleteAccountsHeadHandler,
+  statusChangeFeesHeadHandler,
+  statusChangeFeesTypeHandler,
+  statusChangeAccountsHeadHandler,
 };

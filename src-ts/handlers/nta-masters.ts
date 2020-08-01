@@ -7,14 +7,22 @@ import {
 import {
   createAccountHeadFunction,
   createFeesHeadFunction,
+  statusChangeofAccountHeadByIdFunction,
 } from "../shared/functions/fees.functions";
-import { CreateFeesTypeMasterRequest } from "../shared/model/request-method.model";
+import {
+  CreateFeesTypeMasterRequest,
+  StatusChangeRequest,
+} from "../shared/model/request-method.model";
 import {
   createFeesTypeFunction,
   getFeesHeadListFunction,
 } from "../shared/functions/fees.functions";
 import { keysMissingResponse } from "../shared/helpers/response.helper";
-import { editAccountsHeadByIdFunction } from "../shared/functions/fees.functions";
+import { statusChangeofFeesTypeByIdFunction } from "../shared/functions/fees.functions";
+import {
+  editAccountsHeadByIdFunction,
+  statusChangeofFeesHeadByIdFunction,
+} from "../shared/functions/fees.functions";
 import {
   editFeesTypeByIdFunction,
   editFeesHeadByIdFunction,
@@ -117,6 +125,39 @@ export const editAccountsHeadMasterById = async (
   const body = parseBody<CreateAccountsHeadMasterRequest>(event.body);
   if (body) {
     return await editAccountsHeadByIdFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
+};
+
+export const statusChangeOfFeesHeadMaster = async (
+  event: APIGatewayProxyEvent
+) => {
+  const body = parseBody<StatusChangeRequest>(event.body);
+  if (body) {
+    return await statusChangeofFeesHeadByIdFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
+};
+
+export const statusChangeOfFeesTypeMaster = async (
+  event: APIGatewayProxyEvent
+) => {
+  const body = parseBody<StatusChangeRequest>(event.body);
+  if (body) {
+    return await statusChangeofFeesTypeByIdFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
+};
+
+export const statusChangeOfAccountHeadMaster = async (
+  event: APIGatewayProxyEvent
+) => {
+  const body = parseBody<StatusChangeRequest>(event.body);
+  if (body) {
+    return await statusChangeofAccountHeadByIdFunction(body, event);
   } else {
     return keysMissingResponse();
   }

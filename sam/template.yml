@@ -418,6 +418,68 @@ Resources:
               InstituteCognitoAuthorizer:
                 UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
+  # Status Change of NTA
+
+  StatusChangeFeesHead:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteFeesHeadHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/head/status/{id}
+            Method: POST
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
+  StatusChangeFeesType:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteFeesTypeHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/type/status/{id}
+            Method: POST
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
+  StatusChangeAccountsHead:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteAccountsHeadHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/accounts/head/status/{id}
+            Method: POST
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
   # End NTA
 
   # Tables

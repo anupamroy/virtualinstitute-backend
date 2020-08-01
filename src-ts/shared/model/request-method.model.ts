@@ -33,3 +33,7 @@ export class CreateAccountsHeadMasterRequest extends ChildMasterItemRequest {}
 export class CreateNTAAuthorityRequest {
   ntaName: string = "";
 }
+
+export interface StatusChangeRequest {
+  isActive: boolean;
+}
