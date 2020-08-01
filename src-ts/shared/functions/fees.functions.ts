@@ -60,10 +60,10 @@ export const createAccountHeadFunction = async (
 
 export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
   const ntaId = event.headers[EVENT_HEADERS.ntaAuthorityId];
-  const nta: NTA = await getNTAById(ntaId);
+  // const nta: NTA = await getNTAById(ntaId);
   return createResponse(
     200,
-    new APIResponse(false, "", nta.masters.feesHeadNames)
+    new APIResponse(false, "", ntaId)
   );
 };
 export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {

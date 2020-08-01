@@ -12,11 +12,7 @@ Globals:
       AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
       AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"
       AllowOrigin: "'*'"
-    Auth:
-      DefaultAuthorizer: InstituteCognitoAuthorizer
-      Authorizers:
-        InstituteCognitoAuthorizer:
-          UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
   Function:
     Runtime: nodejs12.x
     MemorySize: 128
@@ -26,6 +22,17 @@ Globals:
         INSTITUTE_TABLE: !Ref InstituteTable
 
 Resources:
+  GatewayResponseDefault4XX:
+    Type: "AWS::ApiGateway::GatewayResponse"
+    Properties:
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
+        gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
+      ResponseType: DEFAULT_4XX
+      RestApiId:
+        Ref: "ServerlessRestApi"
+
   # List NTA Masters
   ListFeesHead:
     Type: AWS::Serverless::Function
@@ -41,7 +48,12 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head
             Method: GET
-  
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
   GetFeesHeadByIDFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -56,6 +68,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: GET
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
   # End NTA
 
   # Tables
