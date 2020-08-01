@@ -10,8 +10,8 @@ Globals:
     EndpointConfiguration: REGIONAL
     Cors:
       AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
-      AllowMethods: "'OPTIONS,POST,GET,PATCH,PUT,DELETE'"
-      AllowOrigin: "'https://dev.admin.nta-sys.tk'"
+      AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"
+      AllowOrigin: "'*'"
     Auth:
       DefaultAuthorizer: InstituteCognitoAuthorizer
       Authorizers:

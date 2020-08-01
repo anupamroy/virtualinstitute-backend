@@ -15,7 +15,7 @@ export const CommonItems = {
 
 export const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  "Access-Control-Allow-Origin": "https://dev.admin.nta-sys.tk",
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST,GET,PATCH,PUT,DELETE",
   // "Access-Control-Allow-Credentials": "true",
 };
