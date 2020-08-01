@@ -11,7 +11,11 @@ import {
   newPasswordChallenge,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
-import { statusChangeOfAccountHeadMaster } from "./nta-masters";
+import {
+  statusChangeOfAccountHeadMaster,
+  getFeesTypeMasterById,
+  getAccountsHeadMasterById,
+} from "./nta-masters";
 import {
   statusChangeOfFeesHeadMaster,
   statusChangeOfFeesTypeMaster,
@@ -32,6 +36,10 @@ import {
   getFeesTypeMasterList,
   getFeesHeadMasterById,
 } from "./nta-masters";
+import {
+  getFeesTypeByIdFunction,
+  getAccountsHeadByIdFunction,
+} from "../shared/functions/fees.functions";
 
 // Actual Functions
 
@@ -50,9 +58,12 @@ const optionsHandler = AWSHandler("OPTIONS", optionsResponse);
 
 // NTA Masters
 const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
-const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
 const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
 const getFeeTypeListHandler = AWSHandler("GET", getFeesTypeMasterList);
+
+const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
+const getFeesTypeByIdHandler = AWSHandler("GET", getFeesTypeMasterById);
+const getAccountsHeadByIdHandler = AWSHandler("GET", getAccountsHeadMasterById);
 
 const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
 const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
@@ -70,15 +81,15 @@ const deleteAccountsHeadHandler = AWSHandler(
 );
 
 const statusChangeFeesHeadHandler = AWSHandler(
-  "POST",
+  "PATCH",
   statusChangeOfFeesHeadMaster
 );
 const statusChangeFeesTypeHandler = AWSHandler(
-  "POST",
+  "PATCH",
   statusChangeOfFeesTypeMaster
 );
 const statusChangeAccountsHeadHandler = AWSHandler(
-  "POST",
+  "PATCH",
   statusChangeOfAccountHeadMaster
 );
 
@@ -100,6 +111,8 @@ export {
   createFeeTypeHandler,
   createStudentHandler,
   getFeesHeadMasterByIdHandler,
+  getFeesTypeByIdHandler,
+  getAccountsHeadByIdHandler,
   editFeesHeadHandler,
   editFeesTypeHandler,
   editAccountsHeadHandler,

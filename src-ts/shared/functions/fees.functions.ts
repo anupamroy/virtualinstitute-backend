@@ -103,6 +103,36 @@ export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
   );
 };
 
+export const getFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
+  const nta = await getNTAFromEvent(event);
+  const feesTypeId = event.pathParameters?.id;
+  return createResponse(
+    200,
+    new APIResponse(
+      false,
+      "",
+      nta.masters.feeTypeNames.find((feeType) => feeType.id === feesTypeId)
+    )
+  );
+};
+
+export const getAccountsHeadByIdFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  const nta = await getNTAFromEvent(event);
+  const accountsHeadId = event.pathParameters?.id;
+  return createResponse(
+    200,
+    new APIResponse(
+      false,
+      "",
+      nta.masters.accountHeads.find(
+        (accountsHead) => accountsHead.id === accountsHeadId
+      )
+    )
+  );
+};
+
 // Delete Functions
 
 export const deleteFeesHeadByIdFunction = async (

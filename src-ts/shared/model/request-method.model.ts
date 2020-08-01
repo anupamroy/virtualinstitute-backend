@@ -1,5 +1,11 @@
 import { ObjectId } from "./DB/imports/types.DB.model";
-export type RequestMethod = "GET" | "PUT" | "POST" | "DELETE" | "OPTIONS";
+export type RequestMethod =
+  | "GET"
+  | "PATCH"
+  | "PUT"
+  | "POST"
+  | "DELETE"
+  | "OPTIONS";
 
 export class APIResponse {
   hasError = false;

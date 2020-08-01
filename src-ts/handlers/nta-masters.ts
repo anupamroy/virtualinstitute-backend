@@ -8,6 +8,8 @@ import {
   createAccountHeadFunction,
   createFeesHeadFunction,
   statusChangeofAccountHeadByIdFunction,
+  getFeesTypeByIdFunction,
+  getAccountsHeadByIdFunction,
 } from "../shared/functions/fees.functions";
 import {
   CreateFeesTypeMasterRequest,
@@ -75,6 +77,14 @@ export const getFeesHeadMastersList = async (event: APIGatewayProxyEvent) => {
 
 export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
   return await getFeesHeadByIdFunction(event);
+};
+
+export const getFeesTypeMasterById = async (event: APIGatewayProxyEvent) => {
+  return await getFeesTypeByIdFunction(event);
+};
+
+export const getAccountsHeadMasterById = async (event: APIGatewayProxyEvent) => {
+  return await getAccountsHeadByIdFunction(event);
 };
 
 export const getFeesTypeMasterList = async (event: APIGatewayProxyEvent) => {

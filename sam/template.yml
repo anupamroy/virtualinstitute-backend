@@ -236,26 +236,6 @@ Resources:
               InstituteCognitoAuthorizer:
                 UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
-  GetFeesHeadByIDFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head/{id}
-            Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
-
   ListAccountsHead:
     Type: AWS::Serverless::Function
     Properties:
@@ -289,6 +269,67 @@ Resources:
           Type: Api
           Properties:
             Path: /NTA/masters/fees/type
+            Method: GET
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
+  # Get NTA Masters By Id
+  GetFeesHeadByIDFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/head/{id}
+            Method: GET
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
+  GetFeesTypeByIDFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getFeesTypeByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/type/{id}
+            Method: GET
+          Auth:
+            DefaultAuthorizer: InstituteCognitoAuthorizer
+            Authorizers:
+              InstituteCognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
+  GetAccountsHeadByIDFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getAccountsHeadByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/accounts/head/{id}
             Method: GET
           Auth:
             DefaultAuthorizer: InstituteCognitoAuthorizer
@@ -423,7 +464,7 @@ Resources:
   StatusChangeFeesHead:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.deleteFeesHeadHandler
+      Handler: src/handlers/nta-institute.statusChangeFeesHeadHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -432,8 +473,8 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head/status/{id}
-            Method: POST
+            Path: /NTA/masters/fees/head/{id}
+            Method: PATCH
           Auth:
             DefaultAuthorizer: InstituteCognitoAuthorizer
             Authorizers:
@@ -443,7 +484,7 @@ Resources:
   StatusChangeFeesType:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.deleteFeesTypeHandler
+      Handler: src/handlers/nta-institute.statusChangeFeesTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -452,8 +493,8 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type/status/{id}
-            Method: POST
+            Path: /NTA/masters/fees/type/{id}
+            Method: PATCH
           Auth:
             DefaultAuthorizer: InstituteCognitoAuthorizer
             Authorizers:
@@ -463,7 +504,7 @@ Resources:
   StatusChangeAccountsHead:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.deleteAccountsHeadHandler
+      Handler: src/handlers/nta-institute.statusChangeAccountsHeadHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -472,8 +513,8 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head/status/{id}
-            Method: POST
+            Path: /NTA/masters/accounts/head/{id}
+            Method: PATCH
           Auth:
             DefaultAuthorizer: InstituteCognitoAuthorizer
             Authorizers:
