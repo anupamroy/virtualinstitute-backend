@@ -7,8 +7,8 @@ Transform:
 
 Globals:
   Api:
-    EndpointConfiguration: REGIONAL
-    Cors: "'*'"
+    # EndpointConfiguration: REGIONAL
+    # Cors: "'*'"
     Auth:
       DefaultAuthorizer: InstituteCognitoAuthorizer
       Authorizers:
@@ -190,20 +190,20 @@ Resources:
             Path: /NTA/masters/fees/type
             Method: POST
 
-    # OptionsHandler:
-    #   Type: AWS::Serverless::Function
-    #   Properties:
-    #     Handler: src/handlers/nta-institute.optionsHandler
-    #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-    #     Policies:
-    #       - DynamoDBCrudPolicy:
-    #           TableName: !Ref InstituteTable
-    #     Events:
-    #       Api:
-    #         Type: Api
-    #         Properties:
-    #           Path: /NTA/user/check
-    #           Method: OPTIONS
+  OptionsHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.optionsHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InstituteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: OPTIONS
 
   # List NTA Masters
 
@@ -251,6 +251,9 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type
             Method: GET
+
+  
+
   # End NTA
 
   # Tables
