@@ -11,7 +11,7 @@ import {
   newPasswordChallenge,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
-import { getFeesHeadMastersList, getAccountHeadList, createFeesHeadMaster, createFeesTypeMaster, createAccountHeadMaster, getFeesMasterList } from './nta-masters';
+import { getFeesHeadMastersList, getAccountHeadList, createFeesHeadMaster, createFeesTypeMaster, createAccountHeadMaster, getFeesMasterList, getFeesHeadMasterById } from './nta-masters';
 
 
 // Actual Functions
@@ -44,6 +44,9 @@ const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
 const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
 const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
 
+// Get by ID
+const getFeesHeadMasterByIdHandler = AWSHandler('GET', getFeesHeadMasterById);
+
 export {
   listNTAAuthorityHandler,
   createNTAAuthorityHandler,
@@ -59,4 +62,5 @@ export {
   createAccountHeadHandler,
   createFeeTypeHandler,
   createStudentHandler,
+  getFeesHeadMasterByIdHandler
 };

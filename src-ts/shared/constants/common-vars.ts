@@ -17,10 +17,10 @@ export const CommonItems = {
 
 export const CORS_HEADERS = {
   "Access-Control-Allow-Headers":
-    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization",
+    "Content-Type, Authorization",
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
-  "Access-Control-Allow-Credentials": "true",
+  "Access-Control-Allow-Methods": "POST,GET,PATCH,PUT,DELETE",
+  // "Access-Control-Allow-Credentials": "true",
 };
 
 export const CognitoConfig = {

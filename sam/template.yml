@@ -7,8 +7,12 @@ Transform:
 
 Globals:
   Api:
-    # EndpointConfiguration: REGIONAL
-    # Cors: "'*'"
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowCredentials: true
+      AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
+      AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"
+      AllowOrigin: "'*'"
     Auth:
       DefaultAuthorizer: InstituteCognitoAuthorizer
       Authorizers:
@@ -23,6 +27,14 @@ Globals:
         INSTITUTE_TABLE: !Ref InstituteTable
 
 Resources:
+  GatewayResponseDefault4XX:
+    Type: "AWS::ApiGateway::GatewayResponse"
+    Properties:
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
+        gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
+
   # NTA Section
   CreateNTAAuthorityFunction:
     Type: AWS::Serverless::Function
@@ -190,20 +202,35 @@ Resources:
             Path: /NTA/masters/fees/type
             Method: POST
 
-  OptionsHandler:
+  GetFeesHeadByIDFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.optionsHandler
+      Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref InstituteTable
+            TableName: "*"
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /
-            Method: OPTIONS
+            Path: /NTA/masters/fees/head/{id}
+            Method: GET
+
+  # OptionsHandler:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.optionsHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: !Ref InstituteTable
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head
+  #           Method: OPTIONS
 
   # List NTA Masters
 
@@ -251,8 +278,6 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type
             Method: GET
-
-  
 
   # End NTA
 

@@ -84,3 +84,17 @@ export const getAccountsHeadListFunction = async (
     new APIResponse(false, "", nta.masters.accountHeads)
   );
 };
+
+export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
+  const ntaId = event.headers["Nta-Authority-Id"];
+  const nta: NTA = await getNTAById(ntaId);
+  const feesHeadId = event.pathParameters?.id;
+  return createResponse(
+    200,
+    new APIResponse(
+      false,
+      "",
+      nta.masters.feesHeadNames.find((feesHead) => feesHead.id === feesHeadId)
+    )
+  );
+};

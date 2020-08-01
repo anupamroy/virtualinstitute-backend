@@ -14,6 +14,7 @@ import {
   getFeesHeadListFunction,
 } from "../shared/functions/fees.functions";
 import { keysMissingResponse } from "../shared/helpers/response.helper";
+import { getFeesHeadByIdFunction } from "../shared/functions/fees.functions";
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
@@ -30,6 +31,10 @@ export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
 
 export const getFeesHeadMastersList = async (event: APIGatewayProxyEvent) => {
   return await getFeesHeadListFunction(event);
+};
+
+export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
+  return await getFeesHeadByIdFunction(event);
 };
 
 export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
