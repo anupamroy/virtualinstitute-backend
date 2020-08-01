@@ -25,9 +25,45 @@ export const deleteItemFromNTAMasters = (
   nta: NTA
 ) => {
   const masterArray = getNTAMasterArray(masterArrayName, nta);
-  nta.masters[masterArrayName] = masterArray.filter(
-    (masterItem: any) => masterItem.id !== itemId
+  const itemIndex = masterArray.findIndex(
+    (masterItem) => masterItem.id === itemId
   );
+  if (itemIndex > -1) {
+    nta.masters[masterArrayName] = masterArray.filter(
+      (masterItem: any) => masterItem.id !== itemId
+    );
+    const children = nta.masters[masterArrayName].filter(
+      (masterItem: any) => masterItem.parentId === itemId
+    );
+    children.forEach((childMasterItem) =>
+      deleteItemFromNTAMasters(childMasterItem.id, masterArrayName, nta)
+    );
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const editNTAMasterItem = (
+  itemId: string,
+  item: any,
+  masterArrayName: keyof NTAMasters,
+  nta: NTA
+) => {
+  const masterArray = getNTAMasterArray(masterArrayName, nta);
+  const matchedItem = masterArray.find(
+    (masterItem) => masterItem.id === itemId
+  );
+  if (matchedItem) {
+    Object.keys(matchedItem)
+      .filter((matchedItemKey) => matchedItemKey !== "id")
+      .forEach(
+        (matchedItemKey) => (matchedItem[matchedItemKey] = item[matchedItemKey])
+      );
+    return true;
+  } else {
+    return false;
+  }
 };
 
 export const changeStatusOfNTAMaster = (
@@ -49,11 +85,9 @@ export const getNTAMasterArray = (
   masterArrayName: keyof NTAMasters,
   nta: NTA
 ) => {
-  let masterArray = nta.masters[masterArrayName] as any;
+  let masterArray = nta.masters[masterArrayName] as any[];
   if (!masterArray) {
     masterArray = nta.masters[masterArrayName] = [];
   }
   return masterArray;
 };
-
-

@@ -12,12 +12,19 @@ import {
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
 import {
+  editFeesTypeMasterById,
+  editFeesHeadMasterById,
+  deleteFeesHeadMasterById,
+  deleteFeesTypeMasterById,
+  deleteAccountsHeadMasterById,
+} from "./nta-masters";
+import {
   getFeesHeadMastersList,
   getAccountHeadList,
   createFeesHeadMaster,
   createFeesTypeMaster,
   createAccountHeadMaster,
-  getFeesMasterList,
+  getFeesTypeMasterList,
   getFeesHeadMasterById,
 } from "./nta-masters";
 
@@ -36,17 +43,28 @@ const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);
 
 const optionsHandler = AWSHandler("OPTIONS", optionsResponse);
 
-// Fees Head
+// NTA Masters
 const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
+const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
 const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
-const getFeeTypeListHandler = AWSHandler("GET", getFeesMasterList);
+const getFeeTypeListHandler = AWSHandler("GET", getFeesTypeMasterList);
 
 const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
 const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
 const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
 
+const editFeesHeadHandler = AWSHandler("POST", editFeesHeadMasterById);
+const editFeesTypeHandler = AWSHandler("POST", editFeesTypeMasterById);
+const editAccountsHeadHandler = AWSHandler("POST", createAccountHeadMaster);
+
+const deleteFeesHeadHandler = AWSHandler("DELETE", deleteFeesHeadMasterById);
+const deleteFeesTypeHandler = AWSHandler("DELETE", deleteFeesTypeMasterById);
+const deleteAccountsHeadHandler = AWSHandler(
+  "DELETE",
+  deleteAccountsHeadMasterById
+);
+
 // // Get by ID
-const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
 
 export {
   listNTAAuthorityHandler,
@@ -64,4 +82,10 @@ export {
   createFeeTypeHandler,
   createStudentHandler,
   getFeesHeadMasterByIdHandler,
+  editFeesHeadHandler,
+  editFeesTypeHandler,
+  editAccountsHeadHandler,
+  deleteFeesHeadHandler,
+  deleteFeesTypeHandler,
+  deleteAccountsHeadHandler,
 };

@@ -13,7 +13,6 @@ export class APIResponse {
 }
 
 export class GeneralMasterItemRequest {
-  id: ObjectId = "";
   name: string = "";
 }
 

@@ -50,3 +50,8 @@ export const EVENT_HEADERS = {
   accessToken: "access-token",
   ntaAuthorityId: "nta-authority-id",
 };
+
+export const EVENT_HEADERS_LOCAL = {
+  accessToken: "Access-Token",
+  ntaAuthorityId: "Nta-Authority-Id",
+};
