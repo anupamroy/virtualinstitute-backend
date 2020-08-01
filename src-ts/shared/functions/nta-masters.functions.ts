@@ -57,6 +57,9 @@ export const editNTAMasterItem = (
   if (matchedItem) {
     Object.keys(matchedItem)
       .filter((matchedItemKey) => matchedItemKey !== "id")
+      .filter(
+        (matchedKey) => item[matchedKey] || typeof item[matchedKey] === "string"
+      )
       .forEach(
         (matchedItemKey) => (matchedItem[matchedItemKey] = item[matchedItemKey])
       );
