@@ -24,6 +24,7 @@ import {
 import { createResponse } from "../helpers/handler";
 import { editNTAMasterItem } from "./nta-masters.functions";
 import { getNTAFromEvent } from "../helpers/general.helpers";
+import { CreateFeesMasterRequest } from "../model/request-method.model";
 import {
   createEditFeesType,
   createEditAccountHead,
@@ -140,26 +141,32 @@ export const deleteAccountsHeadByIdFunction = async (
       );
 };
 
-export const editFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
+export const editFeesHeadByIdFunction = async (
+  body: CreateFeesHeadRequest,
+  event: APIGatewayProxyEvent
+) => {
   const userId = event.headers.username;
   const nta = await getNTAFromEvent(event);
   const feesHeadId = event.pathParameters?.id + "";
-  const feesHead = createEditFeesHead(userId, event.body);
+  const feesHead = createEditFeesHead(userId, body);
   return editNTAMasterItem(feesHeadId, feesHead, "feesHeadNames", nta)
-    ? createResponse(200, new APIResponse(false, "", null))
+    ? processDynamoDBResponse(saveNTAAuthority(nta))
     : createResponse(
         200,
         new APIResponse(true, "Fees Head Does Not Exist", null)
       );
 };
 
-export const editFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
+export const editFeesTypeByIdFunction = async (
+  body: CreateFeesTypeMasterRequest,
+  event: APIGatewayProxyEvent
+) => {
   const userId = event.headers.username;
   const nta = await getNTAFromEvent(event);
   const feesTypeId = event.pathParameters?.id + "";
-  const feesType = createEditFeesType(userId, event.body);
+  const feesType = createEditFeesType(userId, body);
   return editNTAMasterItem(feesTypeId, feesType, "feeTypeNames", nta)
-    ? createResponse(200, new APIResponse(false, "", null))
+    ? processDynamoDBResponse(saveNTAAuthority(nta))
     : createResponse(
         200,
         new APIResponse(true, "Fees Type Does Not Exist", null)
@@ -167,14 +174,15 @@ export const editFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
 };
 
 export const editAccountsHeadByIdFunction = async (
+  body: CreateAccountsHeadMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
   const userId = event.headers.username;
   const nta = await getNTAFromEvent(event);
   const accountsHeadId = event.pathParameters?.id + "";
-  const accountsHead = createEditAccountHead(userId, event.body);
+  const accountsHead = createEditAccountHead(userId, body);
   return editNTAMasterItem(accountsHeadId, accountsHead, "accountHeads", nta)
-    ? createResponse(200, new APIResponse(false, "", null))
+    ? processDynamoDBResponse(saveNTAAuthority(nta))
     : createResponse(
         200,
         new APIResponse(true, "Accounts Head Does Not Exist", null)

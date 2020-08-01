@@ -94,15 +94,30 @@ export const deleteAccountsHeadMasterById = async (
 
 // Edit Functions
 export const editFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
-  return await editFeesHeadByIdFunction(event);
+  const body = parseBody<CreateFeesHeadRequest>(event.body);
+  if (body) {
+    return await editFeesHeadByIdFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
 };
 
 export const editFeesTypeMasterById = async (event: APIGatewayProxyEvent) => {
-  return await editFeesTypeByIdFunction(event);
+  const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
+  if (body) {
+    return await editFeesTypeByIdFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
 };
 
 export const editAccountsHeadMasterById = async (
   event: APIGatewayProxyEvent
 ) => {
-  return await editAccountsHeadByIdFunction(event);
+  const body = parseBody<CreateAccountsHeadMasterRequest>(event.body);
+  if (body) {
+    return await editAccountsHeadByIdFunction(body, event);
+  } else {
+    return keysMissingResponse();
+  }
 };

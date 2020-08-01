@@ -34,14 +34,15 @@ export const createEditFeesHead = (userId: string, body: any) => {
   feesHead.name = body.name;
   feesHead.parentId = body.parentId;
   feesHead.instituteTypeId = body.institutionTypeId;
+  feesHead.updated_at = new Date().toISOString();
   return feesHead;
 };
-
 
 export const createEditFeesType = (userId: string, body: any) => {
   const feeType = new FeeType();
   feeType.updated_by = userId;
   feeType.name = body.name;
+  feeType.updated_at = new Date().toISOString();
   return feeType;
 };
 
@@ -50,5 +51,6 @@ export const createEditAccountHead = (userId: string, body: any) => {
   accountHead.updated_by = userId;
   accountHead.name = body.name;
   accountHead.parentId = body.parentId;
+  accountHead.updated_at = new Date().toISOString();
   return accountHead;
 };
