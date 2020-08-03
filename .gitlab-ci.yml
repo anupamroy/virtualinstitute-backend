@@ -1,5 +1,10 @@
 stages:
   - Release
+
+cache:
+  paths:
+    - node_modules/
+
 npm_build:
   stage: Release
   image: 'node:lts'
