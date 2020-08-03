@@ -27,6 +27,7 @@ import {
   setParentNameInMasterArray,
 } from "./nta-masters.functions";
 import { getNTAFromEvent } from "../helpers/general.helpers";
+import { getNTAMasterArray } from "./nta-masters.functions";
 import {
   CreateFeesMasterRequest,
   StatusChangeRequest,
@@ -80,7 +81,7 @@ export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {
   const nta = await getNTAFromEvent(event);
   return createResponse(
     200,
-    new APIResponse(false, "", setParentNameInMasterArray("feeTypeNames", nta))
+    new APIResponse(false, "", getNTAMasterArray("feeTypeNames", nta))
   );
 };
 export const getAccountsHeadListFunction = async (
