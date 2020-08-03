@@ -48,11 +48,11 @@ Resources:
           Properties:
             Path: /NTA
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   ListNTAAuthorityFunction:
     Type: AWS::Serverless::Function
@@ -68,11 +68,11 @@ Resources:
           Properties:
             Path: /NTA/authority
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   CreateNTAUserFunction:
     Type: AWS::Serverless::Function
@@ -88,11 +88,11 @@ Resources:
           Properties:
             Path: /NTA/user
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   deleteNTAUserFunction:
     Type: AWS::Serverless::Function
@@ -108,11 +108,11 @@ Resources:
           Properties:
             Path: /NTA/user/{mobile}
             Method: DELETE
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   CheckFunction:
     Type: AWS::Serverless::Function
@@ -128,11 +128,11 @@ Resources:
           Properties:
             Path: /NTA/user/check
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   SetNTAPassword:
     Type: AWS::Serverless::Function
@@ -148,11 +148,11 @@ Resources:
           Properties:
             Path: /NTA/user/challenge
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # Create NTA Masters
   CreateFeesHead:
@@ -169,11 +169,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   CreateAccountHead:
     Type: AWS::Serverless::Function
@@ -189,11 +189,11 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   CreateFeesType:
     Type: AWS::Serverless::Function
@@ -209,11 +209,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # List NTA Masters
   ListFeesHead:
@@ -230,11 +230,10 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   ListAccountsHead:
     Type: AWS::Serverless::Function
@@ -250,11 +249,11 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   ListFeesType:
     Type: AWS::Serverless::Function
@@ -270,11 +269,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # Get NTA Masters By Id
   GetFeesHeadByIDFunction:
@@ -291,11 +290,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   GetFeesTypeByIDFunction:
     Type: AWS::Serverless::Function
@@ -311,11 +310,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   GetAccountsHeadByIDFunction:
     Type: AWS::Serverless::Function
@@ -331,11 +330,11 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: GET
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # Edit NTA Masters
   EditFeesHead:
@@ -352,11 +351,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   EditFeesType:
     Type: AWS::Serverless::Function
@@ -372,11 +371,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   EditAccountsHead:
     Type: AWS::Serverless::Function
@@ -392,11 +391,11 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: POST
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # Delete NTA Masters
   DeleteFeesHead:
@@ -413,11 +412,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: DELETE
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   DeleteFeesType:
     Type: AWS::Serverless::Function
@@ -433,11 +432,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: DELETE
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   DeleteAccountsHead:
     Type: AWS::Serverless::Function
@@ -453,11 +452,11 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: DELETE
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # Status Change of NTA
 
@@ -475,11 +474,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: PATCH
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   StatusChangeFeesType:
     Type: AWS::Serverless::Function
@@ -495,11 +494,11 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: PATCH
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   StatusChangeAccountsHead:
     Type: AWS::Serverless::Function
@@ -515,11 +514,11 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: PATCH
-          Auth:
-            DefaultAuthorizer: InstituteCognitoAuthorizer
-            Authorizers:
-              InstituteCognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            Auth:
+              DefaultAuthorizer: InstituteCognitoAuthorizer
+              Authorizers:
+                InstituteCognitoAuthorizer:
+                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
 
   # End NTA
 
