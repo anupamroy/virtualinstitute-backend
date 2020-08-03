@@ -238,7 +238,7 @@ export const statusChangeofFeesHeadByIdFunction = async (
     ? processDynamoDBResponse(saveNTAAuthority(nta))
     : createResponse(
         200,
-        new APIResponse(true, "Accounts Head Does Not Exist", null)
+        new APIResponse(true, "Fees Head Does Not Exist", null)
       );
 };
 
@@ -258,7 +258,7 @@ export const statusChangeofFeesTypeByIdFunction = async (
     ? processDynamoDBResponse(saveNTAAuthority(nta))
     : createResponse(
         200,
-        new APIResponse(true, "Accounts Head Does Not Exist", null)
+        new APIResponse(true, "Fees Type Does Not Exist", null)
       );
 };
 
