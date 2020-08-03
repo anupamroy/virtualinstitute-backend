@@ -22,16 +22,25 @@ Globals:
         INSTITUTE_TABLE: !Ref InstituteTable
 
 Resources:
+  NtaApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        DefaultAuthorizer: InstituteCognitoAuthorizer
+        Authorizers:
+          InstituteCognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+
   GatewayResponseDefault4XX:
-    Type: "AWS::ApiGateway::GatewayResponse"
+    Type: AWS::ApiGateway::GatewayResponse
     Properties:
       ResponseParameters:
         gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
         gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
         gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
       ResponseType: DEFAULT_4XX
-      RestApiId:
-        Ref: "ServerlessRestApi"
+      RestApiId: !Ref NtaApi
 
   # NTA Section
   CreateNTAAuthorityFunction:
@@ -48,11 +57,7 @@ Resources:
           Properties:
             Path: /NTA
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   ListNTAAuthorityFunction:
     Type: AWS::Serverless::Function
@@ -68,11 +73,7 @@ Resources:
           Properties:
             Path: /NTA/authority
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   CreateNTAUserFunction:
     Type: AWS::Serverless::Function
@@ -88,11 +89,7 @@ Resources:
           Properties:
             Path: /NTA/user
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   deleteNTAUserFunction:
     Type: AWS::Serverless::Function
@@ -108,11 +105,7 @@ Resources:
           Properties:
             Path: /NTA/user/{mobile}
             Method: DELETE
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   CheckFunction:
     Type: AWS::Serverless::Function
@@ -128,11 +121,7 @@ Resources:
           Properties:
             Path: /NTA/user/check
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   SetNTAPassword:
     Type: AWS::Serverless::Function
@@ -148,11 +137,7 @@ Resources:
           Properties:
             Path: /NTA/user/challenge
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # Create NTA Masters
   CreateFeesHead:
@@ -169,11 +154,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   CreateAccountHead:
     Type: AWS::Serverless::Function
@@ -189,11 +170,7 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   CreateFeesType:
     Type: AWS::Serverless::Function
@@ -209,11 +186,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # List NTA Masters
   ListFeesHead:
@@ -230,10 +203,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head
             Method: GET
-            Auth:
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   ListAccountsHead:
     Type: AWS::Serverless::Function
@@ -249,11 +219,7 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   ListFeesType:
     Type: AWS::Serverless::Function
@@ -269,11 +235,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # Get NTA Masters By Id
   GetFeesHeadByIDFunction:
@@ -290,11 +252,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   GetFeesTypeByIDFunction:
     Type: AWS::Serverless::Function
@@ -310,11 +268,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   GetAccountsHeadByIDFunction:
     Type: AWS::Serverless::Function
@@ -330,11 +284,7 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: GET
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # Edit NTA Masters
   EditFeesHead:
@@ -351,11 +301,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   EditFeesType:
     Type: AWS::Serverless::Function
@@ -371,11 +317,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   EditAccountsHead:
     Type: AWS::Serverless::Function
@@ -391,11 +333,7 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: POST
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # Delete NTA Masters
   DeleteFeesHead:
@@ -412,11 +350,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: DELETE
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   DeleteFeesType:
     Type: AWS::Serverless::Function
@@ -432,11 +366,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: DELETE
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   DeleteAccountsHead:
     Type: AWS::Serverless::Function
@@ -452,11 +382,7 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: DELETE
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # Status Change of NTA
 
@@ -474,11 +400,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/head/{id}
             Method: PATCH
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   StatusChangeFeesType:
     Type: AWS::Serverless::Function
@@ -494,11 +416,7 @@ Resources:
           Properties:
             Path: /NTA/masters/fees/type/{id}
             Method: PATCH
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   StatusChangeAccountsHead:
     Type: AWS::Serverless::Function
@@ -514,11 +432,7 @@ Resources:
           Properties:
             Path: /NTA/masters/accounts/head/{id}
             Method: PATCH
-            Auth:
-              DefaultAuthorizer: InstituteCognitoAuthorizer
-              Authorizers:
-                InstituteCognitoAuthorizer:
-                  UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            RestApiId: !Ref NtaApi
 
   # End NTA
 
@@ -581,4 +495,4 @@ Resources:
 Outputs:
   WebEndpoint:
     Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${NtaApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
