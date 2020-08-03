@@ -66,3 +66,6 @@ export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {
   const nta: NTA = await getNTAById(ntaId);
   return nta;
 };
+
+export const sanitizeString = (inputString: string) =>
+  (inputString || "").trim().replace(/[^\w\s]/gi, "");
