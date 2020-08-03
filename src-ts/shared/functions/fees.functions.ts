@@ -22,7 +22,10 @@ import {
   APIResponse,
 } from "../model/request-method.model";
 import { createResponse } from "../helpers/handler";
-import { editNTAMasterItem } from "./nta-masters.functions";
+import {
+  editNTAMasterItem,
+  setParentNameInMasterArray,
+} from "./nta-masters.functions";
 import { getNTAFromEvent } from "../helpers/general.helpers";
 import {
   CreateFeesMasterRequest,
@@ -70,14 +73,14 @@ export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
   const nta = await getNTAFromEvent(event);
   return createResponse(
     200,
-    new APIResponse(false, "", nta.masters.feesHeadNames)
+    new APIResponse(false, "", setParentNameInMasterArray("feesHeadNames", nta))
   );
 };
 export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {
   const nta = await getNTAFromEvent(event);
   return createResponse(
     200,
-    new APIResponse(false, "", nta.masters.feeTypeNames)
+    new APIResponse(false, "", setParentNameInMasterArray("feeTypeNames", nta))
   );
 };
 export const getAccountsHeadListFunction = async (
@@ -86,7 +89,7 @@ export const getAccountsHeadListFunction = async (
   const nta = await getNTAFromEvent(event);
   return createResponse(
     200,
-    new APIResponse(false, "", nta.masters.accountHeads)
+    new APIResponse(false, "", setParentNameInMasterArray("accountHeads", nta))
   );
 };
 

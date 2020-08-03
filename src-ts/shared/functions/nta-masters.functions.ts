@@ -95,3 +95,21 @@ export const getNTAMasterArray = (
   }
   return masterArray;
 };
+
+export const setParentNameInMasterArray = (
+  masterArrayName: keyof NTAMasters,
+  nta: NTA
+) => {
+  const masterArray = getNTAMasterArray(masterArrayName, nta);
+  const processMasterArrayItem = (childItem: any) => {
+    if (childItem.parentId) {
+      childItem.parentName = masterArray.find(
+        (masterArrayItem) => masterArrayItem.id === childItem.parentId
+      )?.name;
+    }
+  };
+  masterArray.forEach((masterArrayItem) =>
+    processMasterArrayItem(masterArrayItem)
+  );
+  return masterArray;
+};
