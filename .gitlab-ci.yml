@@ -1,0 +1,9 @@
+stages:
+  - Release
+npm_build:
+  stage: Release
+  image: 'node:lts'
+  before_script:
+    - npm install
+  script:
+    - npm run release
