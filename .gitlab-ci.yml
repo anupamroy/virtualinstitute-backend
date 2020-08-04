@@ -31,5 +31,5 @@ production:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
   script:
-    - cd sam && tsc sam build && sam deploy
+    - cd sam && sam build && sam deploy
   environment: production
