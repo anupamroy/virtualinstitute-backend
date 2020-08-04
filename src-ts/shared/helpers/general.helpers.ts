@@ -20,15 +20,6 @@ export const runDynamoDBQuery = (
   value: string,
   comparator: string
 ) => {
-  console.log(
-    `KeyConditionExpression: "` +
-      key +
-      ` " + ` +
-      comparator +
-      ` + " :` +
-      value +
-      `"`
-  );
   return DynamoDBActions.query({
     TableName,
     KeyConditionExpression: "#key " + comparator + " :value",
@@ -41,7 +32,7 @@ export const runDynamoDBQuery = (
   });
 };
 
-export const getContentsByType = (tablename: string, tableType: TableName) => {
+export const getContentsByType = (tablename: string, tableType: TableName): Promise<any[]> => {
   const params = {
     FilterExpression: "tableType = :tableType",
     ExpressionAttributeValues: {

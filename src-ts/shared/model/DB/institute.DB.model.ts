@@ -17,7 +17,7 @@ export class Institute extends NTAItem {
   masters: Masters = new InstituteMasters();
 
   instituteTypeId: ObjectId = "";
-  ledgerIds: ObjectId[] = [];
+  ledgerIds: ObjectId[] = [];  // Account Heads
 
   logo: LinkURL = "";
   favIcon: LinkURL = "";

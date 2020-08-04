@@ -26,6 +26,10 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
+      Domain:
+        CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+        DomainName: api.nta-sys.tk
+        EndpointConfiguration: REGIONAL
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
         DefaultAuthorizer: InstituteCognitoAuthorizer
