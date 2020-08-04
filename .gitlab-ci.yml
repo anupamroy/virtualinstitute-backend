@@ -1,22 +1,22 @@
-# stages:
-#   - Install SAM
-#   - Release
+stages:
+  - Install SAM
+  - Release
 
-# cache:
-#   paths:
-#     - node_modules/
+cache:
+  paths:
+    - node_modules/
 
-# install_sam:
-#   stage: Install SAM
-#   image: python:3.8
-#   before_script:
-#     - pip3 install awscli --upgrade
-#     - pip3 install aws-sam-cli --upgrade
+install_sam:
+  stage: Install SAM
+  image: python:3.8
+  before_script:
+    - pip3 install awscli --upgrade
+    - pip3 install aws-sam-cli --upgrade
 
-# npm_build:
-#   stage: Release
-#   image: "node:lts"
-#   before_script:
-#     - npm install
-#   script:
-#     - npm run release
+npm_build:
+  stage: Release
+  image: "node:lts"
+  before_script:
+    - npm install
+  script:
+    - npm run release
