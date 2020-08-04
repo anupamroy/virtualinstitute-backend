@@ -1,4 +1,4 @@
-import { createResponse } from "./handler";
+import { createResponse } from "./handler-common";
 import { APIResponse } from "../model/request-method.model";
 
 export const unauthorisedAccessResponse = () =>

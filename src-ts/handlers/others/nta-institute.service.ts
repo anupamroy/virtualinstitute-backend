@@ -2,7 +2,7 @@
 
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { cognitoActions } from "../../shared/helpers/cognito/cognito.actions";
-import { createResponse } from "../../shared/helpers/handler";
+import { createResponse } from "../../shared/helpers/handler-common";
 import {
   APIResponse,
 } from "../../shared/model/request-method.model";

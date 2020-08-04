@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { CognitoConfig, cognito } from "../../constants/common-vars";
 import { keysMissingResponse } from "../response.helper";
-import { parseBody, createResponse } from "../handler";
+import { parseBody, createResponse } from "../handler-common";
 import {
   CreatePersonRequest,
   CreateStudentRequest,

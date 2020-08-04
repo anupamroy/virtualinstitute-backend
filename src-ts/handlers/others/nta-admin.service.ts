@@ -8,7 +8,7 @@ import {
   listAllNTAAuthoritiesFunction,
 } from "../../shared/functions/nta.functions";
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../../shared/helpers/handler";
+import { parseBody } from "../../shared/helpers/handler-common";
 import { CreateNTAAuthorityRequest } from "../../shared/model/request-method.model";
 import { cognitoActions } from "../../shared/helpers/cognito/cognito.actions";
 

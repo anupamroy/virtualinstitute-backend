@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../../shared/helpers/handler";
+import { parseBody } from "../../shared/helpers/handler-common";
 import {
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,

@@ -9,7 +9,7 @@ import {
   getContentsByType,
   getCognitoUserFromToken,
 } from "../helpers/general.helpers";
-import { createResponse } from "../helpers/handler";
+import { createResponse } from "../helpers/handler-common";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { ObjectId } from "../model/DB/imports/types.DB.model";
 

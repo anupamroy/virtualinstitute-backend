@@ -1,10 +1,10 @@
-import { AWSHandler } from "../../shared/helpers/handler";
+import { AWSHandler } from "../../shared/helpers/handler-common";
 import {
   createNTAAuthority,
   listNTAAuthority,
   createNTAUser,
   deleteNTAUser,
-} from "./nta-admin.handler";
+} from "./nta-admin.service";
 import {
   createStudent,
   checkToken,

@@ -21,7 +21,7 @@ import {
   CreateAccountsHeadMasterRequest,
   APIResponse,
 } from "../model/request-method.model";
-import { createResponse } from "../helpers/handler";
+import { createResponse } from "../helpers/handler-common";
 import {
   editNTAMasterItem,
   setParentNameInMasterArray,

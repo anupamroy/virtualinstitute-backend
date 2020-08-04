@@ -1,4 +1,4 @@
-import { AWSHandler } from "../../shared/helpers/handler";
+import { AWSHandler } from "../../shared/helpers/handler-common";
 // import { getAllItems, getById, putItem } from "./nta-transactions.service";
 
 // const getAllItemsHandler = AWSHandler("GET", getAllItems);

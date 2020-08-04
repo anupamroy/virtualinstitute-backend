@@ -1,5 +1,5 @@
 import { CommonItems } from "../constants/common-vars";
-import { createResponse } from "./handler";
+import { createResponse } from "./handler-common";
 import { APIResponse } from "../model/request-method.model";
 
 // import { documentClient } from "../constants/common-vars";

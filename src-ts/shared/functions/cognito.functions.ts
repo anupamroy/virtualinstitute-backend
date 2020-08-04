@@ -3,7 +3,7 @@ import {
   AdminCreateUserRequest,
   RespondToAuthChallengeRequest,
 } from 'aws-sdk/clients/cognitoidentityserviceprovider';
-import { createResponse } from '../helpers/handler';
+import { createResponse } from '../helpers/handler-common';
 import { APIResponse } from '../model/request-method.model';
 import { CognitoConfig, cognito } from '../constants/common-vars';
 import { processDynamoDBResponse } from '../helpers/db-handler';

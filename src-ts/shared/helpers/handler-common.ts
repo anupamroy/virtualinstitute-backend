@@ -9,22 +9,20 @@ export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
   return async (
     event: APIGatewayProxyEvent
   ): Promise<APIGatewayProxyResult> => {
-    // All log statements are written to CloudWatch
-    // console.info("received:", event);
-    if (event.httpMethod !== requestMethod) {
-      throw new Error(
-        `This API only accepts ${requestMethod} method, you tried: ${event.httpMethod}`
-      );
-    }
-
-    const response = await callback(event);
-    // All log statements are written to CloudWatch
-    // console.info(
-    //   `response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`
-    // );
-    // console.log(response);
-    return response;
+    checkRequestMethod(requestMethod, event);
+    return await callback(event);
   };
+};
+
+export const checkRequestMethod = (
+  requestMethod: RequestMethod,
+  event: APIGatewayProxyEvent
+) => {
+  if (event.httpMethod !== requestMethod) {
+    throw new Error(
+      `This API only accepts ${requestMethod} method, you tried: ${event.httpMethod}`
+    );
+  }
 };
 
 export const parseBody = <T>(body: string | null): T | null => {

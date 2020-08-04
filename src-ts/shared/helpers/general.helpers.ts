@@ -14,23 +14,6 @@ import { EVENT_HEADERS_LOCAL } from "../constants/common-vars";
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
 
-export const runDynamoDBQuery = (
-  TableName: string,
-  key: string,
-  value: string,
-  comparator: string
-) => {
-  return DynamoDBActions.query({
-    TableName,
-    KeyConditionExpression: "#key " + comparator + " :value",
-    ExpressionAttributeNames: {
-      "#key": key,
-    },
-    ExpressionAttributeValues: {
-      ":value": value,
-    },
-  });
-};
 
 export const getContentsByType = (tablename: string, tableType: TableName): Promise<any[]> => {
   const params = {
