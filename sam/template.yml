@@ -44,407 +44,407 @@ Resources:
   #     Auth:
   #       Authorizers: NONE
 
-  GatewayResponseDefault4XX:
-    Type: AWS::ApiGateway::GatewayResponse
-    Properties:
-      ResponseParameters:
-        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
-        gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
-      ResponseType: DEFAULT_4XX
-      RestApiId: !Ref NtaApi
+  # GatewayResponseDefault4XX:
+  #   Type: AWS::ApiGateway::GatewayResponse
+  #   Properties:
+  #     ResponseParameters:
+  #       gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  #       gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
+  #       gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
+  #     ResponseType: DEFAULT_4XX
+  #     RestApiId: !Ref NtaApi
 
-  # NTA Section
-  CreateNTAAuthorityFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.createNTAAuthorityHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # # NTA Section
+  # CreateNTAAuthorityFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.createNTAAuthorityHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  ListNTAAuthorityFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.listNTAAuthorityHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/authority
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # ListNTAAuthorityFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.listNTAAuthorityHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/authority
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  CreateNTAUserFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.createNTAUserHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/user
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # CreateNTAUserFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.createNTAUserHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/user
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  deleteNTAUserFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.deleteNTAUserHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/user/{mobile}
-            Method: DELETE
-            RestApiId: !Ref NtaApi
+  # deleteNTAUserFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.deleteNTAUserHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/user/{mobile}
+  #           Method: DELETE
+  #           RestApiId: !Ref NtaApi
 
-  CheckFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.checkTokenHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/user/check
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # CheckFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.checkTokenHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/user/check
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  SetNTAPassword:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.newPasswordChallengeHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/user/challenge
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # SetNTAPassword:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.newPasswordChallengeHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/user/challenge
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  # Create NTA Masters
-  CreateFeesHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.createFeesHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # # Create NTA Masters
+  # CreateFeesHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.createFeesHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  CreateAccountHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.createAccountHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/accounts/head
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # CreateAccountHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.createAccountHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/accounts/head
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  CreateFeesType:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.createFeeTypeHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/type
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # CreateFeesType:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.createFeeTypeHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/type
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  # List NTA Masters
-  ListFeesHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getFeesHeadListHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # # List NTA Masters
+  # ListFeesHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.getFeesHeadListHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  ListAccountsHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getAccountHeadListHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/accounts/head
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # ListAccountsHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.getAccountHeadListHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/accounts/head
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  ListFeesType:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getFeeTypeListHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/type
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # ListFeesType:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.getFeeTypeListHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/type
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  # Get NTA Masters By Id
-  GetFeesHeadByIDFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head/{id}
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # # Get NTA Masters By Id
+  # GetFeesHeadByIDFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head/{id}
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  GetFeesTypeByIDFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getFeesTypeByIdHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/type/{id}
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # GetFeesTypeByIDFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.getFeesTypeByIdHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/type/{id}
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  GetAccountsHeadByIDFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.getAccountsHeadByIdHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/accounts/head/{id}
-            Method: GET
-            RestApiId: !Ref NtaApi
+  # GetAccountsHeadByIDFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.getAccountsHeadByIdHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/accounts/head/{id}
+  #           Method: GET
+  #           RestApiId: !Ref NtaApi
 
-  # Edit NTA Masters
-  EditFeesHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.editFeesHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head/{id}
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # # Edit NTA Masters
+  # EditFeesHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.editFeesHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head/{id}
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  EditFeesType:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.editFeesTypeHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/type/{id}
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # EditFeesType:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.editFeesTypeHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/type/{id}
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  EditAccountsHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.editAccountsHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/accounts/head/{id}
-            Method: POST
-            RestApiId: !Ref NtaApi
+  # EditAccountsHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.editAccountsHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/accounts/head/{id}
+  #           Method: POST
+  #           RestApiId: !Ref NtaApi
 
-  # Delete NTA Masters
-  DeleteFeesHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.deleteFeesHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head/{id}
-            Method: DELETE
-            RestApiId: !Ref NtaApi
+  # # Delete NTA Masters
+  # DeleteFeesHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.deleteFeesHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head/{id}
+  #           Method: DELETE
+  #           RestApiId: !Ref NtaApi
 
-  DeleteFeesType:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.deleteFeesTypeHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/type/{id}
-            Method: DELETE
-            RestApiId: !Ref NtaApi
+  # DeleteFeesType:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.deleteFeesTypeHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/type/{id}
+  #           Method: DELETE
+  #           RestApiId: !Ref NtaApi
 
-  DeleteAccountsHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.deleteAccountsHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/accounts/head/{id}
-            Method: DELETE
-            RestApiId: !Ref NtaApi
+  # DeleteAccountsHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.deleteAccountsHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/accounts/head/{id}
+  #           Method: DELETE
+  #           RestApiId: !Ref NtaApi
 
-  # Status Change of NTA
+  # # Status Change of NTA
 
-  StatusChangeFeesHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.statusChangeFeesHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/head/{id}
-            Method: PATCH
-            RestApiId: !Ref NtaApi
+  # StatusChangeFeesHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.statusChangeFeesHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/head/{id}
+  #           Method: PATCH
+  #           RestApiId: !Ref NtaApi
 
-  StatusChangeFeesType:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.statusChangeFeesTypeHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/fees/type/{id}
-            Method: PATCH
-            RestApiId: !Ref NtaApi
+  # StatusChangeFeesType:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.statusChangeFeesTypeHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/fees/type/{id}
+  #           Method: PATCH
+  #           RestApiId: !Ref NtaApi
 
-  StatusChangeAccountsHead:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-institute.statusChangeAccountsHeadHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /NTA/masters/accounts/head/{id}
-            Method: PATCH
-            RestApiId: !Ref NtaApi
+  # StatusChangeAccountsHead:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: src/handlers/nta-institute.statusChangeAccountsHeadHandler
+  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: "*"
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           Path: /NTA/masters/accounts/head/{id}
+  #           Method: PATCH
+  #           RestApiId: !Ref NtaApi
 
   # End NTA
 
