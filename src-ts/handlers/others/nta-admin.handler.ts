@@ -5,12 +5,11 @@ import {
 import {
   createNTAAuthorityFunction,
   listNTAAuthorityFunction,
+  listAllNTAAuthoritiesFunction,
 } from "../../shared/functions/nta.functions";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { parseBody } from "../../shared/helpers/handler";
-import {
-  CreateNTAAuthorityRequest,
-} from "../../shared/model/request-method.model";
+import { CreateNTAAuthorityRequest } from "../../shared/model/request-method.model";
 import { cognitoActions } from "../../shared/helpers/cognito/cognito.actions";
 
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
@@ -29,7 +28,14 @@ export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
 export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
   return await NTATokenGuard(
     event,
-    async () => await listNTAAuthorityFunction()
+    async () => await listNTAAuthorityFunction(event.pathParameters?.id + "")
+  );
+};
+
+export const listAllNTAAuthorities = async (event: APIGatewayProxyEvent) => {
+  return await NTATokenGuard(
+    event,
+    async () => await listAllNTAAuthoritiesFunction()
   );
 };
 
@@ -38,4 +44,3 @@ export const createNTAUser = async (event: APIGatewayProxyEvent) =>
 
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTA(event);
-

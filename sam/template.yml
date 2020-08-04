@@ -19,7 +19,7 @@ Globals:
     Timeout: 100
     Environment:
       Variables:
-        INSTITUTE_TABLE: !Ref InstituteTable
+        INSTITUTE_TABLE: !Ref InstituteTableDynamo
 
 Resources:
   NtaApi:
@@ -55,37 +55,53 @@ Resources:
   #     RestApiId: !Ref NtaApi
 
   # # NTA Section
-  # CreateNTAAuthorityFunction:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     Handler: src/handlers/nta-institute.createNTAAuthorityHandler
-  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-  #     Policies:
-  #       - DynamoDBCrudPolicy:
-  #           TableName: "*"
-  #     Events:
-  #       Api:
-  #         Type: Api
-  #         Properties:
-  #           Path: /NTA
-  #           Method: POST
-  #           RestApiId: !Ref NtaApi
+  CreateNTAAuthorityFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/handlers.createNTAAuthorityHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA
+            Method: POST
+            RestApiId: !Ref NtaApi
 
-  # ListNTAAuthorityFunction:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     Handler: src/handlers/nta-institute.listNTAAuthorityHandler
-  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-  #     Policies:
-  #       - DynamoDBCrudPolicy:
-  #           TableName: "*"
-  #     Events:
-  #       Api:
-  #         Type: Api
-  #         Properties:
-  #           Path: /NTA/authority
-  #           Method: GET
-  #           RestApiId: !Ref NtaApi
+  ListNTAAuthorityFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/handlers.listNTAAuthorityHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/authority/{id}
+            Method: GET
+            RestApiId: !Ref NtaApi
+
+  ListAllNTAAuthoritiesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/handlers.listAllNTAAuthoritiesHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/authority
+            Method: GET
+            RestApiId: !Ref NtaApi
 
   # CreateNTAUserFunction:
   #   Type: AWS::Serverless::Function
@@ -449,15 +465,22 @@ Resources:
   # End NTA
 
   # Tables
-  InstituteTable:
+  InstituteTableDynamo:
     Type: AWS::DynamoDB::Table
     Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "tableType"
+          AttributeType: "S"
+        -
+          AttributeName: "id"
+          AttributeType: "S"
       KeySchema:
         - 
-          AttributeName: "TableType"
+          AttributeName: "tableType"
           KeyType: "HASH"
         - 
-          AttributeName: "ObjectId"
+          AttributeName: "id"
           KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits: 2

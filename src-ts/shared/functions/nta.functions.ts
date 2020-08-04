@@ -11,6 +11,7 @@ import {
 } from "../helpers/general.helpers";
 import { createResponse } from "../helpers/handler";
 import { APIGatewayProxyEvent } from "aws-lambda";
+import { ObjectId } from "../model/DB/imports/types.DB.model";
 
 export const createNTAAuthorityFunction = async (
   body: CreateNTAAuthorityRequest
@@ -27,7 +28,12 @@ export const createNTAAuthorityFunction = async (
   );
 };
 
-export const listNTAAuthorityFunction = async () => {
+export const listNTAAuthorityFunction = async (ntaId: ObjectId) => {
+  console.log(ntaId);
+  return processDynamoDBResponse(getNTAByIDFunction(ntaId));
+};
+
+export const listAllNTAAuthoritiesFunction = async () => {
   return processDynamoDBResponse(
     getContentsByType(TABLE_NAMES.instituteTable, "NTA_AUTHORITY")
   );
@@ -37,7 +43,11 @@ export const saveNTAAuthority = (ntaAuthority: NTA) =>
   DynamoDBActions.putItem(ntaAuthority, TABLE_NAMES.instituteTable);
 
 export const getNTAByIDFunction = (ntaId: string) => {
-  return DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable);
+  return DynamoDBActions.getItemById(
+    ntaId,
+    "NTA_AUTHORITY",
+    TABLE_NAMES.instituteTable
+  );
 };
 
 export const insertCognitoUserInNTAFunction = async (
@@ -75,9 +85,8 @@ export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getNTAById = (ntaId: string) =>
-  DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable).then(nta => nta.Item);
+  DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable).then(
+    (nta) => nta.Item
+  );
 
-
-  export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {
-    
-  }
+export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {};

@@ -37,7 +37,7 @@ export const USER_PASSWORD =
 
 export const TABLE_NAMES = {
   studentTable: "StudentsTable",
-  instituteTable: "InstituteTable",
+  instituteTable: "InstituteTableV1",
   feesTable: "FeesTable",
   transactionsTable: "TransactionsTable",
 };
