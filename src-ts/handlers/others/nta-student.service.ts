@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { DynamoDBActions } from "../shared/helpers/db-handler";
-import { createResponse, parseBody } from "../shared/helpers/handler";
+import { DynamoDBActions } from "../../shared/helpers/db-handler";
+import { createResponse } from "../../shared/helpers/handler";
+import { cognitoActions } from '../../shared/helpers/cognito/cognito.actions';
 
 // export const getAllItems = async () => {
 //   const data = await DynamoDBActions.scan();
@@ -16,9 +17,10 @@ import { createResponse, parseBody } from "../shared/helpers/handler";
 // };
 
 // export const putItem = async (event: APIGatewayProxyEvent) => {
-//   const body = parseBody<any>(event.body);
-//   const id = body.id;
-//   const name = body.name;
-//   const result = await DynamoDBActions.putItem({ id, name });
+//   // const body = parseBody<any>(event.body);
+//   // const id = body.id;
+//   // const name = body.name;
+//   // const result = await DynamoDBActions.putItem({ id, name });
+//   const result = await cognitoActions.addStudent(event)
 //   return createResponse(200, result);
 // };

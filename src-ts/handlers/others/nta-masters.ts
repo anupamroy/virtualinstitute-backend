@@ -1,46 +1,46 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../shared/helpers/handler";
+import { parseBody } from "../../shared/helpers/handler";
 import {
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,
-} from "../shared/model/request-method.model";
+} from "../../shared/model/request-method.model";
 import {
   createAccountHeadFunction,
   createFeesHeadFunction,
   statusChangeofAccountHeadByIdFunction,
   getFeesTypeByIdFunction,
   getAccountsHeadByIdFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 import {
   CreateFeesTypeMasterRequest,
   StatusChangeRequest,
-} from "../shared/model/request-method.model";
+} from "../../shared/model/request-method.model";
 import {
   createFeesTypeFunction,
   getFeesHeadListFunction,
-} from "../shared/functions/fees.functions";
-import { keysMissingResponse } from "../shared/helpers/response.helper";
-import { statusChangeofFeesTypeByIdFunction } from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
+import { keysMissingResponse } from "../../shared/helpers/response.helper";
+import { statusChangeofFeesTypeByIdFunction } from "../../shared/functions/fees.functions";
 import {
   editAccountsHeadByIdFunction,
   statusChangeofFeesHeadByIdFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 import {
   editFeesTypeByIdFunction,
   editFeesHeadByIdFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 import {
   deleteFeesTypeByIdFunction,
   deleteAccountsHeadByIdFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 import {
   getFeesHeadByIdFunction,
   deleteFeesHeadByIdFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 
 // Create Functions
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {

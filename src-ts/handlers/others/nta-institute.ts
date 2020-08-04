@@ -1,4 +1,4 @@
-import { AWSHandler } from "../shared/helpers/handler";
+import { AWSHandler } from "../../shared/helpers/handler";
 import {
   createNTAAuthority,
   listNTAAuthority,
@@ -10,7 +10,7 @@ import {
   checkToken,
   newPasswordChallenge,
 } from "./nta-institute.service";
-import { optionsResponse } from "../shared/helpers/response.helper";
+import { optionsResponse } from "../../shared/helpers/response.helper";
 import {
   statusChangeOfAccountHeadMaster,
   getFeesTypeMasterById,
@@ -39,7 +39,7 @@ import {
 import {
   getFeesTypeByIdFunction,
   getAccountsHeadByIdFunction,
-} from "../shared/functions/fees.functions";
+} from "../../shared/functions/fees.functions";
 
 // Actual Functions
 
