@@ -503,6 +503,17 @@ Resources:
         WriteCapacityUnits: 2
       TableName: InstituteTableDynamo
 
+  ErrorsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: ErrorsTable
+
   # TransactionsTable:
   #   Type: AWS::Serverless::SimpleTable
   #   Properties:
