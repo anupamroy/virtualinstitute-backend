@@ -10,6 +10,7 @@ import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
 import { NTA } from "../model/DB/nta.DB.model";
 import { getNTAById } from "../functions/nta.functions";
 import { EVENT_HEADERS_LOCAL } from "../constants/common-vars";
+import { GeneralDBItem } from "../model/DB/imports/DB.model";
 
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
@@ -90,8 +91,7 @@ export const checkIfMasterListItemExistsByName = async (
 ) => {
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
-    KeyConditionExpression:
-      "tableType = :ntaItem and begins_with(id, :id)",
+    KeyConditionExpression: "tableType = :ntaItem and begins_with(id, :id)",
     ExpressionAttributeValues: {
       ":ntaItem": `#NTA#${ntaId}`,
       ":id":
@@ -99,5 +99,31 @@ export const checkIfMasterListItemExistsByName = async (
         (institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) +
         `#MASTER_NAME#${masterName}`,
     },
-  }).then(result => !!result.Items.length);
+  }).then((result) => !!result.Items.length);
+};
+
+export const getIdFromURLEvent = (event: APIGatewayProxyEvent) => {
+  return decodeURI(event.pathParameters?.id || "");
+};
+
+export const getNTAObjectById = async <T>(
+  masterId: ObjectId,
+  ntaId: ObjectId
+) => {
+  return await DynamoDBActions.get(
+    {
+      tableType: `#NTA#${ntaId}`,
+      id: masterId,
+    },
+    TABLE_NAMES.instituteTable
+  ).then((result: { Item: T }) => result.Item);
+};
+
+export const setUpdationDetailsOfObject = (
+  object: GeneralDBItem,
+  event: APIGatewayProxyEvent
+) => {
+  const userId = event.headers.username;
+  object.updated_by = userId;
+  object.updated_at = new Date().toISOString();
 };

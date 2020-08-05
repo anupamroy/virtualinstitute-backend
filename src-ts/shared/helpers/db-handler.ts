@@ -27,6 +27,8 @@ export const DynamoDBActions = {
     CommonItems.documentClient.batchGet({ RequestItems: params }).promise(),
   query: (params: any): Promise<any> =>
     CommonItems.documentClient.query(params).promise(),
+  delete: (params: any, TableName: string) =>
+    CommonItems.documentClient.delete({ TableName, ...params }).promise(),
 };
 
 export const processDynamoDBResponse = (event: Promise<any>, data?: any) =>

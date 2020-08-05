@@ -330,22 +330,22 @@ Resources:
   #           Method: GET
   #           RestApiId: !Ref NtaApi
 
-  # # Edit NTA Masters
-  # EditFeesHead:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     Handler: src/handlers/nta-institute.editFeesHeadHandler
-  #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-  #     Policies:
-  #       - DynamoDBCrudPolicy:
-  #           TableName: "*"
-  #     Events:
-  #       Api:
-  #         Type: Api
-  #         Properties:
-  #           Path: /NTA/masters/fees/head/{id}
-  #           Method: POST
-  #           RestApiId: !Ref NtaApi
+  # Edit NTA Masters
+  EditFeesHead:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.editFeesHeadHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/fees/head/{id}
+            Method: POST
+            RestApiId: !Ref NtaApi
 
   # EditFeesType:
   #   Type: AWS::Serverless::Function

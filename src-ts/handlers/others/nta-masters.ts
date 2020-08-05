@@ -7,9 +7,7 @@ import {
 import {
   createAccountHeadFunction,
   createFeesHeadFunction,
-  statusChangeofAccountHeadByIdFunction,
-  getFeesTypeByIdFunction,
-  getAccountsHeadByIdFunction,
+  statusChangeofAccountHeadByIdFunction
 } from "../../shared/functions/fees.functions";
 import {
   CreateFeesTypeMasterRequest,
@@ -20,7 +18,7 @@ import {
   getFeesHeadListFunction,
 } from "../../shared/functions/fees.functions";
 import { keysMissingResponse } from "../../shared/helpers/response.helper";
-import { statusChangeofFeesTypeByIdFunction, checkIfNTAFeesHeadMasterExistsFunction } from '../../shared/functions/fees.functions';
+import { statusChangeofFeesTypeByIdFunction, } from '../../shared/functions/fees.functions';
 import {
   editAccountsHeadByIdFunction,
   statusChangeofFeesHeadByIdFunction,
@@ -34,7 +32,6 @@ import {
   deleteAccountsHeadByIdFunction,
 } from "../../shared/functions/fees.functions";
 import {
-  getFeesHeadByIdFunction,
   deleteFeesHeadByIdFunction,
 } from "../../shared/functions/fees.functions";
 import {
@@ -75,17 +72,17 @@ export const getFeesHeadMastersList = async (event: APIGatewayProxyEvent) => {
   return await getFeesHeadListFunction(event);
 };
 
-export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
-  return await getFeesHeadByIdFunction(event);
-};
+// export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
+//   return await getFeesHeadByIdFunction(event);
+// };
 
-export const getFeesTypeMasterById = async (event: APIGatewayProxyEvent) => {
-  return await getFeesTypeByIdFunction(event);
-};
+// export const getFeesTypeMasterById = async (event: APIGatewayProxyEvent) => {
+//   return await getFeesTypeByIdFunction(event);
+// };
 
-export const getAccountsHeadMasterById = async (event: APIGatewayProxyEvent) => {
-  return await getAccountsHeadByIdFunction(event);
-};
+// export const getAccountsHeadMasterById = async (event: APIGatewayProxyEvent) => {
+//   return await getAccountsHeadByIdFunction(event);
+// };
 
 export const getFeesTypeMasterList = async (event: APIGatewayProxyEvent) => {
   return await getFeesTypeListFunction(event);
@@ -97,9 +94,9 @@ export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
 
 // Check If master Name already Exists
 
-export const checkIfNTAFeesHeadExists = async (event: APIGatewayProxyEvent) => {
-  return await checkIfNTAFeesHeadMasterExistsFunction(event);
-}
+// export const checkIfNTAFeesHeadExists = async (event: APIGatewayProxyEvent) => {
+//   return await checkIfNTAFeesHeadMasterExistsFunction(event);
+// }
 
 // Delete Functions
 export const deleteFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {

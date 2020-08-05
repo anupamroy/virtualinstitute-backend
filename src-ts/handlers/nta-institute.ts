@@ -1,7 +1,5 @@
 import { AWSHandler } from "../shared/helpers/handler-common";
 import {
-  createNTAAuthority,
-  listNTAAuthority,
   createNTAUser,
   deleteNTAUser,
 } from "./others/nta-admin.service";
@@ -11,11 +9,8 @@ import {
   newPasswordChallenge,
 } from "./nta-institute.service";
 import { optionsResponse } from "../shared/helpers/response.helper";
-import { checkIfNTAFeesHeadExists } from './others/nta-masters';
 import {
   statusChangeOfAccountHeadMaster,
-  getFeesTypeMasterById,
-  getAccountsHeadMasterById,
 } from "./others/nta-masters";
 import {
   statusChangeOfFeesHeadMaster,
@@ -35,12 +30,7 @@ import {
   createFeesTypeMaster,
   createAccountHeadMaster,
   getFeesTypeMasterList,
-  getFeesHeadMasterById,
 } from "./others/nta-masters";
-import {
-  getFeesTypeByIdFunction,
-  getAccountsHeadByIdFunction,
-} from "../shared/functions/fees.functions";
 
 // Actual Functions
 
@@ -62,9 +52,9 @@ const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
 const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
 const getFeeTypeListHandler = AWSHandler("GET", getFeesTypeMasterList);
 
-const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
-const getFeesTypeByIdHandler = AWSHandler("GET", getFeesTypeMasterById);
-const getAccountsHeadByIdHandler = AWSHandler("GET", getAccountsHeadMasterById);
+// const getFeesHeadMasterByIdHandler = AWSHandler("GET", getFeesHeadMasterById);
+// const getFeesTypeByIdHandler = AWSHandler("GET", getFeesTypeMasterById);
+// const getAccountsHeadByIdHandler = AWSHandler("GET", getAccountsHeadMasterById);
 
 const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
 const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
@@ -96,7 +86,7 @@ const statusChangeAccountsHeadHandler = AWSHandler(
 
 // Check If Masters Exist
 
-const checkIfNTAFeesHeadExistsHandler = AWSHandler('POST', checkIfNTAFeesHeadExists);
+// const checkIfNTAFeesHeadExistsHandler = AWSHandler('POST', checkIfNTAFeesHeadExists);
 
 // // Get by ID
 
@@ -115,9 +105,9 @@ export {
   createAccountHeadHandler,
   createFeeTypeHandler,
   createStudentHandler,
-  getFeesHeadMasterByIdHandler,
-  getFeesTypeByIdHandler,
-  getAccountsHeadByIdHandler,
+  // getFeesHeadMasterByIdHandler,
+  // getFeesTypeByIdHandler,
+  // getAccountsHeadByIdHandler,
   editFeesHeadHandler,
   editFeesTypeHandler,
   editAccountsHeadHandler,
@@ -127,5 +117,5 @@ export {
   statusChangeFeesHeadHandler,
   statusChangeFeesTypeHandler,
   statusChangeAccountsHeadHandler,
-  checkIfNTAFeesHeadExistsHandler
+  // checkIfNTAFeesHeadExistsHandler
 };
