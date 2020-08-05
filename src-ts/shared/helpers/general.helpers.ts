@@ -11,6 +11,7 @@ import { NTA } from "../model/DB/nta.DB.model";
 import { getNTAById } from "../functions/nta.functions";
 import { EVENT_HEADERS_LOCAL } from "../constants/common-vars";
 import { GeneralDBItem } from "../model/DB/imports/DB.model";
+import { GeneralMasterItem } from "../model/DB/imports/misc.DB.model";
 
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
@@ -67,7 +68,10 @@ export const getNTAMasterRangeKey = (
   );
 };
 
-export const getNTAMasterList = async (ntaId: string, tableType: TableName) => {
+export const getNTAMasterList = async <T>(
+  ntaId: string,
+  tableType: TableName
+) => {
   console.log(
     "#MASTER#MASTER_TYPE#${tableType}",
     `#MASTER#MASTER_TYPE#${tableType}`
@@ -80,7 +84,20 @@ export const getNTAMasterList = async (ntaId: string, tableType: TableName) => {
       ":ntaItem": `#NTA#${ntaId}`,
       ":master": `#MASTER#MASTER_TYPE#${tableType}`,
     },
-  });
+  }).then((result: { Items: T[] }) => result.Items);
+};
+
+export const checkIfMasterListitemExistsById = async (
+  ntaId: string,
+  id: string
+) => {
+  return await DynamoDBActions.get(
+    {
+      tableType: `#NTA#${ntaId}`,
+      id,
+    },
+    TABLE_NAMES.instituteTable
+  ).then((result: { Item: GeneralMasterItem }) => !!result.Item);
 };
 
 export const checkIfMasterListItemExistsByName = async (
@@ -96,7 +113,8 @@ export const checkIfMasterListItemExistsByName = async (
     masterName,
     institutionTypeId,
     `#MASTER#MASTER_TYPE#${tableType}` +
-      (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) + '|'
+      (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) +
+      "|"
   );
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,

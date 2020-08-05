@@ -21,4 +21,5 @@ export class GeneralMasterItem extends GeneralDBItem {
 
 export class ChildMasterItem extends GeneralMasterItem {
   parentId?: ObjectId = "";
+  parentName?: string = "";
 }
