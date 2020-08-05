@@ -167,17 +167,32 @@ export const getAccountsHeadByIdFunction = async (
 export const deleteFeesHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  return await processDynamoDBResponse(deleteNTAObjectFromEvent(event));
+  const feesHead = await getNTAObjectFromEvent<FeesHeadName>(event);
+  feesHead.isDeleted = true;
+  setUpdationDetailsOfObject(feesHead, event);
+  return await processDynamoDBResponse(
+    DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+  );
 };
 export const deleteFeesTypeByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  return await processDynamoDBResponse(deleteNTAObjectFromEvent(event));
+  const feesType = await getNTAObjectFromEvent<FeeType>(event);
+  feesType.isDeleted = true;
+  setUpdationDetailsOfObject(feesType, event);
+  return await processDynamoDBResponse(
+    DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+  );
 };
 export const deleteAccountsHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  return await processDynamoDBResponse(deleteNTAObjectFromEvent(event));
+  const accountsHead = await getNTAObjectFromEvent<AccountHead>(event);
+  accountsHead.isDeleted = true;
+  setUpdationDetailsOfObject(accountsHead, event);
+  return await processDynamoDBResponse(
+    DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+  );
 };
 
 // Edit by Id
