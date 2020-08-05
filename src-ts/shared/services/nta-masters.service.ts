@@ -1,41 +1,41 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../../shared/helpers/handler-common";
+import { parseBody } from "../helpers/handler-common";
 import {
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,
-} from "../../shared/model/request-method.model";
+} from "../model/request-method.model";
 import {
   createAccountHeadFunction,
   createFeesHeadFunction,
   statusChangeofAccountHeadByIdFunction,
-} from "../../shared/functions/fees.functions";
+} from "../functions/fees.functions";
 import {
   CreateFeesTypeMasterRequest,
   StatusChangeRequest,
-} from "../../shared/model/request-method.model";
+} from "../model/request-method.model";
 import {
   createFeesTypeFunction,
   getFeesHeadListFunction,
-} from "../../shared/functions/fees.functions";
-import { keysMissingResponse } from "../../shared/helpers/response.helper";
-import { statusChangeofFeesTypeByIdFunction } from "../../shared/functions/fees.functions";
+} from "../functions/fees.functions";
+import { keysMissingResponse } from "../helpers/response.helper";
+import { statusChangeofFeesTypeByIdFunction } from "../functions/fees.functions";
 import {
   editAccountsHeadByIdFunction,
   statusChangeofFeesHeadByIdFunction,
-} from "../../shared/functions/fees.functions";
+} from "../functions/fees.functions";
 import {
   editFeesTypeByIdFunction,
   editFeesHeadByIdFunction,
-} from "../../shared/functions/fees.functions";
+} from "../functions/fees.functions";
 import {
   deleteFeesTypeByIdFunction,
   deleteAccountsHeadByIdFunction,
-} from "../../shared/functions/fees.functions";
-import { deleteFeesHeadByIdFunction } from "../../shared/functions/fees.functions";
+} from "../functions/fees.functions";
+import { deleteFeesHeadByIdFunction } from "../functions/fees.functions";
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
-} from "../../shared/functions/fees.functions";
+} from "../functions/fees.functions";
 
 // Create
 

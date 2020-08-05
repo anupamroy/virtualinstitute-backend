@@ -1,16 +1,16 @@
 import { AWSHandler } from "../shared/helpers/handler-common";
-import { statusChangeOfAccountHeadMaster } from "./others/nta-masters";
+import { statusChangeOfAccountHeadMaster } from "../shared/services/nta-masters.service";
 import {
   statusChangeOfFeesHeadMaster,
   statusChangeOfFeesTypeMaster,
-} from "./others/nta-masters";
+} from "../shared/services/nta-masters.service";
 import {
   editFeesTypeMasterById,
   editFeesHeadMasterById,
   deleteFeesHeadMasterById,
   deleteFeesTypeMasterById,
   deleteAccountsHeadMasterById,
-} from "./others/nta-masters";
+} from "../shared/services/nta-masters.service";
 import {
   getFeesHeadMastersList,
   getAccountHeadList,
@@ -18,7 +18,7 @@ import {
   createFeesTypeMaster,
   createAccountHeadMaster,
   getFeesTypeMasterList,
-} from "./others/nta-masters";
+} from "../shared/services/nta-masters.service";
 
 const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
 const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
