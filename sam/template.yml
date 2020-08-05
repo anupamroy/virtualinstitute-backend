@@ -58,7 +58,7 @@ Resources:
   CreateNTAAuthorityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/handlers.createNTAAuthorityHandler
+      Handler: src/handlers/nta-authority.createNTAAuthorityHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -74,7 +74,7 @@ Resources:
   ListNTAAuthorityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/handlers.listNTAAuthorityHandler
+      Handler: src/handlers/nta-authority.listNTAAuthorityHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -90,7 +90,7 @@ Resources:
   ListAllNTAAuthoritiesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/handlers.listAllNTAAuthoritiesHandler
+      Handler: src/handlers/nta-authority.listAllNTAAuthoritiesHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -187,7 +187,7 @@ Resources:
   # CreateAccountHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.createAccountHeadHandler
+  #     Handler: src/handlers/nta-masters.createAccountHeadHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -203,7 +203,7 @@ Resources:
   # CreateFeesType:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.createFeeTypeHandler
+  #     Handler: src/handlers/nta-masters.createFeeTypeHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -220,7 +220,7 @@ Resources:
   ListFeesHead:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.getFeesHeadListHandler
+      Handler: src/handlers/nta-masters.getFeesHeadListHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -236,7 +236,7 @@ Resources:
   CheckFeesHeadExists:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.checkIfNTAFeesHeadExistsHandler
+      Handler: src/handlers/nta-masters.checkIfNTAFeesHeadExistsHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -252,7 +252,7 @@ Resources:
   # ListAccountsHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.getAccountHeadListHandler
+  #     Handler: src/handlers/nta-masters.getAccountHeadListHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -268,7 +268,7 @@ Resources:
   # ListFeesType:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.getFeeTypeListHandler
+  #     Handler: src/handlers/nta-masters.getFeeTypeListHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -285,7 +285,7 @@ Resources:
   # GetFeesHeadByIDFunction:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.getFeesHeadMasterByIdHandler
+  #     Handler: src/handlers/nta-masters.getFeesHeadMasterByIdHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -301,7 +301,7 @@ Resources:
   # GetFeesTypeByIDFunction:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.getFeesTypeByIdHandler
+  #     Handler: src/handlers/nta-masters.getFeesTypeByIdHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -317,7 +317,7 @@ Resources:
   # GetAccountsHeadByIDFunction:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.getAccountsHeadByIdHandler
+  #     Handler: src/handlers/nta-masters.getAccountsHeadByIdHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -334,7 +334,7 @@ Resources:
   EditFeesHead:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-institute.editFeesHeadHandler
+      Handler: src/handlers/nta-masters.editFeesHeadHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -350,7 +350,7 @@ Resources:
   # EditFeesType:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.editFeesTypeHandler
+  #     Handler: src/handlers/nta-masters.editFeesTypeHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -366,7 +366,7 @@ Resources:
   # EditAccountsHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.editAccountsHeadHandler
+  #     Handler: src/handlers/nta-masters.editAccountsHeadHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -383,7 +383,7 @@ Resources:
   # DeleteFeesHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.deleteFeesHeadHandler
+  #     Handler: src/handlers/nta-masters.deleteFeesHeadHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -399,7 +399,7 @@ Resources:
   # DeleteFeesType:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.deleteFeesTypeHandler
+  #     Handler: src/handlers/nta-masters.deleteFeesTypeHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -415,7 +415,7 @@ Resources:
   # DeleteAccountsHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.deleteAccountsHeadHandler
+  #     Handler: src/handlers/nta-masters.deleteAccountsHeadHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -433,7 +433,7 @@ Resources:
   # StatusChangeFeesHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.statusChangeFeesHeadHandler
+  #     Handler: src/handlers/nta-masters.statusChangeFeesHeadHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -449,7 +449,7 @@ Resources:
   # StatusChangeFeesType:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.statusChangeFeesTypeHandler
+  #     Handler: src/handlers/nta-masters.statusChangeFeesTypeHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
@@ -465,7 +465,7 @@ Resources:
   # StatusChangeAccountsHead:
   #   Type: AWS::Serverless::Function
   #   Properties:
-  #     Handler: src/handlers/nta-institute.statusChangeAccountsHeadHandler
+  #     Handler: src/handlers/nta-masters.statusChangeAccountsHeadHandler
   #     Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
   #     Policies:
   #       - DynamoDBCrudPolicy:
