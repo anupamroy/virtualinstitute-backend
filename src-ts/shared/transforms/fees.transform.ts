@@ -66,7 +66,6 @@ export const createEditAccountHead = (userId: string, body: any) => {
 export const getFeesHeadRangeKey = (ntaId: string, feeHead: FeesHeadName) => {
   return getNTAMasterRangeKey(
     "FEE_HEAD_MASTER",
-    feeHead.name,
     feeHead.id,
     feeHead.parentId,
     feeHead.instituteTypeId

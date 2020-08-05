@@ -53,7 +53,6 @@ export const sanitizeString = (inputString: string) =>
 
 export const getNTAMasterRangeKey = (
   tableType: TableName,
-  masterName: string,
   masterId: ObjectId,
   parentId?: ObjectId,
   institutionTypeId?: ObjectId
@@ -63,7 +62,7 @@ export const getNTAMasterRangeKey = (
     `#MASTER_TYPE#${tableType}` +
     (institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) +
     (parentId ? `#PARENT_ID#${parentId}` : ``) +
-    `#MASTER_NAME#${masterName}#MASTER_ID#${masterId}`
+    `#MASTER_ID#${masterId}`
   );
 };
 
