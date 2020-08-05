@@ -24,7 +24,7 @@ export class Institute extends NTAItem {
 }
 
 export class AccountHead extends ChildMasterItem {
-  tableType: TableName = "ACCOUNTS_HEAD_MASTER";
+  tableType: string = "";
   balance: number = 0;
 }
 

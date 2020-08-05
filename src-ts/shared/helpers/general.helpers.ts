@@ -89,15 +89,28 @@ export const checkIfMasterListItemExistsByName = async (
   masterName: string,
   institutionTypeId?: string
 ) => {
+  console.log(
+    "ntaId, tableType, masterName, institutionTypeId",
+    ntaId,
+    tableType,
+    masterName,
+    institutionTypeId,
+    `#MASTER#MASTER_TYPE#${tableType}` +
+      (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) + '|'
+  );
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
     KeyConditionExpression: "tableType = :ntaItem and begins_with(id, :id)",
+    FilterExpression: "#name = :masterName",
     ExpressionAttributeValues: {
       ":ntaItem": `#NTA#${ntaId}`,
       ":id":
         `#MASTER#MASTER_TYPE#${tableType}` +
-        (institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) +
-        `#MASTER_NAME#${masterName}`,
+        (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``),
+      ":masterName": masterName,
+    },
+    ExpressionAttributeNames: {
+      "#name": "name",
     },
   }).then((result) => !!result.Items.length);
 };

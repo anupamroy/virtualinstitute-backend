@@ -36,7 +36,7 @@ export class UserType extends GeneralMasterItem {}
 export class FeeGroup extends ChildMasterItem {}
 // fees.dt_fees_type
 export class FeeType extends GeneralMasterItem {
-  tableType: TableName = "FEE_TYPE_MASTER";
+  tableType: string = "";
 }
 export class FeesHeadName extends ChildMasterItem {
   tableType: string = "";

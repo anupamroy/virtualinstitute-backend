@@ -8,6 +8,12 @@ import {
   createAccountHeadFunction,
   createFeesHeadFunction,
   statusChangeofAccountHeadByIdFunction,
+  getFeesHeadByIdFunction,
+  getFeesTypeByIdFunction,
+  getAccountsHeadByIdFunction,
+  checkIfFeesHeadExistsFunction,
+  checkIfNTAFeesTypeExistsFunction,
+  checkIfNtaAccountsHeadExistsFunction,
 } from "../functions/fees.functions";
 import {
   CreateFeesTypeMasterRequest,
@@ -32,13 +38,18 @@ import {
   deleteAccountsHeadByIdFunction,
 } from "../functions/fees.functions";
 import { deleteFeesHeadByIdFunction } from "../functions/fees.functions";
+import { processDynamoDBResponse } from "../helpers/db-handler";
+import {
+  checkIfMasterListItemExistsByName,
+  getNTAIdFromEvent,
+} from "../helpers/general.helpers";
+import { ObjectId } from "../model/DB/imports/types.DB.model";
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
 } from "../functions/fees.functions";
 
 // Create
-
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesHeadRequest>(event.body);
   if (body) {
@@ -77,6 +88,36 @@ export const getFeesTypeMasterList = async (event: APIGatewayProxyEvent) => {
 
 export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
   return await getAccountsHeadListFunction(event);
+};
+
+// Check If Master Exists
+export const checkIfNTAFeesHeadExists = async (event: APIGatewayProxyEvent) => {
+  return await checkIfFeesHeadExistsFunction(event);
+};
+
+export const checkIfNTAFeesTypeExists = async (event: APIGatewayProxyEvent) => {
+  return await checkIfNTAFeesTypeExistsFunction(event);
+};
+
+export const checkIfNtaAccountsHeadExists = async (
+  event: APIGatewayProxyEvent
+) => {
+  return await checkIfNtaAccountsHeadExistsFunction(event);
+};
+
+// Get By Id
+export const getFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {
+  return await getFeesHeadByIdFunction(event);
+};
+
+export const getFeesTypeMasterById = async (event: APIGatewayProxyEvent) => {
+  return await getFeesTypeByIdFunction(event);
+};
+
+export const getAccountsHeadMasterById = async (
+  event: APIGatewayProxyEvent
+) => {
+  return await getAccountsHeadByIdFunction(event);
 };
 
 // Delete By Id

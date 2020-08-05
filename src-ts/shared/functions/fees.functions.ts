@@ -7,25 +7,24 @@ import {
   createNewFeesType,
   createNewAccountHead,
   createNewFeesHead,
+  getFeesTypeRangeKey,
 } from "../transforms/fees.transform";
 import {
   processDynamoDBResponse,
   DynamoDBActions,
 } from "../helpers/db-handler";
 import { TABLE_NAMES } from "../constants/common-vars";
-import { saveNTAAuthority } from "./nta.functions";
-import { addItemToNTAMasters } from "./nta-masters.functions";
+import { CreateAccountsHeadMasterRequest } from "../model/request-method.model";
+import { parseBody } from "../helpers/handler-common";
 import {
-  CreateAccountsHeadMasterRequest,
-  APIResponse,
-} from "../model/request-method.model";
-import { createResponse } from "../helpers/handler-common";
-import {
-  getNTAFromEvent,
   getNTAIdFromEvent,
   getNTAMasterList,
+  checkIfMasterListItemExistsByName,
 } from "../helpers/general.helpers";
-import { getFeesHeadRangeKey } from "../transforms/fees.transform";
+import {
+  getFeesHeadRangeKey,
+  getAccountsHeadRangeKey,
+} from "../transforms/fees.transform";
 import { getIdFromURLEvent } from "../helpers/general.helpers";
 import {
   getNTAObjectById,
@@ -34,6 +33,7 @@ import {
 import { StatusChangeRequest } from "../model/request-method.model";
 import { FeesHeadName, FeeType } from "../model/DB/imports/masters.model";
 import { AccountHead } from "../model/DB/institute.DB.model";
+import { ObjectId } from "../model/DB/imports/types.DB.model";
 
 export const createFeesHeadFunction = async (
   body: CreateFeesHeadRequest,
@@ -42,35 +42,40 @@ export const createFeesHeadFunction = async (
   const userId = event.headers.username;
   const feesHead = createNewFeesHead(userId, body);
   const ntaId = await getNTAIdFromEvent(event);
-  feesHead.id = getFeesHeadRangeKey(ntaId, feesHead);
+  feesHead.id = getFeesHeadRangeKey(feesHead);
   feesHead.tableType = `#NTA#${ntaId}`;
   return await processDynamoDBResponse(
     DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
   );
 };
-
 export const createFeesTypeFunction = async (
   body: CreateFeesTypeMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
   const userId = event.headers.username;
   const feeType = createNewFeesType(userId, body);
-  const nta = await getNTAFromEvent(event);
-  addItemToNTAMasters(feeType, "feeTypeNames", nta);
-  return await processDynamoDBResponse(saveNTAAuthority(nta));
+  const ntaId = await getNTAIdFromEvent(event);
+  feeType.id = getFeesTypeRangeKey(feeType);
+  feeType.tableType = `#NTA#${ntaId}`;
+  return await processDynamoDBResponse(
+    DynamoDBActions.putItem(feeType, TABLE_NAMES.instituteTable)
+  );
 };
-
 export const createAccountHeadFunction = async (
   body: CreateAccountsHeadMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
   const userId = event.headers.username;
   const accountHead = createNewAccountHead(userId, body);
-  const nta = await getNTAFromEvent(event);
-  addItemToNTAMasters(accountHead, "accountHeads", nta);
-  return await processDynamoDBResponse(saveNTAAuthority(nta));
+  const ntaId = await getNTAIdFromEvent(event);
+  accountHead.id = getAccountsHeadRangeKey(accountHead);
+  accountHead.tableType = `#NTA#${ntaId}`;
+  return await processDynamoDBResponse(
+    DynamoDBActions.putItem(accountHead, TABLE_NAMES.instituteTable)
+  );
 };
 
+// Get list
 export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
   const ntaId = await getNTAIdFromEvent(event);
   return await processDynamoDBResponse(
@@ -92,27 +97,90 @@ export const getAccountsHeadListFunction = async (
   );
 };
 
+// Check If Master Exists
+export const checkIfFeesHeadExistsFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  const ntaId = getNTAIdFromEvent(event);
+  const body = parseBody<{ name: string; institutionTypeId: ObjectId }>(
+    event.body
+  );
+  return await processDynamoDBResponse(
+    checkIfMasterListItemExistsByName(
+      ntaId,
+      "FEE_HEAD_MASTER",
+      body?.name || "",
+      body?.institutionTypeId || ""
+    )
+  );
+};
 
-// Delete Functions
+export const checkIfNTAFeesTypeExistsFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  console.log(
+    "---------------------------------checkIfNTAFeesTypeExistsFunction--------------------------------------"
+  );
+  const ntaId = getNTAIdFromEvent(event);
+  const body = parseBody<{ name: string }>(event.body);
+  return await processDynamoDBResponse(
+    checkIfMasterListItemExistsByName(
+      ntaId,
+      "FEE_TYPE_MASTER",
+      body?.name || ""
+    )
+  );
+};
 
+export const checkIfNtaAccountsHeadExistsFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  const ntaId = getNTAIdFromEvent(event);
+  const body = parseBody<{ name: string; institutionTypeId: ObjectId }>(
+    event.body
+  );
+  return await processDynamoDBResponse(
+    checkIfMasterListItemExistsByName(
+      ntaId,
+      "ACCOUNTS_HEAD_MASTER",
+      body?.name || ""
+    )
+  );
+};
+
+// Get By Id
+export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
+  return await processDynamoDBResponse(getNTAObjectFromEvent(event));
+};
+
+export const getFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
+  return await processDynamoDBResponse(getNTAObjectFromEvent(event));
+};
+
+export const getAccountsHeadByIdFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  return await processDynamoDBResponse(getNTAObjectFromEvent(event));
+};
+
+// Delete By Id Functions
 export const deleteFeesHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   return await processDynamoDBResponse(deleteNTAObjectFromEvent(event));
 };
-
 export const deleteFeesTypeByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   return await processDynamoDBResponse(deleteNTAObjectFromEvent(event));
 };
-
 export const deleteAccountsHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   return await processDynamoDBResponse(deleteNTAObjectFromEvent(event));
 };
 
+// Edit by Id
 export const editFeesHeadByIdFunction = async (
   body: CreateFeesHeadRequest,
   event: APIGatewayProxyEvent
@@ -126,7 +194,6 @@ export const editFeesHeadByIdFunction = async (
     DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
   );
 };
-
 export const editFeesTypeByIdFunction = async (
   body: CreateFeesTypeMasterRequest,
   event: APIGatewayProxyEvent
@@ -138,7 +205,6 @@ export const editFeesTypeByIdFunction = async (
     DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
   );
 };
-
 export const editAccountsHeadByIdFunction = async (
   body: CreateAccountsHeadMasterRequest,
   event: APIGatewayProxyEvent
@@ -152,6 +218,7 @@ export const editAccountsHeadByIdFunction = async (
   );
 };
 
+// Status Change By id
 export const statusChangeofFeesHeadByIdFunction = async (
   body: StatusChangeRequest,
   event: APIGatewayProxyEvent
@@ -163,7 +230,6 @@ export const statusChangeofFeesHeadByIdFunction = async (
     DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
   );
 };
-
 export const statusChangeofFeesTypeByIdFunction = async (
   body: StatusChangeRequest,
   event: APIGatewayProxyEvent
@@ -175,7 +241,6 @@ export const statusChangeofFeesTypeByIdFunction = async (
     DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
   );
 };
-
 export const statusChangeofAccountHeadByIdFunction = async (
   body: StatusChangeRequest,
   event: APIGatewayProxyEvent
@@ -188,26 +253,7 @@ export const statusChangeofAccountHeadByIdFunction = async (
   );
 };
 
-// TODO: modify this
-// export const checkIfNTAFeesHeadMasterExistsFunction = async (
-//   event: APIGatewayProxyEvent
-// ) => {
-//   const ntaId = getNTAIdFromEvent(event);
-//   const requestBody = parseBody<{ name: string; institutionTypeId: ObjectId }>(
-//     event.body
-//   );
-//   const feesHeadName = requestBody?.name || "";
-//   const institutionTypeId = requestBody?.institutionTypeId || "";
-//   return await processDynamoDBResponse(
-//     checkIfMasterListItemExistsByName(
-//       ntaId,
-//       "FEE_HEAD_MASTER",
-//       feesHeadName,
-//       institutionTypeId
-//     )
-//   );
-// };
-
+// Helpers
 export const getNTAObjectFromEvent = async <T>(event: APIGatewayProxyEvent) => {
   const ntaId = getNTAIdFromEvent(event);
   const objectId = getIdFromURLEvent(event);
@@ -219,8 +265,7 @@ export const deleteNTAObjectFromEvent = async (event: APIGatewayProxyEvent) => {
   const ntaId = getNTAIdFromEvent(event);
   const objectId = getIdFromURLEvent(event);
   const params = {
-    tableType: `#NTA#${ntaId}`,
-    id: objectId,
+    Key: { id: objectId, tableType: `#NTA#${ntaId}` },
   };
   return await DynamoDBActions.delete(params, TABLE_NAMES.instituteTable);
 };

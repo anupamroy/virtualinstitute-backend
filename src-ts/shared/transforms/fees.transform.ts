@@ -63,11 +63,23 @@ export const createEditAccountHead = (userId: string, body: any) => {
   return accountHead;
 };
 
-export const getFeesHeadRangeKey = (ntaId: string, feeHead: FeesHeadName) => {
+export const getFeesHeadRangeKey = (feeHead: FeesHeadName) => {
   return getNTAMasterRangeKey(
     "FEE_HEAD_MASTER",
     feeHead.id,
     feeHead.parentId,
     feeHead.instituteTypeId
+  );
+};
+
+export const getFeesTypeRangeKey = (feesType: FeeType) => {
+  return getNTAMasterRangeKey("FEE_TYPE_MASTER", feesType.id);
+};
+
+export const getAccountsHeadRangeKey = (accountsHead: AccountHead) => {
+  return getNTAMasterRangeKey(
+    "ACCOUNTS_HEAD_MASTER",
+    accountsHead.id,
+    accountsHead.parentId
   );
 };
