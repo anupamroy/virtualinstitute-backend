@@ -1,11 +1,11 @@
 // Handler helpers
 
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { cognitoActions } from "../../shared/helpers/cognito/cognito.actions";
-import { createResponse } from "../../shared/helpers/handler-common";
+import { cognitoActions } from "../shared/helpers/cognito/cognito.actions";
+import { createResponse } from "../shared/helpers/handler-common";
 import {
   APIResponse,
-} from "../../shared/model/request-method.model";
+} from "../shared/model/request-method.model";
 
 export const createStudent = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.addStudent(event);

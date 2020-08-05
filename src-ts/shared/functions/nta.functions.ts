@@ -88,5 +88,3 @@ export const getNTAById = (ntaId: string) =>
   DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable).then(
     (nta) => nta.Item
   );
-
-export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {};

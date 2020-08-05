@@ -1,6 +1,10 @@
 import { FeesHeadName, FeeType } from "../model/DB/imports/masters.model";
 import { AccountHead } from "../model/DB/institute.DB.model";
-import { sanitizeString } from "../helpers/general.helpers";
+import {
+  sanitizeString,
+  getNTAMasterRangeKey,
+} from "../helpers/general.helpers";
+import { TableName, ObjectId } from "../model/DB/imports/types.DB.model";
 
 export const createNewFeesHead = (userId: string, body: any) => {
   const feesHead = new FeesHeadName();
@@ -57,4 +61,14 @@ export const createEditAccountHead = (userId: string, body: any) => {
     updated_at: new Date().toISOString(),
   };
   return accountHead;
+};
+
+export const getFeesHeadRangeKey = (ntaId: string, feeHead: FeesHeadName) => {
+  return getNTAMasterRangeKey(
+    "FEE_HEAD_MASTER",
+    feeHead.name,
+    feeHead.id,
+    feeHead.parentId,
+    feeHead.instituteTypeId
+  );
 };

@@ -39,6 +39,6 @@ export class FeeType extends GeneralMasterItem {
   tableType: TableName = "FEE_TYPE_MASTER";
 }
 export class FeesHeadName extends ChildMasterItem {
-  tableType: TableName = "FEE_HEAD_MASTER";
+  tableType: string = "";
   instituteTypeId: ObjectId = "";
 }

@@ -1,32 +1,33 @@
-import { AWSHandler } from "../../shared/helpers/handler-common";
+import { AWSHandler } from "../shared/helpers/handler-common";
 import {
   createNTAAuthority,
   listNTAAuthority,
   createNTAUser,
   deleteNTAUser,
-} from "./nta-admin.service";
+} from "./others/nta-admin.service";
 import {
   createStudent,
   checkToken,
   newPasswordChallenge,
 } from "./nta-institute.service";
-import { optionsResponse } from "../../shared/helpers/response.helper";
+import { optionsResponse } from "../shared/helpers/response.helper";
+import { checkIfNTAFeesHeadExists } from './others/nta-masters';
 import {
   statusChangeOfAccountHeadMaster,
   getFeesTypeMasterById,
   getAccountsHeadMasterById,
-} from "./nta-masters";
+} from "./others/nta-masters";
 import {
   statusChangeOfFeesHeadMaster,
   statusChangeOfFeesTypeMaster,
-} from "./nta-masters";
+} from "./others/nta-masters";
 import {
   editFeesTypeMasterById,
   editFeesHeadMasterById,
   deleteFeesHeadMasterById,
   deleteFeesTypeMasterById,
   deleteAccountsHeadMasterById,
-} from "./nta-masters";
+} from "./others/nta-masters";
 import {
   getFeesHeadMastersList,
   getAccountHeadList,
@@ -35,16 +36,16 @@ import {
   createAccountHeadMaster,
   getFeesTypeMasterList,
   getFeesHeadMasterById,
-} from "./nta-masters";
+} from "./others/nta-masters";
 import {
   getFeesTypeByIdFunction,
   getAccountsHeadByIdFunction,
-} from "../../shared/functions/fees.functions";
+} from "../shared/functions/fees.functions";
 
 // Actual Functions
 
-const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
-const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
+// const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
+// const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
 
 const createNTAUserHandler = AWSHandler("POST", createNTAUser);
 const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
@@ -93,11 +94,15 @@ const statusChangeAccountsHeadHandler = AWSHandler(
   statusChangeOfAccountHeadMaster
 );
 
+// Check If Masters Exist
+
+const checkIfNTAFeesHeadExistsHandler = AWSHandler('POST', checkIfNTAFeesHeadExists);
+
 // // Get by ID
 
 export {
-  listNTAAuthorityHandler,
-  createNTAAuthorityHandler,
+  // listNTAAuthorityHandler,
+  // createNTAAuthorityHandler,
   createNTAUserHandler,
   deleteNTAUserHandler,
   checkTokenHandler,
@@ -122,4 +127,5 @@ export {
   statusChangeFeesHeadHandler,
   statusChangeFeesTypeHandler,
   statusChangeAccountsHeadHandler,
+  checkIfNTAFeesHeadExistsHandler
 };

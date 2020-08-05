@@ -20,7 +20,7 @@ import {
   getFeesHeadListFunction,
 } from "../../shared/functions/fees.functions";
 import { keysMissingResponse } from "../../shared/helpers/response.helper";
-import { statusChangeofFeesTypeByIdFunction } from "../../shared/functions/fees.functions";
+import { statusChangeofFeesTypeByIdFunction, checkIfNTAFeesHeadMasterExistsFunction } from '../../shared/functions/fees.functions';
 import {
   editAccountsHeadByIdFunction,
   statusChangeofFeesHeadByIdFunction,
@@ -94,6 +94,12 @@ export const getFeesTypeMasterList = async (event: APIGatewayProxyEvent) => {
 export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
   return await getAccountsHeadListFunction(event);
 };
+
+// Check If master Name already Exists
+
+export const checkIfNTAFeesHeadExists = async (event: APIGatewayProxyEvent) => {
+  return await checkIfNTAFeesHeadMasterExistsFunction(event);
+}
 
 // Delete Functions
 export const deleteFeesHeadMasterById = async (event: APIGatewayProxyEvent) => {

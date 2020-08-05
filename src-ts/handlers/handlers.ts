@@ -5,10 +5,13 @@ import {
   listNTAAuthority,
 } from "./others/nta-admin.service";
 
-export const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
-export const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
+const listAllNTAAuthoritiesHandler = AWSHandler("GET", listAllNTAAuthorities);
+const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
 
-export const listAllNTAAuthoritiesHandler = AWSHandler(
-  "GET",
-  listAllNTAAuthorities
-);
+const createNTAAuthorityHandler = AWSHandler("POST", createNTAAuthority);
+
+export {
+  createNTAAuthorityHandler,
+  listNTAAuthorityHandler,
+  listAllNTAAuthoritiesHandler,
+};

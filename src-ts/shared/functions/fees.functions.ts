@@ -9,9 +9,12 @@ import {
   createNewFeesHead,
   createEditFeesHead,
 } from "../transforms/fees.transform";
-import { processDynamoDBResponse } from "../helpers/db-handler";
-import { EVENT_HEADERS } from "../constants/common-vars";
-import { getNTAById, saveNTAAuthority } from "./nta.functions";
+import {
+  processDynamoDBResponse,
+  DynamoDBActions,
+} from "../helpers/db-handler";
+import { EVENT_HEADERS, TABLE_NAMES } from "../constants/common-vars";
+import { getNTAById, saveNTAAuthority, getNTAIdofUser } from "./nta.functions";
 import { NTA } from "../model/DB/nta.DB.model";
 import {
   addItemToNTAMasters,
@@ -21,13 +24,20 @@ import {
   CreateAccountsHeadMasterRequest,
   APIResponse,
 } from "../model/request-method.model";
-import { createResponse } from "../helpers/handler-common";
+import { createResponse, parseBody } from "../helpers/handler-common";
 import {
   editNTAMasterItem,
   setParentNameInMasterArray,
 } from "./nta-masters.functions";
-import { getNTAFromEvent } from "../helpers/general.helpers";
+import {
+  getNTAFromEvent,
+  getNTAIdFromEvent,
+  getNTAMasterList,
+} from "../helpers/general.helpers";
 import { getNTAMasterArray } from "./nta-masters.functions";
+import { getFeesHeadRangeKey } from "../transforms/fees.transform";
+import { checkIfMasterListItemExistsByName } from "../helpers/general.helpers";
+import { ObjectId } from "../model/DB/imports/types.DB.model";
 import {
   CreateFeesMasterRequest,
   StatusChangeRequest,
@@ -43,9 +53,12 @@ export const createFeesHeadFunction = async (
 ) => {
   const userId = event.headers.username;
   const feesHead = createNewFeesHead(userId, body);
-  const nta = await getNTAFromEvent(event);
-  addItemToNTAMasters(feesHead, "feesHeadNames", nta);
-  return await processDynamoDBResponse(saveNTAAuthority(nta));
+  const ntaId = await getNTAIdFromEvent(event);
+  feesHead.id = getFeesHeadRangeKey(ntaId, feesHead);
+  feesHead.tableType = `#NTA#${ntaId}`;
+  return await processDynamoDBResponse(
+    DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+  );
 };
 
 export const createFeesTypeFunction = async (
@@ -71,10 +84,9 @@ export const createAccountHeadFunction = async (
 };
 
 export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
-  const nta = await getNTAFromEvent(event);
-  return createResponse(
-    200,
-    new APIResponse(false, "", setParentNameInMasterArray("feesHeadNames", nta))
+  const ntaId = await getNTAIdFromEvent(event);
+  return await processDynamoDBResponse(
+    getNTAMasterList(ntaId, "FEE_HEAD_MASTER")
   );
 };
 export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {
@@ -284,4 +296,23 @@ export const statusChangeofAccountHeadByIdFunction = async (
         200,
         new APIResponse(true, "Accounts Head Does Not Exist", null)
       );
+};
+
+export const checkIfNTAFeesHeadMasterExistsFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  const ntaId = getNTAIdFromEvent(event);
+  const requestBody = parseBody<{ name: string; institutionTypeId: ObjectId }>(
+    event.body
+  );
+  const feesHeadName = requestBody?.name || "";
+  const institutionTypeId = requestBody?.institutionTypeId || "";
+  return await processDynamoDBResponse(
+    checkIfMasterListItemExistsByName(
+      ntaId,
+      "FEE_HEAD_MASTER",
+      feesHeadName,
+      institutionTypeId
+    )
+  );
 };
