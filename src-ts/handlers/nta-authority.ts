@@ -17,6 +17,9 @@ const createNTAAuthorityHandler = AWSHandler('POST', createNTAAuthority);
 const createNTAUserHandler = AWSHandler('POST', createNTAUser);
 const deleteNTAUserHandler = AWSHandler('DELETE', deleteNTAUser);
 
+const checkTokenHandler = AWSHandler('GET', checkToken);
+const newPasswordChallengeHandler = AWSHandler('POST', newPasswordChallenge);
+
 export {
   createNTAAuthorityHandler,
   listNTAAuthorityHandler,
