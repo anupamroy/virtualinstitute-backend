@@ -47,15 +47,15 @@ export const createFeesHeadFunction = async (
   const userId = event.headers.username;
   const ntaId = getNTAIdFromEvent(event);
   const institutionType =
-    body.institutionTypeId &&
+    body.instituteTypeId &&
     (await checkIfMasterListitemExistsById(
       ntaId,
-      `#MASTER#MASTER_TYPE#INSTITUTE_TYPE_MASTER#MASTER_ID#${body.institutionTypeId}`
+      `#MASTER#MASTER_TYPE#INSTITUTE_TYPE_MASTER#MASTER_ID#${body.instituteTypeId}`
     ));
   const parentMaster =
     body.parentId &&
     (await checkIfMasterListitemExistsById(ntaId, body.parentId));
-  if (body.institutionTypeId && !institutionType) {
+  if (body.instituteTypeId && !institutionType) {
     return createResponse(
       200,
       new APIResponse(true, 'Institution Type Does not exist')
@@ -78,7 +78,7 @@ export const createFeesHeadFunction = async (
       ntaId,
       'FEE_HEAD_MASTER',
       sanitizeString(body.name),
-      body.institutionTypeId || ''
+      body.instituteTypeId || ''
     )
   ) {
     return createResponse(
@@ -353,7 +353,7 @@ export const editFeesHeadByIdFunction = async (
   const feesHead = await getNTAObjectFromEvent<FeesHeadName>(event);
   if (feesHead) {
     feesHead.name = body.name;
-    feesHead.instituteTypeId = body.institutionTypeId;
+    feesHead.instituteTypeId = body.instituteTypeId;
     feesHead.parentId = body.parentId;
     setUpdationDetailsOfObject(feesHead, event);
     return await processDynamoDBResponse(

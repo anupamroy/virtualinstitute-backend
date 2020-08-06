@@ -48,7 +48,7 @@ import { sanitizeString } from '../helpers/general.helpers';
 // Create
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesHeadRequest>(event.body);
-  if (body && sanitizeString(body.name) && body.institutionTypeId) {
+  if (body && sanitizeString(body.name) && body.instituteTypeId) {
     return createFeesHeadFunction(body, event);
   } else {
     return keysMissingResponse();
