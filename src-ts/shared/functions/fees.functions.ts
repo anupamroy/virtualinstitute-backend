@@ -157,7 +157,8 @@ export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
     'FEE_HEAD_MASTER'
   );
   for (let feesHead of feesHeadList) {
-    await setParentNameInmaster(feesHead, ntaId);
+    await setParentNameInMaster(feesHead, ntaId);
+    await setInstituteNameInMaster(feesHead, ntaId);
   }
   return createResponse(
     200,
@@ -247,8 +248,11 @@ export const checkIfNtaAccountsHeadExistsFunction = async (
 
 // Get By Id
 export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
-  const object = await getNTAObjectFromEvent(event);
+  const object = await getNTAObjectFromEvent<FeesHeadName>(event);
   if (object) {
+    const ntaId = getNTAIdFromEvent(event);
+    await setParentNameInMaster(object, ntaId);
+    await setInstituteNameInMaster(object, ntaId);
     return createResponse(200, new APIResponse(false, '', object));
   } else {
     return createResponse(
@@ -259,8 +263,10 @@ export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
-  const object = await getNTAObjectFromEvent(event);
+  const object = await getNTAObjectFromEvent<FeeType>(event);
   if (object) {
+    const ntaId = getNTAIdFromEvent(event);
+    await setParentNameInMaster(object, ntaId);
     return createResponse(200, new APIResponse(false, '', object));
   } else {
     return createResponse(
@@ -273,8 +279,10 @@ export const getFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
 export const getAccountsHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  const object = await getNTAObjectFromEvent(event);
+  const object = await getNTAObjectFromEvent<AccountHead>(event);
   if (object) {
+    const ntaId = getNTAIdFromEvent(event);
+    await setParentNameInMaster(object, ntaId);
     return createResponse(200, new APIResponse(false, '', object));
   } else {
     return createResponse(
@@ -459,12 +467,23 @@ export const getNTAObjectFromEvent = async <T>(event: APIGatewayProxyEvent) => {
   return await getNTAObjectById<T>(objectId, ntaId);
 };
 
-export const setParentNameInmaster = async (
+export const setParentNameInMaster = async (
   master: ChildMasterItem,
   ntaId: ObjectId
 ) => {
   master.parentName = master.parentId
     ? (await getParentItemById(master.parentId + '', ntaId))?.name || ''
+    : '';
+  master.parentId = master.parentId ? decodeURI(master.parentId) : '';
+  return master;
+};
+
+export const setInstituteNameInMaster = async (
+  master: FeesHeadName,
+  ntaId: ObjectId
+) => {
+  master.instituteTypeName = master.instituteTypeId
+    ? (await getInstituteById(master.instituteTypeId + '', ntaId))?.name || ''
     : '';
   master.parentId = master.parentId ? decodeURI(master.parentId) : '';
   return master;
@@ -481,6 +500,21 @@ export const getParentItemById = async (
     ExpressionAttributeValues: {
       ':ntaItem': `#NTA#${ntaId}`,
       ':id': parentId,
+    },
+  }).then((result: { Items: any[] }) => result.Items[0]);
+};
+
+export const getInstituteById = async (
+  instituteIdURI: string,
+  ntaId: ObjectId
+) => {
+  const instituteId = decodeURI(instituteIdURI);
+  return await DynamoDBActions.query({
+    TableName: TABLE_NAMES.instituteTable,
+    KeyConditionExpression: 'tableType = :ntaItem and id = :id',
+    ExpressionAttributeValues: {
+      ':ntaItem': `#NTA#${ntaId}`,
+      ':id': instituteId,
     },
   }).then((result: { Items: any[] }) => result.Items[0]);
 };
