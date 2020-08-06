@@ -247,17 +247,41 @@ export const checkIfNtaAccountsHeadExistsFunction = async (
 
 // Get By Id
 export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
-  return await processDynamoDBResponse(getNTAObjectFromEvent(event));
+  const object = await getNTAObjectFromEvent(event);
+  if (object) {
+    return createResponse(200, new APIResponse(false, '', object));
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees head does not Exist')
+    );
+  }
 };
 
 export const getFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
-  return await processDynamoDBResponse(getNTAObjectFromEvent(event));
+  const object = await getNTAObjectFromEvent(event);
+  if (object) {
+    return createResponse(200, new APIResponse(false, '', object));
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees head does not Exist')
+    );
+  }
 };
 
 export const getAccountsHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  return await processDynamoDBResponse(getNTAObjectFromEvent(event));
+  const object = await getNTAObjectFromEvent(event);
+  if (object) {
+    return createResponse(200, new APIResponse(false, '', object));
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees head does not Exist')
+    );
+  }
 };
 
 // Delete By Id Functions

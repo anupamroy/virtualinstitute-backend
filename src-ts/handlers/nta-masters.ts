@@ -27,6 +27,11 @@ import {
   createAccountHeadMaster,
   getFeesTypeMasterList,
 } from '../shared/services/nta-masters.service';
+import {
+  getFeesHeadByIdFunction,
+  getFeesTypeByIdFunction,
+  getAccountsHeadByIdFunction,
+} from '../shared/functions/fees.functions';
 
 const getFeesHeadListHandler = AWSHandler('GET', getFeesHeadMastersList);
 const getAccountHeadListHandler = AWSHandler('GET', getAccountHeadList);
@@ -74,11 +79,21 @@ const statusChangeAccountsHeadHandler = AWSHandler(
   statusChangeOfAccountHeadMaster
 );
 
+const getFeesHeadMasterByIdHandler = AWSHandler('GET', getFeesHeadByIdFunction);
+const getFeesTypeByIdHandler = AWSHandler('GET', getFeesTypeByIdFunction);
+const getAccountsHeadByIdHandler = AWSHandler(
+  'GET',
+  getAccountsHeadByIdFunction
+);
+
 export {
   getFeesHeadListHandler,
   getAccountHeadListHandler,
   getFeeTypeListHandler,
   getInstituteTypeListHandler,
+  getFeesHeadMasterByIdHandler,
+  getFeesTypeByIdHandler,
+  getAccountsHeadByIdHandler,
   checkIfNTAFeesHeadExistsHandler,
   checkIfNTAFeesTypeExistsHandler,
   checkIfNTAAccountsHeadExistsHandler,
