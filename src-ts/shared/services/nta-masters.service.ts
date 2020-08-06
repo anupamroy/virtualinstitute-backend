@@ -38,21 +38,16 @@ import {
   deleteAccountsHeadByIdFunction,
 } from "../functions/fees.functions";
 import { deleteFeesHeadByIdFunction } from "../functions/fees.functions";
-import { processDynamoDBResponse } from "../helpers/db-handler";
-import {
-  checkIfMasterListItemExistsByName,
-  getNTAIdFromEvent,
-} from "../helpers/general.helpers";
-import { ObjectId } from "../model/DB/imports/types.DB.model";
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
 } from "../functions/fees.functions";
+import { sanitizeString } from "../helpers/general.helpers";
 
 // Create
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesHeadRequest>(event.body);
-  if (body) {
+  if (body && sanitizeString(body.name) && body.institutionTypeId) {
     return createFeesHeadFunction(body, event);
   } else {
     return keysMissingResponse();

@@ -23,6 +23,7 @@ import {
   checkIfMasterListItemExistsByName,
   checkIfMasterListitemExistsById,
   checkIfMasterExistsByIdQuery,
+  sanitizeString,
 } from "../helpers/general.helpers";
 import {
   getFeesHeadRangeKey,
@@ -38,7 +39,6 @@ import { FeesHeadName, FeeType } from "../model/DB/imports/masters.model";
 import { AccountHead } from "../model/DB/institute.DB.model";
 import { ObjectId, TableName } from "../model/DB/imports/types.DB.model";
 import { ChildMasterItem } from "../model/DB/imports/misc.DB.model";
-import { sanitizeString } from "../../../../../../../../../media/aditya/500GB NTFS 2/Aditya/Work/Work/Others/Fees Collection App/Code/SAM/Backend/src-ts/shared/helpers/general.helpers";
 
 export const createFeesHeadFunction = async (
   body: CreateFeesHeadRequest,
@@ -65,6 +65,14 @@ export const createFeesHeadFunction = async (
       200,
       new APIResponse(true, "Parent Fees head Does not exist")
     );
+  } else if (sanitizeString(body.name) !== body.name) {
+    return createResponse(
+      200,
+      new APIResponse(
+        true,
+        "Fees head name should not contain any special characters."
+      )
+    );
   } else if (
     await checkIfMasterListItemExistsByName(
       ntaId,
@@ -75,7 +83,7 @@ export const createFeesHeadFunction = async (
   ) {
     return createResponse(
       200,
-      new APIResponse(true, "Parent Fees head Does not exist")
+      new APIResponse(true, "Fees head name already exists")
     );
   } else {
     const feesHead = createNewFeesHead(userId, body);
@@ -153,7 +161,7 @@ export const checkIfFeesHeadExistsFunction = async (
     checkIfMasterListItemExistsByName(
       ntaId,
       "FEE_HEAD_MASTER",
-      body?.name || "",
+      sanitizeString(body?.name || ""),
       body?.institutionTypeId || ""
     )
   );
