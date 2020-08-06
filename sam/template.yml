@@ -106,7 +106,7 @@ Resources:
   CreateNTAUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-masters.createNTAUserHandler
+      Handler: src/handlers/nta-authority.createNTAUserHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -122,7 +122,7 @@ Resources:
   deleteNTAUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-masters.deleteNTAUserHandler
+      Handler: src/handlers/nta-authority.deleteNTAUserHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
