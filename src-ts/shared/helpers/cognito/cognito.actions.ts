@@ -80,7 +80,7 @@ export class CognitoActions {
     }
   }
 
-  deleteNTA(event: APIGatewayProxyEvent) {
+  deleteNTAUser(event: APIGatewayProxyEvent) {
     return NTATokenGuard(event, this.deleteNTAFunction);
   }
 
