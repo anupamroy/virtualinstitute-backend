@@ -1,17 +1,17 @@
-import { DynamoDBActions } from "./db-handler";
+import { DynamoDBActions } from './db-handler';
 import {
   NTA_MASTER_SET_ID,
   TABLE_NAMES,
   cognito,
   EVENT_HEADERS,
-} from "../constants/common-vars";
-import { TableName, ObjectId } from "../model/DB/imports/types.DB.model";
-import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { NTA } from "../model/DB/nta.DB.model";
-import { getNTAById } from "../functions/nta.functions";
-import { EVENT_HEADERS_LOCAL } from "../constants/common-vars";
-import { GeneralDBItem } from "../model/DB/imports/DB.model";
-import { GeneralMasterItem } from "../model/DB/imports/misc.DB.model";
+} from '../constants/common-vars';
+import { TableName, ObjectId } from '../model/DB/imports/types.DB.model';
+import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
+import { NTA } from '../model/DB/nta.DB.model';
+import { getNTAById } from '../functions/nta.functions';
+import { EVENT_HEADERS_LOCAL } from '../constants/common-vars';
+import { GeneralDBItem } from '../model/DB/imports/DB.model';
+import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
 
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
@@ -21,9 +21,9 @@ export const getContentsByType = (
   tableType: TableName
 ): Promise<any[]> => {
   const params = {
-    FilterExpression: "tableType = :tableType",
+    FilterExpression: 'tableType = :tableType',
     ExpressionAttributeValues: {
-      ":tableType": tableType,
+      ':tableType': tableType,
     },
   };
   return DynamoDBActions.scan(tablename, params);
@@ -32,7 +32,7 @@ export const getContentsByType = (
 export const getCognitoUserFromToken = (event: APIGatewayProxyEvent) => {
   return cognito
     .getUser({
-      AccessToken: event.headers["Access-Token"],
+      AccessToken: event.headers['Access-Token'],
     })
     .promise();
 };
@@ -51,7 +51,7 @@ export const getNTAIdFromEvent = (event: APIGatewayProxyEvent) => {
 };
 
 export const sanitizeString = (inputString: string) =>
-  (inputString || "").trim().replace(/[^\w\s]/gi, "");
+  (inputString || '').trim().replace(/[^\w\s]/gi, '');
 
 export const getNTAMasterRangeKey = (
   tableType: TableName,
@@ -72,17 +72,13 @@ export const getNTAMasterList = async <T>(
   ntaId: string,
   tableType: TableName
 ) => {
-  console.log(
-    "#MASTER#MASTER_TYPE#${tableType}",
-    `#MASTER#MASTER_TYPE#${tableType}`
-  );
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
     KeyConditionExpression:
-      "tableType = :ntaItem and  begins_with(id, :master) ",
+      'tableType = :ntaItem and  begins_with(id, :master) ',
     ExpressionAttributeValues: {
-      ":ntaItem": `#NTA#${ntaId}`,
-      ":master": `#MASTER#MASTER_TYPE#${tableType}`,
+      ':ntaItem': `#NTA#${ntaId}`,
+      ':master': `#MASTER#MASTER_TYPE#${tableType}`,
     },
   }).then((result: { Items: T[] }) => result.Items);
 };
@@ -105,11 +101,10 @@ export const checkIfMasterExistsByIdQuery = async (
   id: string
 ) => {
   return await DynamoDBActions.query({
-    KeyConditionExpression:
-      "tableType = :ntaItem and  id = :master",
+    KeyConditionExpression: 'tableType = :ntaItem and  id = :master',
     ExpressionAttributeValues: {
-      ":ntaItem": `#NTA#${ntaId}`,
-      ":master": id,
+      ':ntaItem': `#NTA#${ntaId}`,
+      ':master': id,
     },
     TableName: TABLE_NAMES.instituteTable,
   });
@@ -121,35 +116,25 @@ export const checkIfMasterListItemExistsByName = async (
   masterName: string,
   institutionTypeId?: string
 ) => {
-  console.log(
-    "ntaId, tableType, masterName, institutionTypeId",
-    ntaId,
-    tableType,
-    masterName,
-    institutionTypeId,
-    `#MASTER#MASTER_TYPE#${tableType}` +
-      (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``) +
-      "|"
-  );
-  return await DynamoDBActions.query({
+ return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
-    KeyConditionExpression: "tableType = :ntaItem and begins_with(id, :id)",
-    FilterExpression: "#name = :masterName",
+    KeyConditionExpression: 'tableType = :ntaItem and begins_with(id, :id)',
+    FilterExpression: '#name = :masterName',
     ExpressionAttributeValues: {
-      ":ntaItem": `#NTA#${ntaId}`,
-      ":id":
+      ':ntaItem': `#NTA#${ntaId}`,
+      ':id':
         `#MASTER#MASTER_TYPE#${tableType}` +
         (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``),
-      ":masterName": masterName,
+      ':masterName': masterName,
     },
     ExpressionAttributeNames: {
-      "#name": "name",
+      '#name': 'name',
     },
   }).then((result) => !!result.Items.length);
 };
 
 export const getIdFromURLEvent = (event: APIGatewayProxyEvent) => {
-  return decodeURI(event.pathParameters?.id || "");
+  return decodeURI(event.pathParameters?.id || '');
 };
 
 export const getNTAObjectById = async <T>(

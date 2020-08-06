@@ -218,9 +218,6 @@ export const checkIfFeesHeadExistsFunction = async (
 export const checkIfNTAFeesTypeExistsFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  console.log(
-    '---------------------------------checkIfNTAFeesTypeExistsFunction--------------------------------------'
-  );
   const ntaId = getNTAIdFromEvent(event);
   const body = parseBody<{ name: string }>(event.body);
   return await processDynamoDBResponse(
