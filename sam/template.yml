@@ -62,7 +62,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -78,7 +78,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -94,7 +94,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -110,7 +110,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -126,7 +126,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -142,7 +142,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -158,7 +158,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -175,7 +175,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -191,7 +191,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -207,7 +207,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -224,7 +224,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -240,7 +240,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -256,12 +256,28 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
           Properties:
             Path: /NTA/masters/fees/type
+            Method: GET
+            RestApiId: !Ref NtaApi
+
+  ListInstituteType:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-masters.getInstituteTypeListHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /NTA/masters/institute/type
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -273,7 +289,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -289,7 +305,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -305,7 +321,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -322,7 +338,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -338,7 +354,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -354,7 +370,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -371,7 +387,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -387,7 +403,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -403,7 +419,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -420,7 +436,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -436,7 +452,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -452,7 +468,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -469,7 +485,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -485,7 +501,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -501,7 +517,7 @@ Resources:
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "*"
+            TableName: '*'
       Events:
         Api:
           Type: Api
@@ -517,15 +533,15 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "tableType"
-          AttributeType: "S"
-        - AttributeName: "id"
-          AttributeType: "S"
+        - AttributeName: 'tableType'
+          AttributeType: 'S'
+        - AttributeName: 'id'
+          AttributeType: 'S'
       KeySchema:
-        - AttributeName: "tableType"
-          KeyType: "HASH"
-        - AttributeName: "id"
-          KeyType: "RANGE"
+        - AttributeName: 'tableType'
+          KeyType: 'HASH'
+        - AttributeName: 'id'
+          KeyType: 'RANGE'
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
@@ -585,5 +601,5 @@ Resources:
 
 Outputs:
   WebEndpoint:
-    Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${NtaApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Description: 'API Gateway endpoint URL for Prod stage'
+    Value: !Sub 'https://${NtaApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'

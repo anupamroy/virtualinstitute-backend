@@ -1,21 +1,24 @@
-import { AWSHandler } from "../shared/helpers/handler-common";
-import { checkIfNtaAccountsHeadExists } from '../shared/services/nta-masters.service';
+import { AWSHandler } from '../shared/helpers/handler-common';
+import {
+  checkIfNtaAccountsHeadExists,
+  getInstituteTypeList,
+} from '../shared/services/nta-masters.service';
 import {
   statusChangeOfAccountHeadMaster,
   checkIfNTAFeesHeadExists,
   checkIfNTAFeesTypeExists,
-} from "../shared/services/nta-masters.service";
+} from '../shared/services/nta-masters.service';
 import {
   statusChangeOfFeesHeadMaster,
   statusChangeOfFeesTypeMaster,
-} from "../shared/services/nta-masters.service";
+} from '../shared/services/nta-masters.service';
 import {
   editFeesTypeMasterById,
   editFeesHeadMasterById,
   deleteFeesHeadMasterById,
   deleteFeesTypeMasterById,
   deleteAccountsHeadMasterById,
-} from "../shared/services/nta-masters.service";
+} from '../shared/services/nta-masters.service';
 import {
   getFeesHeadMastersList,
   getAccountHeadList,
@@ -23,50 +26,51 @@ import {
   createFeesTypeMaster,
   createAccountHeadMaster,
   getFeesTypeMasterList,
-} from "../shared/services/nta-masters.service";
+} from '../shared/services/nta-masters.service';
 
-const getFeesHeadListHandler = AWSHandler("GET", getFeesHeadMastersList);
-const getAccountHeadListHandler = AWSHandler("GET", getAccountHeadList);
-const getFeeTypeListHandler = AWSHandler("GET", getFeesTypeMasterList);
+const getFeesHeadListHandler = AWSHandler('GET', getFeesHeadMastersList);
+const getAccountHeadListHandler = AWSHandler('GET', getAccountHeadList);
+const getFeeTypeListHandler = AWSHandler('GET', getFeesTypeMasterList);
+const getInstituteTypeListHandler = AWSHandler('GET', getInstituteTypeList);
 
 const checkIfNTAFeesHeadExistsHandler = AWSHandler(
-  "POST",
+  'POST',
   checkIfNTAFeesHeadExists
 );
 const checkIfNTAFeesTypeExistsHandler = AWSHandler(
-  "POST",
+  'POST',
   checkIfNTAFeesTypeExists
 );
 const checkIfNTAAccountsHeadExistsHandler = AWSHandler(
-  "POST",
+  'POST',
   checkIfNtaAccountsHeadExists
 );
 
-const createFeesHeadHandler = AWSHandler("POST", createFeesHeadMaster);
-const createAccountHeadHandler = AWSHandler("POST", createAccountHeadMaster);
-const createFeeTypeHandler = AWSHandler("POST", createFeesTypeMaster);
+const createFeesHeadHandler = AWSHandler('POST', createFeesHeadMaster);
+const createAccountHeadHandler = AWSHandler('POST', createAccountHeadMaster);
+const createFeeTypeHandler = AWSHandler('POST', createFeesTypeMaster);
 
-const editFeesHeadHandler = AWSHandler("POST", editFeesHeadMasterById);
-const editFeesTypeHandler = AWSHandler("POST", editFeesTypeMasterById);
-const editAccountsHeadHandler = AWSHandler("POST", createAccountHeadMaster);
+const editFeesHeadHandler = AWSHandler('POST', editFeesHeadMasterById);
+const editFeesTypeHandler = AWSHandler('POST', editFeesTypeMasterById);
+const editAccountsHeadHandler = AWSHandler('POST', createAccountHeadMaster);
 
-const deleteFeesHeadHandler = AWSHandler("DELETE", deleteFeesHeadMasterById);
-const deleteFeesTypeHandler = AWSHandler("DELETE", deleteFeesTypeMasterById);
+const deleteFeesHeadHandler = AWSHandler('DELETE', deleteFeesHeadMasterById);
+const deleteFeesTypeHandler = AWSHandler('DELETE', deleteFeesTypeMasterById);
 const deleteAccountsHeadHandler = AWSHandler(
-  "DELETE",
+  'DELETE',
   deleteAccountsHeadMasterById
 );
 
 const statusChangeFeesHeadHandler = AWSHandler(
-  "PATCH",
+  'PATCH',
   statusChangeOfFeesHeadMaster
 );
 const statusChangeFeesTypeHandler = AWSHandler(
-  "PATCH",
+  'PATCH',
   statusChangeOfFeesTypeMaster
 );
 const statusChangeAccountsHeadHandler = AWSHandler(
-  "PATCH",
+  'PATCH',
   statusChangeOfAccountHeadMaster
 );
 
@@ -74,6 +78,7 @@ export {
   getFeesHeadListHandler,
   getAccountHeadListHandler,
   getFeeTypeListHandler,
+  getInstituteTypeListHandler,
   checkIfNTAFeesHeadExistsHandler,
   checkIfNTAFeesTypeExistsHandler,
   checkIfNTAAccountsHeadExistsHandler,

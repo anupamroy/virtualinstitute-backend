@@ -2,21 +2,21 @@ import {
   CreateFeesHeadRequest,
   CreateFeesTypeMasterRequest,
   APIResponse,
-} from "../model/request-method.model";
-import { APIGatewayProxyEvent } from "aws-lambda";
+} from '../model/request-method.model';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 import {
   createNewFeesType,
   createNewAccountHead,
   createNewFeesHead,
   getFeesTypeRangeKey,
-} from "../transforms/fees.transform";
+} from '../transforms/fees.transform';
 import {
   processDynamoDBResponse,
   DynamoDBActions,
-} from "../helpers/db-handler";
-import { TABLE_NAMES } from "../constants/common-vars";
-import { CreateAccountsHeadMasterRequest } from "../model/request-method.model";
-import { parseBody, createResponse } from "../helpers/handler-common";
+} from '../helpers/db-handler';
+import { TABLE_NAMES } from '../constants/common-vars';
+import { CreateAccountsHeadMasterRequest } from '../model/request-method.model';
+import { parseBody, createResponse } from '../helpers/handler-common';
 import {
   getNTAIdFromEvent,
   getNTAMasterList,
@@ -24,28 +24,28 @@ import {
   checkIfMasterListitemExistsById,
   checkIfMasterExistsByIdQuery,
   sanitizeString,
-} from "../helpers/general.helpers";
+} from '../helpers/general.helpers';
 import {
   getFeesHeadRangeKey,
   getAccountsHeadRangeKey,
-} from "../transforms/fees.transform";
-import { getIdFromURLEvent } from "../helpers/general.helpers";
+} from '../transforms/fees.transform';
+import { getIdFromURLEvent } from '../helpers/general.helpers';
 import {
   getNTAObjectById,
   setUpdationDetailsOfObject,
-} from "../helpers/general.helpers";
-import { StatusChangeRequest } from "../model/request-method.model";
-import { FeesHeadName, FeeType } from "../model/DB/imports/masters.model";
-import { AccountHead } from "../model/DB/institute.DB.model";
-import { ObjectId, TableName } from "../model/DB/imports/types.DB.model";
-import { ChildMasterItem } from "../model/DB/imports/misc.DB.model";
+} from '../helpers/general.helpers';
+import { StatusChangeRequest } from '../model/request-method.model';
+import { FeesHeadName, FeeType } from '../model/DB/imports/masters.model';
+import { AccountHead } from '../model/DB/institute.DB.model';
+import { ObjectId, TableName } from '../model/DB/imports/types.DB.model';
+import { ChildMasterItem } from '../model/DB/imports/misc.DB.model';
 
 export const createFeesHeadFunction = async (
   body: CreateFeesHeadRequest,
   event: APIGatewayProxyEvent
 ) => {
   const userId = event.headers.username;
-  const ntaId = await getNTAIdFromEvent(event);
+  const ntaId = getNTAIdFromEvent(event);
   const institutionType =
     body.institutionTypeId &&
     (await checkIfMasterListitemExistsById(
@@ -58,32 +58,32 @@ export const createFeesHeadFunction = async (
   if (body.institutionTypeId && !institutionType) {
     return createResponse(
       200,
-      new APIResponse(true, "Institution Type Does not exist")
+      new APIResponse(true, 'Institution Type Does not exist')
     );
   } else if (body.parentId && !parentMaster) {
     return createResponse(
       200,
-      new APIResponse(true, "Parent Fees head Does not exist")
+      new APIResponse(true, 'Parent Fees head Does not exist')
     );
   } else if (sanitizeString(body.name) !== body.name) {
     return createResponse(
       200,
       new APIResponse(
         true,
-        "Fees head name should not contain any special characters."
+        'Fees head name should not contain any special characters.'
       )
     );
   } else if (
     await checkIfMasterListItemExistsByName(
       ntaId,
-      "FEE_HEAD_MASTER",
+      'FEE_HEAD_MASTER',
       sanitizeString(body.name),
-      body.institutionTypeId || ""
+      body.institutionTypeId || ''
     )
   ) {
     return createResponse(
       200,
-      new APIResponse(true, "Fees head name already exists")
+      new APIResponse(true, 'Fees head name already exists')
     );
   } else {
     const feesHead = createNewFeesHead(userId, body);
@@ -100,52 +100,100 @@ export const createFeesTypeFunction = async (
 ) => {
   const userId = event.headers.username;
   const feeType = createNewFeesType(userId, body);
-  const ntaId = await getNTAIdFromEvent(event);
-  feeType.id = getFeesTypeRangeKey(feeType);
-  feeType.tableType = `#NTA#${ntaId}`;
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feeType, TABLE_NAMES.instituteTable)
-  );
+  const ntaId = getNTAIdFromEvent(event);
+  if (sanitizeString(body.name) !== body.name) {
+    return createResponse(
+      200,
+      new APIResponse(
+        true,
+        'Fees Type name should not contain any special characters.'
+      )
+    );
+  } else {
+    feeType.id = getFeesTypeRangeKey(feeType);
+    feeType.tableType = `#NTA#${ntaId}`;
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feeType, TABLE_NAMES.instituteTable)
+    );
+  }
 };
 export const createAccountHeadFunction = async (
   body: CreateAccountsHeadMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
   const userId = event.headers.username;
-  const accountHead = createNewAccountHead(userId, body);
-  const ntaId = await getNTAIdFromEvent(event);
-  accountHead.id = getAccountsHeadRangeKey(accountHead);
-  accountHead.tableType = `#NTA#${ntaId}`;
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(accountHead, TABLE_NAMES.instituteTable)
-  );
+  const ntaId = getNTAIdFromEvent(event);
+  const parentMaster =
+    body.parentId &&
+    (await checkIfMasterListitemExistsById(ntaId, body.parentId));
+  if (body.parentId && !parentMaster) {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Parent Accounts head Does not exist')
+    );
+  } else if (sanitizeString(body.name) !== body.name) {
+    return createResponse(
+      200,
+      new APIResponse(
+        true,
+        'Accounts head name should not contain any special characters.'
+      )
+    );
+  } else {
+    const accountHead = createNewAccountHead(userId, body);
+    accountHead.id = getAccountsHeadRangeKey(accountHead);
+    accountHead.tableType = `#NTA#${ntaId}`;
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(accountHead, TABLE_NAMES.instituteTable)
+    );
+  }
 };
 
 // Get list
 export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
-  const ntaId = await getNTAIdFromEvent(event);
+  const ntaId = getNTAIdFromEvent(event);
   const feesHeadList = await getNTAMasterList<FeesHeadName>(
     ntaId,
-    "FEE_HEAD_MASTER"
+    'FEE_HEAD_MASTER'
   );
   for (let feesHead of feesHeadList) {
     await setParentNameInmaster(feesHead, ntaId);
   }
-  return createResponse(200, new APIResponse(false, "", feesHeadList));
+  return createResponse(
+    200,
+    new APIResponse(
+      false,
+      '',
+      feesHeadList.filter((feesHead) => !feesHead.isDeleted)
+    )
+  );
 };
 
 export const getFeesTypeListFunction = async (event: APIGatewayProxyEvent) => {
-  const ntaId = await getNTAIdFromEvent(event);
+  const ntaId = getNTAIdFromEvent(event);
   return await processDynamoDBResponse(
-    getNTAMasterList(ntaId, "FEE_TYPE_MASTER")
+    getNTAMasterList(ntaId, 'FEE_TYPE_MASTER').then((feesTypeList: any) =>
+      feesTypeList.filter((feesType: any) => !feesType.isDeleted)
+    )
   );
 };
 export const getAccountsHeadListFunction = async (
   event: APIGatewayProxyEvent
 ) => {
-  const ntaId = await getNTAIdFromEvent(event);
+  const ntaId = getNTAIdFromEvent(event);
   return await processDynamoDBResponse(
-    getNTAMasterList(ntaId, "ACCOUNTS_HEAD_MASTER")
+    getNTAMasterList(ntaId, 'ACCOUNTS_HEAD_MASTER').then((accountsHeadList) =>
+      accountsHeadList.filter((accountsHead: any) => !accountsHead.isDeleted)
+    )
+  );
+};
+
+export const getInstituteTypeListFunction = async (
+  event: APIGatewayProxyEvent
+) => {
+  const ntaId = getNTAIdFromEvent(event);
+  return await processDynamoDBResponse(
+    getNTAMasterList(ntaId, 'INSTITUTE_TYPE_MASTER')
   );
 };
 
@@ -160,9 +208,9 @@ export const checkIfFeesHeadExistsFunction = async (
   return await processDynamoDBResponse(
     checkIfMasterListItemExistsByName(
       ntaId,
-      "FEE_HEAD_MASTER",
-      sanitizeString(body?.name || ""),
-      body?.institutionTypeId || ""
+      'FEE_HEAD_MASTER',
+      sanitizeString(body?.name || ''),
+      body?.institutionTypeId || ''
     )
   );
 };
@@ -171,15 +219,15 @@ export const checkIfNTAFeesTypeExistsFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   console.log(
-    "---------------------------------checkIfNTAFeesTypeExistsFunction--------------------------------------"
+    '---------------------------------checkIfNTAFeesTypeExistsFunction--------------------------------------'
   );
   const ntaId = getNTAIdFromEvent(event);
   const body = parseBody<{ name: string }>(event.body);
   return await processDynamoDBResponse(
     checkIfMasterListItemExistsByName(
       ntaId,
-      "FEE_TYPE_MASTER",
-      body?.name || ""
+      'FEE_TYPE_MASTER',
+      body?.name || ''
     )
   );
 };
@@ -194,8 +242,8 @@ export const checkIfNtaAccountsHeadExistsFunction = async (
   return await processDynamoDBResponse(
     checkIfMasterListItemExistsByName(
       ntaId,
-      "ACCOUNTS_HEAD_MASTER",
-      body?.name || ""
+      'ACCOUNTS_HEAD_MASTER',
+      body?.name || ''
     )
   );
 };
@@ -332,9 +380,9 @@ export const setParentNameInmaster = async (
   ntaId: ObjectId
 ) => {
   master.parentName = master.parentId
-    ? (await getParentItemById(master.parentId + "", ntaId))?.name || ""
-    : "";
-  master.parentId = master.parentId ? decodeURI(master.parentId) : "";
+    ? (await getParentItemById(master.parentId + '', ntaId))?.name || ''
+    : '';
+  master.parentId = master.parentId ? decodeURI(master.parentId) : '';
   return master;
 };
 
@@ -345,10 +393,10 @@ export const getParentItemById = async (
   const parentId = decodeURI(parentIdURI);
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
-    KeyConditionExpression: "tableType = :ntaItem and id = :id",
+    KeyConditionExpression: 'tableType = :ntaItem and id = :id',
     ExpressionAttributeValues: {
-      ":ntaItem": `#NTA#${ntaId}`,
-      ":id": parentId,
+      ':ntaItem': `#NTA#${ntaId}`,
+      ':id': parentId,
     },
   }).then((result: { Items: any[] }) => result.Items[0]);
 };

@@ -1,9 +1,9 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../helpers/handler-common";
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import { parseBody } from '../helpers/handler-common';
 import {
   CreateFeesHeadRequest,
   CreateAccountsHeadMasterRequest,
-} from "../model/request-method.model";
+} from '../model/request-method.model';
 import {
   createAccountHeadFunction,
   createFeesHeadFunction,
@@ -14,35 +14,36 @@ import {
   checkIfFeesHeadExistsFunction,
   checkIfNTAFeesTypeExistsFunction,
   checkIfNtaAccountsHeadExistsFunction,
-} from "../functions/fees.functions";
+  getInstituteTypeListFunction,
+} from '../functions/fees.functions';
 import {
   CreateFeesTypeMasterRequest,
   StatusChangeRequest,
-} from "../model/request-method.model";
+} from '../model/request-method.model';
 import {
   createFeesTypeFunction,
   getFeesHeadListFunction,
-} from "../functions/fees.functions";
-import { keysMissingResponse } from "../helpers/response.helper";
-import { statusChangeofFeesTypeByIdFunction } from "../functions/fees.functions";
+} from '../functions/fees.functions';
+import { keysMissingResponse } from '../helpers/response.helper';
+import { statusChangeofFeesTypeByIdFunction } from '../functions/fees.functions';
 import {
   editAccountsHeadByIdFunction,
   statusChangeofFeesHeadByIdFunction,
-} from "../functions/fees.functions";
+} from '../functions/fees.functions';
 import {
   editFeesTypeByIdFunction,
   editFeesHeadByIdFunction,
-} from "../functions/fees.functions";
+} from '../functions/fees.functions';
 import {
   deleteFeesTypeByIdFunction,
   deleteAccountsHeadByIdFunction,
-} from "../functions/fees.functions";
-import { deleteFeesHeadByIdFunction } from "../functions/fees.functions";
+} from '../functions/fees.functions';
+import { deleteFeesHeadByIdFunction } from '../functions/fees.functions';
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
-} from "../functions/fees.functions";
-import { sanitizeString } from "../helpers/general.helpers";
+} from '../functions/fees.functions';
+import { sanitizeString } from '../helpers/general.helpers';
 
 // Create
 export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
@@ -56,7 +57,7 @@ export const createFeesHeadMaster = async (event: APIGatewayProxyEvent) => {
 
 export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateFeesTypeMasterRequest>(event.body);
-  if (body) {
+  if (body && sanitizeString(body.name)) {
     return createFeesTypeFunction(body, event);
   } else {
     return keysMissingResponse();
@@ -65,7 +66,7 @@ export const createFeesTypeMaster = async (event: APIGatewayProxyEvent) => {
 
 export const createAccountHeadMaster = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateAccountsHeadMasterRequest>(event.body);
-  if (body) {
+  if (body && sanitizeString(body.name)) {
     return createAccountHeadFunction(body, event);
   } else {
     return keysMissingResponse();
@@ -83,6 +84,10 @@ export const getFeesTypeMasterList = async (event: APIGatewayProxyEvent) => {
 
 export const getAccountHeadList = async (event: APIGatewayProxyEvent) => {
   return await getAccountsHeadListFunction(event);
+};
+
+export const getInstituteTypeList = async (event: APIGatewayProxyEvent) => {
+  return await getInstituteTypeListFunction(event);
 };
 
 // Check If Master Exists
