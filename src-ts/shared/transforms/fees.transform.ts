@@ -1,22 +1,32 @@
-import { FeesHeadName, FeeType } from "../model/DB/imports/masters.model";
-import { AccountHead } from "../model/DB/institute.DB.model";
+import { FeesHeadName, FeeType } from '../model/DB/imports/masters.model';
+import { AccountHead } from '../model/DB/institute.DB.model';
 import {
   sanitizeString,
   getNTAMasterRangeKey,
-} from "../helpers/general.helpers";
-import { TableName, ObjectId } from "../model/DB/imports/types.DB.model";
+} from '../helpers/general.helpers';
+import {
+  CreateFeesHeadRequest,
+  CreateFeesTypeMasterRequest,
+  CreateAccountsHeadMasterRequest,
+} from '../model/request-method.model';
 
-export const createNewFeesHead = (userId: string, body: any) => {
+export const createNewFeesHead = (
+  userId: string,
+  body: CreateFeesHeadRequest
+) => {
   const feesHead = new FeesHeadName();
   feesHead.created_by = userId;
   feesHead.updated_by = userId;
   feesHead.name = sanitizeString(body.name);
   feesHead.parentId = encodeURI(body.parentId);
-  feesHead.instituteTypeId = body.institutionTypeId;
+  feesHead.instituteTypeId = body.instituteTypeId;
   return feesHead;
 };
 
-export const createNewFeesType = (userId: string, body: any) => {
+export const createNewFeesType = (
+  userId: string,
+  body: CreateFeesTypeMasterRequest
+) => {
   const feeType = new FeeType();
   feeType.created_by = userId;
   feeType.updated_by = userId;
@@ -24,7 +34,10 @@ export const createNewFeesType = (userId: string, body: any) => {
   return feeType;
 };
 
-export const createNewAccountHead = (userId: string, body: any) => {
+export const createNewAccountHead = (
+  userId: string,
+  body: CreateAccountsHeadMasterRequest
+) => {
   const accountHead = new AccountHead();
   accountHead.created_by = userId;
   accountHead.updated_by = userId;
@@ -65,7 +78,7 @@ export const createEditAccountHead = (userId: string, body: any) => {
 
 export const getFeesHeadRangeKey = (feeHead: FeesHeadName) => {
   return getNTAMasterRangeKey(
-    "FEE_HEAD_MASTER",
+    'FEE_HEAD_MASTER',
     feeHead.id,
     feeHead.parentId,
     feeHead.instituteTypeId
@@ -73,12 +86,12 @@ export const getFeesHeadRangeKey = (feeHead: FeesHeadName) => {
 };
 
 export const getFeesTypeRangeKey = (feesType: FeeType) => {
-  return getNTAMasterRangeKey("FEE_TYPE_MASTER", feesType.id);
+  return getNTAMasterRangeKey('FEE_TYPE_MASTER', feesType.id);
 };
 
 export const getAccountsHeadRangeKey = (accountsHead: AccountHead) => {
   return getNTAMasterRangeKey(
-    "ACCOUNTS_HEAD_MASTER",
+    'ACCOUNTS_HEAD_MASTER',
     accountsHead.id,
     accountsHead.parentId
   );
