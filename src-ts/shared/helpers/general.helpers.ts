@@ -100,6 +100,21 @@ export const checkIfMasterListitemExistsById = async (
   ).then((result: { Item: GeneralMasterItem }) => !!result.Item);
 };
 
+export const checkIfMasterExistsByIdQuery = async (
+  ntaId: string,
+  id: string
+) => {
+  return await DynamoDBActions.query({
+    KeyConditionExpression:
+      "tableType = :ntaItem and  id = :master",
+    ExpressionAttributeValues: {
+      ":ntaItem": `#NTA#${ntaId}`,
+      ":master": id,
+    },
+    TableName: TABLE_NAMES.instituteTable,
+  });
+};
+
 export const checkIfMasterListItemExistsByName = async (
   ntaId: string,
   tableType: TableName,

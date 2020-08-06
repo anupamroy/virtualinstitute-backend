@@ -22,6 +22,7 @@ import {
   getNTAMasterList,
   checkIfMasterListItemExistsByName,
   checkIfMasterListitemExistsById,
+  checkIfMasterExistsByIdQuery,
 } from "../helpers/general.helpers";
 import {
   getFeesHeadRangeKey,
@@ -37,6 +38,7 @@ import { FeesHeadName, FeeType } from "../model/DB/imports/masters.model";
 import { AccountHead } from "../model/DB/institute.DB.model";
 import { ObjectId, TableName } from "../model/DB/imports/types.DB.model";
 import { ChildMasterItem } from "../model/DB/imports/misc.DB.model";
+import { sanitizeString } from "../../../../../../../../../media/aditya/500GB NTFS 2/Aditya/Work/Work/Others/Fees Collection App/Code/SAM/Backend/src-ts/shared/helpers/general.helpers";
 
 export const createFeesHeadFunction = async (
   body: CreateFeesHeadRequest,
@@ -44,34 +46,33 @@ export const createFeesHeadFunction = async (
 ) => {
   const userId = event.headers.username;
   const ntaId = await getNTAIdFromEvent(event);
-  const institutionType = await checkIfMasterListitemExistsById(
-    ntaId,
-    `#MASTER#MASTER_TYPE#INSTITUTE_TYPE_MASTER#MASTER_ID#${body.institutionTypeId}`
-  );
-  const parentMaster = await checkIfMasterListitemExistsById(
-    ntaId,
-    `#MASTER#MASTER_TYPE#FEE_HEAD_MASTER` +
-      (body.institutionTypeId
-        ? `#INSTITUTION_TYPE#${body.institutionTypeId}`
-        : ``) +
-      `#MASTER_ID#${body.parentId}`
-  );
-  console.log("============================institutionType");
-  console.log(parentMaster);
-  console.log(`#NTA#${ntaId}`);
-  console.log(
-    `#MASTER#MASTER_TYPE#FEE_HEAD_MASTER` +
-      (body.institutionTypeId
-        ? `#INSTITUTION_TYPE#${body.institutionTypeId}`
-        : ``) +
-      `#MASTER_ID#${body.parentId}`
-  );
+  const institutionType =
+    body.institutionTypeId &&
+    (await checkIfMasterListitemExistsById(
+      ntaId,
+      `#MASTER#MASTER_TYPE#INSTITUTE_TYPE_MASTER#MASTER_ID#${body.institutionTypeId}`
+    ));
+  const parentMaster =
+    body.parentId &&
+    (await checkIfMasterListitemExistsById(ntaId, body.parentId));
   if (body.institutionTypeId && !institutionType) {
     return createResponse(
       200,
       new APIResponse(true, "Institution Type Does not exist")
     );
   } else if (body.parentId && !parentMaster) {
+    return createResponse(
+      200,
+      new APIResponse(true, "Parent Fees head Does not exist")
+    );
+  } else if (
+    await checkIfMasterListItemExistsByName(
+      ntaId,
+      "FEE_HEAD_MASTER",
+      sanitizeString(body.name),
+      body.institutionTypeId || ""
+    )
+  ) {
     return createResponse(
       200,
       new APIResponse(true, "Parent Fees head Does not exist")
@@ -120,7 +121,7 @@ export const getFeesHeadListFunction = async (event: APIGatewayProxyEvent) => {
     "FEE_HEAD_MASTER"
   );
   for (let feesHead of feesHeadList) {
-    await setParentNameInmaster(feesHead, "FEE_HEAD_MASTER", ntaId);
+    await setParentNameInmaster(feesHead, ntaId);
   }
   return createResponse(200, new APIResponse(false, "", feesHeadList));
 };
@@ -320,28 +321,26 @@ export const getNTAObjectFromEvent = async <T>(event: APIGatewayProxyEvent) => {
 
 export const setParentNameInmaster = async (
   master: ChildMasterItem,
-  masterType: TableName,
   ntaId: ObjectId
 ) => {
   master.parentName = master.parentId
-    ? (await getParentItemById(master.parentId + "", masterType, ntaId)).name
+    ? (await getParentItemById(master.parentId + "", ntaId))?.name || ""
     : "";
+  master.parentId = master.parentId ? decodeURI(master.parentId) : "";
   return master;
 };
 
 export const getParentItemById = async (
-  parentId: ObjectId,
-  masterType: TableName,
+  parentIdURI: string,
   ntaId: ObjectId
 ) => {
+  const parentId = decodeURI(parentIdURI);
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
-    KeyConditionExpression: "tableType = :ntaItem and begins_with(id, :id)",
-    FilterExpression: "contains (id, :parentId)",
+    KeyConditionExpression: "tableType = :ntaItem and id = :id",
     ExpressionAttributeValues: {
       ":ntaItem": `#NTA#${ntaId}`,
-      ":id": `#MASTER#MASTER_TYPE#${masterType}`,
-      ":parentId": `#MASTER_ID#${parentId}`,
+      ":id": parentId,
     },
   }).then((result: { Items: any[] }) => result.Items[0]);
 };

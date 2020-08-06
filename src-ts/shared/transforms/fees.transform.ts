@@ -11,7 +11,7 @@ export const createNewFeesHead = (userId: string, body: any) => {
   feesHead.created_by = userId;
   feesHead.updated_by = userId;
   feesHead.name = sanitizeString(body.name);
-  feesHead.parentId = body.parentId;
+  feesHead.parentId = encodeURI(body.parentId);
   feesHead.instituteTypeId = body.institutionTypeId;
   return feesHead;
 };
