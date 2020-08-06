@@ -51,6 +51,8 @@ export const insertCognitoUserInNTAFunction = async (
   const ntaUser = new NTAUser();
   ntaUser.username = username;
   ntaUser.ntaId = ntaId;
+  ntaUser.tableType = `#NTA#${ntaId}`;
+  ntaUser.id = `#USER#ADMIN#${username}`;
   return processDynamoDBResponse(
     DynamoDBActions.putItem(ntaUser, TABLE_NAMES.instituteTable)
   );
