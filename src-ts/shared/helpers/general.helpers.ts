@@ -134,7 +134,7 @@ export const checkIfMasterListItemExistsByName = async (
 };
 
 export const getIdFromURLEvent = (event: APIGatewayProxyEvent) => {
-  return decodeURI(event.pathParameters?.id || '');
+  return decodeURIComponent(event.pathParameters?.id || '');
 };
 
 export const getNTAObjectById = async <T>(
