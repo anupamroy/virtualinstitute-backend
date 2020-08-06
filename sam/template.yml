@@ -138,7 +138,7 @@ Resources:
   CheckFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-masters.checkTokenHandler
+      Handler: src/handlers/nta-authority.checkTokenHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -154,7 +154,7 @@ Resources:
   SetNTAPassword:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-masters.newPasswordChallengeHandler
+      Handler: src/handlers/nta-authority.newPasswordChallengeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:

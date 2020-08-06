@@ -8,6 +8,10 @@ import {
   createNTAAuthority,
   listNTAAuthority,
 } from '../shared/services/nta-authority.service';
+import {
+  checkToken,
+  newPasswordChallenge,
+} from '../shared/services/nta-institute.service';
 
 // NTA Authority
 const listAllNTAAuthoritiesHandler = AWSHandler('GET', listAllNTAAuthorities);
@@ -26,4 +30,6 @@ export {
   listAllNTAAuthoritiesHandler,
   createNTAUserHandler,
   deleteNTAUserHandler,
+  checkTokenHandler,
+  newPasswordChallengeHandler,
 };
