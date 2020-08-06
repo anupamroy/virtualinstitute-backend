@@ -2,6 +2,7 @@ import { AWSHandler } from '../shared/helpers/handler-common';
 import {
   checkIfNtaAccountsHeadExists,
   getInstituteTypeList,
+  editAccountsHeadMasterById,
 } from '../shared/services/nta-masters.service';
 import {
   statusChangeOfAccountHeadMaster,
@@ -57,7 +58,7 @@ const createFeeTypeHandler = AWSHandler('POST', createFeesTypeMaster);
 
 const editFeesHeadHandler = AWSHandler('POST', editFeesHeadMasterById);
 const editFeesTypeHandler = AWSHandler('POST', editFeesTypeMasterById);
-const editAccountsHeadHandler = AWSHandler('POST', createAccountHeadMaster);
+const editAccountsHeadHandler = AWSHandler('POST', editAccountsHeadMasterById);
 
 const deleteFeesHeadHandler = AWSHandler('DELETE', deleteFeesHeadMasterById);
 const deleteFeesTypeHandler = AWSHandler('DELETE', deleteFeesTypeMasterById);
