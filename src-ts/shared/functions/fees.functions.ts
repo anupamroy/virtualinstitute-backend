@@ -265,31 +265,52 @@ export const deleteFeesHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const feesHead = await getNTAObjectFromEvent<FeesHeadName>(event);
-  feesHead.isDeleted = true;
-  setUpdationDetailsOfObject(feesHead, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
-  );
+  if (feesHead) {
+    feesHead.isDeleted = true;
+    setUpdationDetailsOfObject(feesHead, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees Head does not exist')
+    );
+  }
 };
 export const deleteFeesTypeByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const feesType = await getNTAObjectFromEvent<FeeType>(event);
-  feesType.isDeleted = true;
-  setUpdationDetailsOfObject(feesType, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
-  );
+  if (feesType) {
+    feesType.isDeleted = true;
+    setUpdationDetailsOfObject(feesType, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees Type Does not exist')
+    );
+  }
 };
 export const deleteAccountsHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const accountsHead = await getNTAObjectFromEvent<AccountHead>(event);
-  accountsHead.isDeleted = true;
-  setUpdationDetailsOfObject(accountsHead, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
-  );
+  if (accountsHead) {
+    accountsHead.isDeleted = true;
+    setUpdationDetailsOfObject(accountsHead, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Accounts Head does not exist')
+    );
+  }
 };
 
 // Edit by Id
@@ -298,36 +319,57 @@ export const editFeesHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const feesHead = await getNTAObjectFromEvent<FeesHeadName>(event);
-  feesHead.name = body.name;
-  feesHead.instituteTypeId = body.institutionTypeId;
-  feesHead.parentId = body.parentId;
-  setUpdationDetailsOfObject(feesHead, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
-  );
+  if (feesHead) {
+    feesHead.name = body.name;
+    feesHead.instituteTypeId = body.institutionTypeId;
+    feesHead.parentId = body.parentId;
+    setUpdationDetailsOfObject(feesHead, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees Head does not exist')
+    );
+  }
 };
 export const editFeesTypeByIdFunction = async (
   body: CreateFeesTypeMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
   const feesType = await getNTAObjectFromEvent<FeeType>(event);
-  feesType.name = body.name;
-  setUpdationDetailsOfObject(feesType, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
-  );
+  if (feesType) {
+    feesType.name = body.name;
+    setUpdationDetailsOfObject(feesType, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees Type Does not exist')
+    );
+  }
 };
 export const editAccountsHeadByIdFunction = async (
   body: CreateAccountsHeadMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
   const accountsHead = await getNTAObjectFromEvent<AccountHead>(event);
-  accountsHead.name = body.name;
-  accountsHead.parentId = body.parentId;
-  setUpdationDetailsOfObject(accountsHead, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
-  );
+  if (accountsHead) {
+    accountsHead.name = body.name;
+    accountsHead.parentId = body.parentId;
+    setUpdationDetailsOfObject(accountsHead, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Accounts Head does not exist')
+    );
+  }
 };
 
 // Status Change By id
@@ -336,33 +378,54 @@ export const statusChangeofFeesHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const feesHead = await getNTAObjectFromEvent<FeesHeadName>(event);
-  feesHead.isActive = body.isActive;
-  setUpdationDetailsOfObject(feesHead, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
-  );
+  if (feesHead) {
+    feesHead.isActive = body.isActive;
+    setUpdationDetailsOfObject(feesHead, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees Head does not exist')
+    );
+  }
 };
 export const statusChangeofFeesTypeByIdFunction = async (
   body: StatusChangeRequest,
   event: APIGatewayProxyEvent
 ) => {
   const feesType = await getNTAObjectFromEvent<FeeType>(event);
-  feesType.isActive = body.isActive;
-  setUpdationDetailsOfObject(feesType, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
-  );
+  if (feesType) {
+    feesType.isActive = body.isActive;
+    setUpdationDetailsOfObject(feesType, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Fees Type Does not exist')
+    );
+  }
 };
 export const statusChangeofAccountHeadByIdFunction = async (
   body: StatusChangeRequest,
   event: APIGatewayProxyEvent
 ) => {
   const accountsHead = await getNTAObjectFromEvent<AccountHead>(event);
-  accountsHead.isActive = body.isActive;
-  setUpdationDetailsOfObject(accountsHead, event);
-  return await processDynamoDBResponse(
-    DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
-  );
+  if (accountsHead) {
+    accountsHead.isActive = body.isActive;
+    setUpdationDetailsOfObject(accountsHead, event);
+    return await processDynamoDBResponse(
+      DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+    );
+  } else {
+    return createResponse(
+      200,
+      new APIResponse(true, 'Accounts Head does not exist')
+    );
+  }
 };
 
 // Helpers
