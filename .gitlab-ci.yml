@@ -3,20 +3,20 @@ image: python:3.8
 
 # This is the stages / task to perfom in jobs
 stages:
-  - build
+  #- build
   # - lint
   - deploy
 
 # Job One for making build
-build_master:
-  stage: build
-  image: "node:lts"
-  before_script:
-    - npm install
-  script:
-    - npm run release
+#build_master:
+ # stage: build
+ # image: "node:lts"
+#  before_script:
+ #   - npm install
+#  script:
+#    - npm run release
 
-  only: ["development"]
+ # only: ["development"]
   
 deploy_master:
   image: python:latest
