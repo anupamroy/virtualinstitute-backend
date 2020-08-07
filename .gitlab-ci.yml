@@ -22,7 +22,7 @@ deploy_master:
     - pip3 install aws-sam-cli --upgrade
   script:
     - cd sam 
-    - sam build
+   # - sam build
     - sam package --output-template-file template.yaml --s3-bucket demo-sam-deploy-1
     - sam deploy --template-file template.yaml --stack-name gitlab-example --s3-bucket demo-sam-deploy-1 --capabilities CAPABILITY_IAM --region ap-south-1
   environment: production
