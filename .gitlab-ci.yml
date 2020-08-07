@@ -20,6 +20,7 @@ stages:
   
 deploy_master:
   image: python:latest
+  image: node:lts
   stage: deploy
   before_script:
     - pip3 install awscli --upgrade
