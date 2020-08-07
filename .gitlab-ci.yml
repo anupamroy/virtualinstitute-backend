@@ -20,16 +20,16 @@ npm_build:
     - npm install
   script:
     - npm run release
-# image: python:3.8
+ image: python:3.8
 
-# stages:
-#   - deploy
+ stages:
+   - deploy
 
-# production:
-#   stage: deploy
-#   before_script:
-#     - pip3 install awscli --upgrade
-#     - pip3 install aws-sam-cli --upgrade
-#   script:
-#     - cd sam && sam build && sam deploy
-#   environment: production
+ production:
+   stage: deploy
+   before_script:
+     - pip3 install awscli --upgrade
+     - pip3 install aws-sam-cli --upgrade
+   script:
+     - cd sam && sam build && sam deploy
+   environment: production
