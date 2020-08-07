@@ -1,26 +1,14 @@
 # Node Image for docker on which code will execute
-image: node:lts
+image: node:latest
 
 # This is the stages / task to perfom in jobs
 stages:
-  #- build
-  # - lint
   - deploy
 
-# Job One for making build
-#build_master:
- # stage: build
- # image: "node:lts"
-#  before_script:
- #   - npm install
-#  script:
-#    - npm run release
-
- # only: ["development"]
 before_script:
   - cd sam
   - npm install
-  
+
 deploy_master:
   image: python:latest
  
