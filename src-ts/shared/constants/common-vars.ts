@@ -65,9 +65,11 @@ export const ERRORS = {
   FEES_HEAD_NO_EXISTS: 'Fees head does not Exist',
   FEES_TYPE_NO_SPECIAL_CHARS: 'Fees Type name should not contain any special characters.',
   FEES_TYPE_NO_EXIST: 'Fees Type does not Exist',
+  FEES_TYPE_NAME_ALREADY_EXISTS: 'Fees type name already exists',
   PARENT_ACCOUNT_HEAD_NO_EXISTS: 'Parent Accounts head Does not exist',
   ACCOUNTS_HEAD_NO_SPECIAL_CHARS: 'Accounts head name should not contain any special characters.',
   ACCOUNTS_HEAD_NO_EXISTS: 'Accounts head does not Exist',
+  ACCOUNTS_HEAD_NAME_ALREADY_EXISTS: 'Fees type name already exists',
   GENERAL_UNAUTHORISED_ACCESS: "Unauthorised Access",
   GENERAL_KEYS_MISSING: "Some keys Missing"
 };
