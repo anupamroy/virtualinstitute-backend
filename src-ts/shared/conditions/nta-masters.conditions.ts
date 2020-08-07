@@ -3,6 +3,7 @@ import {
   checkIfMasterListitemExistsById,
   sanitizeString,
   checkIfMasterListItemExistsByName,
+  getNTAMasterList,
 } from '../helpers/general.helpers';
 import {
   CreateFeesHeadRequest,
@@ -43,6 +44,15 @@ export const conditionFeesHeadEdit = async (
   ) {
     return createErrorResponse(ERRORS.FEES_HEAD_NAME_ALREADY_EXISTS);
   } else {
+    // TODO: Check if the fees Head parent id is not a child of the current item
+  //   const feesHeadList = await getNTAMasterList<FeesHeadName>(
+  //     ntaId,
+  //     'FEE_HEAD_MASTER'
+  //   );
+  //  const children = feesHeadList.filter(feesHeadItem => feesHeadItem.parentId === feesHead.id);
+  // //  [...children].forEach(child => {
+  // //    const child
+  // //  })
     return false;
   }
 };

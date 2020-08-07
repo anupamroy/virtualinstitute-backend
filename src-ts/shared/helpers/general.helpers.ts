@@ -80,7 +80,9 @@ export const getNTAMasterList = async <T>(
       ':ntaItem': `#NTA#${ntaId}`,
       ':master': `#MASTER#MASTER_TYPE#${tableType}`,
     },
-  }).then((result: { Items: T[] }) => result.Items);
+  }).then((result: { Items: T[] }) =>
+    result.Items.filter((item: any) => !(item as GeneralDBItem).isDeleted)
+  );
 };
 
 export const checkIfMasterListitemExistsById = async (
