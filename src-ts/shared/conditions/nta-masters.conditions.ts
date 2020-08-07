@@ -45,14 +45,14 @@ export const conditionFeesHeadEdit = async (
     return createErrorResponse(ERRORS.FEES_HEAD_NAME_ALREADY_EXISTS);
   } else {
     // TODO: Check if the fees Head parent id is not a child of the current item
-  //   const feesHeadList = await getNTAMasterList<FeesHeadName>(
-  //     ntaId,
-  //     'FEE_HEAD_MASTER'
-  //   );
-  //  const children = feesHeadList.filter(feesHeadItem => feesHeadItem.parentId === feesHead.id);
-  // //  [...children].forEach(child => {
-  // //    const child
-  // //  })
+    //   const feesHeadList = await getNTAMasterList<FeesHeadName>(
+    //     ntaId,
+    //     'FEE_HEAD_MASTER'
+    //   );
+    //  const children = feesHeadList.filter(feesHeadItem => feesHeadItem.parentId === feesHead.id);
+    // //  [...children].forEach(child => {
+    // //    const child
+    // //  })
     return false;
   }
 };
@@ -61,13 +61,12 @@ export const conditionsFeesHead = async (
   body: CreateFeesHeadRequest,
   ntaId: ObjectId
 ) => {
-  const institutionType =
-    body.instituteTypeId &&
-    (await checkIfInstitutionTypeIdValid(ntaId, body.instituteTypeId));
-  const parentMaster = await getNTAObjectById<FeesHeadName>(
-    body.parentId,
-    ntaId
-  );
+  const institutionType = body.instituteTypeId
+    ? await checkIfInstitutionTypeIdValid(ntaId, body.instituteTypeId)
+    : false;
+  const parentMaster = body.parentId
+    ? await getNTAObjectById<FeesHeadName>(body.parentId, ntaId)
+    : null;
   if (body.instituteTypeId && !institutionType) {
     return createErrorResponse(ERRORS.INSTITUTION_TYPE_NO_EXIST);
   } else if (body.parentId && !parentMaster) {
@@ -168,9 +167,9 @@ export const conditionsAccountsHead = async (
   body: CreateAccountsHeadMasterRequest,
   ntaId: ObjectId
 ) => {
-  const parentMaster =
-    body.parentId &&
-    (await checkIfMasterListitemExistsById(ntaId, body.parentId));
+  const parentMaster = body.parentId
+    ? await checkIfMasterListitemExistsById(ntaId, body.parentId)
+    : false;
   if (body.parentId && !parentMaster) {
     return createErrorResponse(ERRORS.PARENT_ACCOUNT_HEAD_NO_EXISTS);
   } else if (sanitizeString(body.name) !== body.name) {

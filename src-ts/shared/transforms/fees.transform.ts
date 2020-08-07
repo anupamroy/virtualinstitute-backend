@@ -18,7 +18,7 @@ export const createNewFeesHead = (
   feesHead.created_by = userId;
   feesHead.updated_by = userId;
   feesHead.name = sanitizeString(body.name);
-  feesHead.parentId = encodeURI(body.parentId);
+  feesHead.parentId = encodeURI(body.parentId || '');
   feesHead.instituteTypeId = body.instituteTypeId;
   return feesHead;
 };

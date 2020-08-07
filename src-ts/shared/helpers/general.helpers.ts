@@ -81,7 +81,13 @@ export const getNTAMasterList = async <T>(
       ':master': `#MASTER#MASTER_TYPE#${tableType}`,
     },
   }).then((result: { Items: T[] }) =>
-    result.Items.filter((item: any) => !(item as GeneralDBItem).isDeleted)
+    result.Items.filter(
+      (item: any) => !(item as GeneralDBItem)?.isDeleted
+    ).sort((item1: any, item2: any) =>
+      (item1 as GeneralMasterItem).name > (item2 as GeneralMasterItem).name
+        ? 1
+        : -1
+    )
   );
 };
 
@@ -133,7 +139,7 @@ export const checkIfMasterListItemExistsByName = async (
       '#name': 'name',
     },
   }).then(
-    (result) => !!result.Items.filter((item: any) => !item.isDeleted).length
+    (result) => !!result.Items.filter((item: any) => !item?.isDeleted).length
   );
 };
 
@@ -152,7 +158,7 @@ export const getNTAObjectById = async <T>(
     },
     TABLE_NAMES.instituteTable
   ).then((result: { Item: T }) =>
-    !(result.Item as any).isDeleted ? result.Item : null
+    !(result.Item as any)?.isDeleted ? result.Item : null
   );
 };
 
