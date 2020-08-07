@@ -478,8 +478,6 @@ export const deleteNTAObjectFromEvent = async (event: APIGatewayProxyEvent) => {
   return await DynamoDBActions.delete(params, TABLE_NAMES.instituteTable);
 };
 
-export const checkIfInstituteTypeExists = async () => {};
-
 // TODO Write this function
 // export const getChildMasters = async (parentId: ObjectId, masterType: TableName) => {
 //   return DynamoDBActions.query()

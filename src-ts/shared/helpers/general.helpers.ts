@@ -116,7 +116,7 @@ export const checkIfMasterListItemExistsByName = async (
   masterName: string,
   institutionTypeId?: string
 ) => {
- return await DynamoDBActions.query({
+  return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
     KeyConditionExpression: 'tableType = :ntaItem and begins_with(id, :id)',
     FilterExpression: '#name = :masterName',
@@ -130,7 +130,9 @@ export const checkIfMasterListItemExistsByName = async (
     ExpressionAttributeNames: {
       '#name': 'name',
     },
-  }).then((result) => !!result.Items.length);
+  }).then(
+    (result) => !!result.Items.filter((item: any) => !item.isDeleted).length
+  );
 };
 
 export const getIdFromURLEvent = (event: APIGatewayProxyEvent) => {
@@ -147,7 +149,9 @@ export const getNTAObjectById = async <T>(
       id: masterId,
     },
     TABLE_NAMES.instituteTable
-  ).then((result: { Item: T }) => result.Item);
+  ).then((result: { Item: T }) =>
+    !(result.Item as any).isDeleted ? result.Item : null
+  );
 };
 
 export const setUpdationDetailsOfObject = (
