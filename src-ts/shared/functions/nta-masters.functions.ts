@@ -45,7 +45,6 @@ import { conditionsAccountsHeadEdit } from '../conditions/nta-masters.conditions
 import {
   conditiondFeesHeadCreate,
   conditionFeesTypeCreate,
-  conditionsAccountsHead,
   conditionFeesHeadEdit,
   conditionsAccountsHeadCreate,
   conditionFeesTypeEdit,
@@ -139,8 +138,18 @@ export const getAccountsHeadListFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const ntaId = getNTAIdFromEvent(event);
-  return await processDynamoDBResponse(
-    getNTAMasterList(ntaId, 'ACCOUNTS_HEAD_MASTER').then((accountsHeadList) =>
+  const accountsHeadList = await getNTAMasterList<AccountHead>(
+    ntaId,
+    'ACCOUNTS_HEAD_MASTER'
+  );
+  for (let accountsHead of accountsHeadList) {
+    await setParentNameInMaster(accountsHead, ntaId);
+  }
+  return createResponse(
+    200,
+    new APIResponse(
+      false,
+      '',
       accountsHeadList.filter((accountsHead: any) => !accountsHead.isDeleted)
     )
   );
