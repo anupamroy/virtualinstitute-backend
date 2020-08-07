@@ -1,5 +1,5 @@
 # Node Image for docker on which code will execute
-image: python:3.8
+image: node:lts
 
 # This is the stages / task to perfom in jobs
 stages:
@@ -17,10 +17,13 @@ stages:
 #    - npm run release
 
  # only: ["development"]
+before_script:
+  - cd sam
+  - npm install
   
 deploy_master:
   image: python:latest
-  image: node:lts
+ 
   stage: deploy
   before_script:
     - pip3 install awscli --upgrade
