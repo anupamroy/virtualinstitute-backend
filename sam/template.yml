@@ -59,7 +59,6 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-authority.createNTAAuthorityHandler
-      CodeUri: ../src-ts/handlers
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
