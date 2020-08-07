@@ -1,9 +1,18 @@
 import { ObjectId } from '../model/DB/imports/types.DB.model';
-import { checkIfMasterListitemExistsById, sanitizeString, checkIfMasterListItemExistsByName } from '../helpers/general.helpers';
-import { CreateFeesHeadRequest, CreateFeesTypeMasterRequest, CreateAccountsHeadMasterRequest } from '../model/request-method.model';
+import {
+  checkIfMasterListitemExistsById,
+  sanitizeString,
+  checkIfMasterListItemExistsByName,
+} from '../helpers/general.helpers';
+import {
+  CreateFeesHeadRequest,
+  CreateFeesTypeMasterRequest,
+  CreateAccountsHeadMasterRequest,
+} from '../model/request-method.model';
 import { createErrorResponse } from '../helpers/handler-common';
 import { ERRORS } from '../constants/common-vars';
 import { FeesHeadName, FeeType } from '../model/DB/imports/masters.model';
+import { AccountHead } from '../model/DB/institute.DB.model';
 export const conditiondFeesHeadCreate = async (
   body: CreateFeesHeadRequest,
   ntaId: ObjectId
@@ -109,6 +118,32 @@ export const conditionsAccountsHeadCreate = async (
   ntaId: ObjectId
 ) => {
   const error = await conditionsAccountsHead(body, ntaId);
+  if (error) {
+    return error;
+  } else if (await checkIfAccountsHeadExists(ntaId, body)) {
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NAME_ALREADY_EXISTS);
+  } else {
+    return false;
+  }
+};
+
+export const conditionsAccountsHeadEdit = async (
+  accountsHead: AccountHead,
+  body: CreateAccountsHeadMasterRequest,
+  ntaId: ObjectId
+) => {
+  const accountsHeadName = sanitizeString(body.name);
+  const error = await conditionsAccountsHead(body, ntaId);
+  if (error) {
+    return error;
+  } else if (
+    accountsHeadName !== accountsHead.name &&
+    (await checkIfAccountsHeadExists(ntaId, body))
+  ) {
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NAME_ALREADY_EXISTS);
+  } else {
+    return false;
+  }
 };
 
 export const conditionsAccountsHead = async (
@@ -122,8 +157,6 @@ export const conditionsAccountsHead = async (
     return createErrorResponse(ERRORS.PARENT_ACCOUNT_HEAD_NO_EXISTS);
   } else if (sanitizeString(body.name) !== body.name) {
     return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_SPECIAL_CHARS);
-  } else if (await checkIfAccountsHeadExists(ntaId, body)) {
-    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NAME_ALREADY_EXISTS);
   } else {
     return false;
   }

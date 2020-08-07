@@ -41,7 +41,15 @@ import { FeesHeadName, FeeType } from '../model/DB/imports/masters.model';
 import { AccountHead } from '../model/DB/institute.DB.model';
 import { ObjectId } from '../model/DB/imports/types.DB.model';
 import { ChildMasterItem } from '../model/DB/imports/misc.DB.model';
-import { conditiondFeesHeadCreate, conditionFeesTypeCreate, conditionsAccountsHead, conditionFeesHeadEdit } from '../conditions/nta-masters.conditions';
+import { conditionsAccountsHeadEdit } from '../conditions/nta-masters.conditions';
+import {
+  conditiondFeesHeadCreate,
+  conditionFeesTypeCreate,
+  conditionsAccountsHead,
+  conditionFeesHeadEdit,
+  conditionsAccountsHeadCreate,
+  conditionFeesTypeEdit,
+} from '../conditions/nta-masters.conditions';
 
 export const createFeesHeadFunction = async (
   body: CreateFeesHeadRequest,
@@ -85,7 +93,7 @@ export const createAccountHeadFunction = async (
 ) => {
   const userId = event.headers.username;
   const ntaId = getNTAIdFromEvent(event);
-  const error = await conditionsAccountsHead(body, ntaId);
+  const error = await conditionsAccountsHeadCreate(body, ntaId);
   if (error) {
     return error;
   } else {
@@ -305,13 +313,19 @@ export const editFeesTypeByIdFunction = async (
   body: CreateFeesTypeMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
+  const ntaId = getNTAIdFromEvent(event);
   const feesType = await getNTAObjectFromEvent<FeeType>(event);
   if (feesType) {
-    feesType.name = body.name;
-    setUpdationDetailsOfObject(feesType, event);
-    return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
-    );
+    const error = await conditionFeesTypeEdit(feesType, body, ntaId);
+    if (error) {
+      return error;
+    } else {
+      feesType.name = body.name;
+      setUpdationDetailsOfObject(feesType, event);
+      return await processDynamoDBResponse(
+        DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+      );
+    }
   } else {
     return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
   }
@@ -320,14 +334,20 @@ export const editAccountsHeadByIdFunction = async (
   body: CreateAccountsHeadMasterRequest,
   event: APIGatewayProxyEvent
 ) => {
+  const ntaId = getNTAIdFromEvent(event);
   const accountsHead = await getNTAObjectFromEvent<AccountHead>(event);
   if (accountsHead) {
-    accountsHead.name = body.name;
-    accountsHead.parentId = body.parentId;
-    setUpdationDetailsOfObject(accountsHead, event);
-    return await processDynamoDBResponse(
-      DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
-    );
+    const error = await conditionsAccountsHeadEdit(accountsHead, body, ntaId);
+    if (error) {
+      return error;
+    } else {
+      accountsHead.name = body.name;
+      accountsHead.parentId = body.parentId;
+      setUpdationDetailsOfObject(accountsHead, event);
+      return await processDynamoDBResponse(
+        DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+      );
+    }
   } else {
     return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
   }
