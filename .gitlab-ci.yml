@@ -33,6 +33,6 @@ npm_build:
    script:
     - cd sam 
     - sam build
-    - sam package --output-template-file template.yaml --s3-bucket #S3Bucket#
-    - sam deploy --template-file template.yaml --stack-name gitlab-example --s3-bucket #S3Bucket# --capabilities CAPABILITY_IAM --region ap-south-1
+    - sam package --output-template-file template.yaml --s3-bucket demo-sam-deploy-1
+    - sam deploy --template-file template.yaml --stack-name gitlab-example --s3-bucket demo-sam-deploy-1 --capabilities CAPABILITY_IAM --region ap-south-1
   environment: production
