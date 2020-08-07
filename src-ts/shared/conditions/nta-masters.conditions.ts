@@ -13,6 +13,7 @@ import { createErrorResponse } from '../helpers/handler-common';
 import { ERRORS } from '../constants/common-vars';
 import { FeesHeadName, FeeType } from '../model/DB/imports/masters.model';
 import { AccountHead } from '../model/DB/institute.DB.model';
+import { getNTAObjectById } from '../helpers/general.helpers';
 export const conditiondFeesHeadCreate = async (
   body: CreateFeesHeadRequest,
   ntaId: ObjectId
@@ -53,13 +54,20 @@ export const conditionsFeesHead = async (
   const institutionType =
     body.instituteTypeId &&
     (await checkIfInstitutionTypeIdValid(ntaId, body.instituteTypeId));
-  const parentMaster =
-    body.parentId &&
-    (await checkIfMasterListitemExistsById(ntaId, body.parentId));
+  const parentMaster = await getNTAObjectById<FeesHeadName>(
+    body.parentId,
+    ntaId
+  );
   if (body.instituteTypeId && !institutionType) {
     return createErrorResponse(ERRORS.INSTITUTION_TYPE_NO_EXIST);
   } else if (body.parentId && !parentMaster) {
     return createErrorResponse(ERRORS.PARENT_FEES_HEAD_NOT_EXIST);
+  } else if (
+    body.instituteTypeId &&
+    parentMaster &&
+    parentMaster.instituteTypeId !== body.instituteTypeId
+  ) {
+    return createErrorResponse(ERRORS.FEES_HEAD_INSTITUTE_ID_NO_MATCH_PARENT);
   } else if (sanitizeString(body.name) !== body.name) {
     return createErrorResponse(ERRORS.FEES_HEAD_NO_SPECIAL_CHARS);
   } else {

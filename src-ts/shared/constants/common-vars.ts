@@ -63,6 +63,7 @@ export const ERRORS = {
     'Fees head name should not contain any special characters.',
   FEES_HEAD_NAME_ALREADY_EXISTS: 'Fees head name already exists',
   FEES_HEAD_NO_EXISTS: 'Fees head does not Exist',
+  FEES_HEAD_INSTITUTE_ID_NO_MATCH_PARENT : 'The Fees Head Institute does not match with the parent Fees head',
   FEES_TYPE_NO_SPECIAL_CHARS: 'Fees Type name should not contain any special characters.',
   FEES_TYPE_NO_EXIST: 'Fees Type does not Exist',
   FEES_TYPE_NAME_ALREADY_EXISTS: 'Fees type name already exists',
