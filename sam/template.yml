@@ -35,7 +35,7 @@ Resources:
         DefaultAuthorizer: InstituteCognitoAuthorizer
         Authorizers:
           InstituteCognitoAuthorizer:
-            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_qhEXlobaj
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
 
   # CORSApi:
   #   Type: AWS::Serverless::Api
