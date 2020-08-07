@@ -2,9 +2,9 @@ stages:
   - Install SAM
   - Release
 
-cache:
-  paths:
-    - node_modules/
+# cache:
+#   paths:
+#     - node_modules/
 
 production:
   stage: Install SAM
