@@ -1,24 +1,21 @@
 # Node Image for docker on which code will execute
 image: node:latest
+image: python:latest
 
 # This is the stages / task to perfom in jobs
 stages:
   - deploy
 
-before_script:
-  - cd sam
-  - npm install
-
 deploy_master:
-  image: python:latest
- 
   stage: deploy
   before_script:
+    - cd sam
+    - npm install
+    - cd..
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
   script:
     - cd sam 
-    - npm install
     - sam build
     - sam package --output-template-file template.yaml --s3-bucket demo-sam-deploy-1
     - sam deploy --template-file template.yaml --stack-name gitlab-example --s3-bucket demo-sam-deploy-1 --capabilities CAPABILITY_IAM --region ap-south-1
