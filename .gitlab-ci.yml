@@ -33,5 +33,5 @@ npm_build:
    script:
     - sam build
     - sam package --output-template-file sam/template.yaml --s3-bucket #S3Bucket#
-    - sam deploy --template-file sam/template.yaml --stack-name gitlab-example --s3-bucket #S3Bucket# --capabilities CAPABILITY_IAM --region us-east-1
+    - sam deploy --template-file sam/template.yaml --stack-name gitlab-example --s3-bucket #S3Bucket# --capabilities CAPABILITY_IAM --region ap-south-1
   environment: production
