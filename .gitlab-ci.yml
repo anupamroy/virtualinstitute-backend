@@ -1,0 +1,35 @@
+# stages:
+#   - Install SAM
+#   - Release
+
+# cache:
+#   paths:
+#     - node_modules/
+
+# production:
+#   stage: Install SAM
+#   image: python:3.8
+#   before_script:
+#     - pip3 install awscli --upgrade
+#     - pip3 install aws-sam-cli --upgrade
+
+# npm_build:
+#   stage: Release
+#   image: "node:lts"
+#   before_script:
+
+#   script:
+#     - npm run release
+image: python:3.8
+
+stages:
+  - deploy
+
+production:
+  stage: deploy
+  before_script:
+    - pip3 install awscli --upgrade
+    - pip3 install aws-sam-cli --upgrade
+  script:
+    - cd sam && sam build && sam deploy
+  environment: production

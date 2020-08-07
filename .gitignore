@@ -1,6 +1,6 @@
 node_modules
 .aws-sam
-sam/src
+# sam/src
 sam/node-modules
 sam/package-lock.json
 .idea

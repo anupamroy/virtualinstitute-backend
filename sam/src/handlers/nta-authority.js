@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.newPasswordChallengeHandler = exports.checkTokenHandler = exports.deleteNTAUserHandler = exports.createNTAUserHandler = exports.listAllNTAAuthoritiesHandler = exports.listNTAAuthorityHandler = exports.createNTAAuthorityHandler = void 0;
+const handler_common_1 = require("../shared/helpers/handler-common");
+const nta_authority_service_1 = require("../shared/services/nta-authority.service");
+const nta_authority_service_2 = require("../shared/services/nta-authority.service");
+const nta_institute_service_1 = require("../shared/services/nta-institute.service");
+// NTA Authority
+const listAllNTAAuthoritiesHandler = handler_common_1.AWSHandler('GET', nta_authority_service_1.listAllNTAAuthorities);
+exports.listAllNTAAuthoritiesHandler = listAllNTAAuthoritiesHandler;
+const listNTAAuthorityHandler = handler_common_1.AWSHandler('GET', nta_authority_service_2.listNTAAuthority);
+exports.listNTAAuthorityHandler = listNTAAuthorityHandler;
+const createNTAAuthorityHandler = handler_common_1.AWSHandler('POST', nta_authority_service_2.createNTAAuthority);
+exports.createNTAAuthorityHandler = createNTAAuthorityHandler;
+const createNTAUserHandler = handler_common_1.AWSHandler('POST', nta_authority_service_1.createNTAUser);
+exports.createNTAUserHandler = createNTAUserHandler;
+const deleteNTAUserHandler = handler_common_1.AWSHandler('DELETE', nta_authority_service_1.deleteNTAUser);
+exports.deleteNTAUserHandler = deleteNTAUserHandler;
+const checkTokenHandler = handler_common_1.AWSHandler('GET', nta_institute_service_1.checkToken);
+exports.checkTokenHandler = checkTokenHandler;
+const newPasswordChallengeHandler = handler_common_1.AWSHandler('POST', nta_institute_service_1.newPasswordChallenge);
+exports.newPasswordChallengeHandler = newPasswordChallengeHandler;
