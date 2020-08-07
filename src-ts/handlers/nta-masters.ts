@@ -32,7 +32,7 @@ import {
   getFeesHeadByIdFunction,
   getFeesTypeByIdFunction,
   getAccountsHeadByIdFunction,
-} from '../shared/functions/fees.functions';
+} from '../shared/functions/nta-masters.functions';
 
 const getFeesHeadListHandler = AWSHandler('GET', getFeesHeadMastersList);
 const getAccountHeadListHandler = AWSHandler('GET', getAccountHeadList);

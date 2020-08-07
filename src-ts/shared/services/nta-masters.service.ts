@@ -15,7 +15,7 @@ import {
   checkIfNTAFeesTypeExistsFunction,
   checkIfNtaAccountsHeadExistsFunction,
   getInstituteTypeListFunction,
-} from '../functions/fees.functions';
+} from '../functions/nta-masters.functions';
 import {
   CreateFeesTypeMasterRequest,
   StatusChangeRequest,
@@ -23,26 +23,26 @@ import {
 import {
   createFeesTypeFunction,
   getFeesHeadListFunction,
-} from '../functions/fees.functions';
+} from '../functions/nta-masters.functions';
 import { keysMissingResponse } from '../helpers/response.helper';
-import { statusChangeofFeesTypeByIdFunction } from '../functions/fees.functions';
+import { statusChangeofFeesTypeByIdFunction } from '../functions/nta-masters.functions';
 import {
   editAccountsHeadByIdFunction,
   statusChangeofFeesHeadByIdFunction,
-} from '../functions/fees.functions';
+} from '../functions/nta-masters.functions';
 import {
   editFeesTypeByIdFunction,
   editFeesHeadByIdFunction,
-} from '../functions/fees.functions';
+} from '../functions/nta-masters.functions';
 import {
   deleteFeesTypeByIdFunction,
   deleteAccountsHeadByIdFunction,
-} from '../functions/fees.functions';
-import { deleteFeesHeadByIdFunction } from '../functions/fees.functions';
+} from '../functions/nta-masters.functions';
+import { deleteFeesHeadByIdFunction } from '../functions/nta-masters.functions';
 import {
   getFeesTypeListFunction,
   getAccountsHeadListFunction,
-} from '../functions/fees.functions';
+} from '../functions/nta-masters.functions';
 import { sanitizeString } from '../helpers/general.helpers';
 
 // Create
