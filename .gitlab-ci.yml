@@ -3,14 +3,21 @@ image: node:latest
 
 # This is the stages / task to perfom in jobs
 stages:
-  - deploy
+  - nodeBuild
+  - deploy 
+
+build_node:
+  stage: nodeBuild
+  script:
+    - cd sam
+    - npm install
+    - cd ..
 
 deploy_master:
   stage: deploy
+  image: python:latest
+  
   before_script:
-    - cd sam
-    - npm install
-    - cd..
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
   script:
