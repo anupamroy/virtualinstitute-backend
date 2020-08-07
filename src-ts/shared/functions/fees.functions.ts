@@ -14,15 +14,18 @@ import {
   processDynamoDBResponse,
   DynamoDBActions,
 } from '../helpers/db-handler';
-import { TABLE_NAMES } from '../constants/common-vars';
+import { TABLE_NAMES, ERRORS } from '../constants/common-vars';
 import { CreateAccountsHeadMasterRequest } from '../model/request-method.model';
-import { parseBody, createResponse } from '../helpers/handler-common';
+import {
+  parseBody,
+  createResponse,
+  createErrorResponse,
+} from '../helpers/handler-common';
 import {
   getNTAIdFromEvent,
   getNTAMasterList,
   checkIfMasterListItemExistsByName,
   checkIfMasterListitemExistsById,
-  checkIfMasterExistsByIdQuery,
   sanitizeString,
 } from '../helpers/general.helpers';
 import {
@@ -56,23 +59,11 @@ export const createFeesHeadFunction = async (
     body.parentId &&
     (await checkIfMasterListitemExistsById(ntaId, body.parentId));
   if (body.instituteTypeId && !institutionType) {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Institution Type Does not exist')
-    );
+    return createErrorResponse(ERRORS.INSTITUTION_TYPE_NO_EXIST);
   } else if (body.parentId && !parentMaster) {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Parent Fees head Does not exist')
-    );
+    return createErrorResponse(ERRORS.PARENT_FEES_HEAD_NOT_EXIST);
   } else if (sanitizeString(body.name) !== body.name) {
-    return createResponse(
-      200,
-      new APIResponse(
-        true,
-        'Fees head name should not contain any special characters.'
-      )
-    );
+    return createErrorResponse(ERRORS.FEES_HEAD_NO_SPECIAL_CHARS);
   } else if (
     await checkIfMasterListItemExistsByName(
       ntaId,
@@ -81,10 +72,7 @@ export const createFeesHeadFunction = async (
       body.instituteTypeId || ''
     )
   ) {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees head name already exists')
-    );
+    return createErrorResponse(ERRORS.FEES_HEAD_NAME_ALREADY_EXISTS);
   } else {
     const feesHead = createNewFeesHead(userId, body);
     feesHead.id = getFeesHeadRangeKey(feesHead);
@@ -102,13 +90,7 @@ export const createFeesTypeFunction = async (
   const feeType = createNewFeesType(userId, body);
   const ntaId = getNTAIdFromEvent(event);
   if (sanitizeString(body.name) !== body.name) {
-    return createResponse(
-      200,
-      new APIResponse(
-        true,
-        'Fees Type name should not contain any special characters.'
-      )
-    );
+    return createErrorResponse(ERRORS.FEES_TYPE_NO_SPECIAL_CHARS);
   } else {
     feeType.id = getFeesTypeRangeKey(feeType);
     feeType.tableType = `#NTA#${ntaId}`;
@@ -127,18 +109,9 @@ export const createAccountHeadFunction = async (
     body.parentId &&
     (await checkIfMasterListitemExistsById(ntaId, body.parentId));
   if (body.parentId && !parentMaster) {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Parent Accounts head Does not exist')
-    );
+    return createErrorResponse(ERRORS.PARENT_ACCOUNT_HEAD_NO_EXISTS);
   } else if (sanitizeString(body.name) !== body.name) {
-    return createResponse(
-      200,
-      new APIResponse(
-        true,
-        'Accounts head name should not contain any special characters.'
-      )
-    );
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_SPECIAL_CHARS);
   } else {
     const accountHead = createNewAccountHead(userId, body);
     accountHead.id = getAccountsHeadRangeKey(accountHead);
@@ -255,10 +228,7 @@ export const getFeesHeadByIdFunction = async (event: APIGatewayProxyEvent) => {
     await setInstituteNameInMaster(object, ntaId);
     return createResponse(200, new APIResponse(false, '', object));
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees head does not Exist')
-    );
+    return createErrorResponse(ERRORS.FEES_HEAD_NO_EXISTS);
   }
 };
 
@@ -269,10 +239,7 @@ export const getFeesTypeByIdFunction = async (event: APIGatewayProxyEvent) => {
     await setParentNameInMaster(object, ntaId);
     return createResponse(200, new APIResponse(false, '', object));
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees head does not Exist')
-    );
+    return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
   }
 };
 
@@ -285,10 +252,7 @@ export const getAccountsHeadByIdFunction = async (
     await setParentNameInMaster(object, ntaId);
     return createResponse(200, new APIResponse(false, '', object));
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees head does not Exist')
-    );
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
   }
 };
 
@@ -304,10 +268,7 @@ export const deleteFeesHeadByIdFunction = async (
       DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees Head does not exist')
-    );
+    return createErrorResponse(ERRORS.FEES_HEAD_NO_EXISTS);
   }
 };
 export const deleteFeesTypeByIdFunction = async (
@@ -321,10 +282,7 @@ export const deleteFeesTypeByIdFunction = async (
       DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees Type Does not exist')
-    );
+    return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
   }
 };
 export const deleteAccountsHeadByIdFunction = async (
@@ -338,10 +296,7 @@ export const deleteAccountsHeadByIdFunction = async (
       DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Accounts Head does not exist')
-    );
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
   }
 };
 
@@ -351,19 +306,30 @@ export const editFeesHeadByIdFunction = async (
   event: APIGatewayProxyEvent
 ) => {
   const feesHead = await getNTAObjectFromEvent<FeesHeadName>(event);
+  const ntaId = getNTAIdFromEvent(event);
+  const feesHeadNewName = sanitizeString(body.name);
   if (feesHead) {
-    feesHead.name = body.name;
-    feesHead.instituteTypeId = body.instituteTypeId;
-    feesHead.parentId = body.parentId;
-    setUpdationDetailsOfObject(feesHead, event);
-    return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
-    );
+    if (
+      feesHead.name !== feesHeadNewName &&
+      (await checkIfMasterListItemExistsByName(
+        ntaId,
+        'FEE_HEAD_MASTER',
+        feesHeadNewName,
+        body.instituteTypeId || ''
+      ))
+    ) {
+      return createErrorResponse(ERRORS.FEES_HEAD_NAME_ALREADY_EXISTS);
+    } else {
+      feesHead.name = feesHeadNewName;
+      feesHead.instituteTypeId = body.instituteTypeId;
+      feesHead.parentId = body.parentId;
+      setUpdationDetailsOfObject(feesHead, event);
+      return await processDynamoDBResponse(
+        DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+      );
+    }
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees Head does not exist')
-    );
+    return createErrorResponse(ERRORS.FEES_HEAD_NO_EXISTS);
   }
 };
 export const editFeesTypeByIdFunction = async (
@@ -378,10 +344,7 @@ export const editFeesTypeByIdFunction = async (
       DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees Type Does not exist')
-    );
+    return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
   }
 };
 export const editAccountsHeadByIdFunction = async (
@@ -397,10 +360,7 @@ export const editAccountsHeadByIdFunction = async (
       DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Accounts Head does not exist')
-    );
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
   }
 };
 
@@ -417,10 +377,7 @@ export const statusChangeofFeesHeadByIdFunction = async (
       DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees Head does not exist')
-    );
+    return createErrorResponse(ERRORS.FEES_HEAD_NO_EXISTS);
   }
 };
 export const statusChangeofFeesTypeByIdFunction = async (
@@ -435,10 +392,7 @@ export const statusChangeofFeesTypeByIdFunction = async (
       DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Fees Type Does not exist')
-    );
+    return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
   }
 };
 export const statusChangeofAccountHeadByIdFunction = async (
@@ -453,10 +407,7 @@ export const statusChangeofAccountHeadByIdFunction = async (
       DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
     );
   } else {
-    return createResponse(
-      200,
-      new APIResponse(true, 'Accounts Head does not exist')
-    );
+    return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
   }
 };
 

@@ -1,9 +1,9 @@
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
-} from "aws-lambda/trigger/api-gateway-proxy";
-import { RequestMethod } from "../model/request-method.model";
-import { CORS_HEADERS } from "../constants/common-vars";
+} from 'aws-lambda/trigger/api-gateway-proxy';
+import { RequestMethod, APIResponse } from '../model/request-method.model';
+import { CORS_HEADERS } from '../constants/common-vars';
 
 export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
   return async (
@@ -42,3 +42,7 @@ export const createResponse = (
   multiValueHeaders,
   isBase64Encoded,
 });
+
+export const createErrorResponse = (error: string, data?: any) => {
+  return createResponse(200, new APIResponse(true, error, data));
+};
