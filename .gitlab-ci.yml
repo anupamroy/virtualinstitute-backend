@@ -1,29 +1,24 @@
+# Node Image for docker on which code will execute
+image: python:3.8
+
 stages:
-  - Install SAM
-  - Release
+  #- Install SAM
+  - release
+  - deploy
 
-# cache:
-#   paths:
-#     - node_modules/
-
-production:
-  stage: Install SAM
-  image: python:3.8
-  before_script:
-    - pip3 install awscli --upgrade
-    - pip3 install aws-sam-cli --upgrade
+# production:
+  # stage: Install SAM  
+  # before_script:
+    # - pip3 install awscli --upgrade
+    # - pip3 install aws-sam-cli --upgrade
 
 npm_build:
-  stage: Release
+  stage: release
   image: "node:lts"
   before_script:
     - npm install
   script:
     - npm run release
- image: python:3.8
-
- stages:
-   - deploy
 
  production:
    stage: deploy
