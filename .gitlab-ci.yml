@@ -31,7 +31,8 @@ npm_build:
      - pip3 install awscli --upgrade
      - pip3 install aws-sam-cli --upgrade
    script:
+    - cd sam 
     - sam build
-    - sam package --output-template-file sam/template.yaml --s3-bucket #S3Bucket#
-    - sam deploy --template-file sam/template.yaml --stack-name gitlab-example --s3-bucket #S3Bucket# --capabilities CAPABILITY_IAM --region ap-south-1
+    - sam package --output-template-file template.yaml --s3-bucket #S3Bucket#
+    - sam deploy --template-file template.yaml --stack-name gitlab-example --s3-bucket #S3Bucket# --capabilities CAPABILITY_IAM --region ap-south-1
   environment: production
