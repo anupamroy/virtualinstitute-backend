@@ -6,7 +6,7 @@ import {
   createNTAAuthorityFunction,
   listNTAAuthorityFunction,
   listAllNTAAuthoritiesFunction,
-} from "../../shared/functions/nta.functions";
+} from "../functions/nta-authority.functions";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { parseBody } from "../../shared/helpers/handler-common";
 import { CreateNTAAuthorityRequest } from "../../shared/model/request-method.model";

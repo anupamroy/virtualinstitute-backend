@@ -17,7 +17,7 @@ import {
 } from "../../functions/cognito.functions";
 import { APIResponse } from "../../model/request-method.model";
 import { NTATokenGuard, requestValidatorGuard } from "../requests/guard";
-import { insertCognitoUserInNTAFunction } from "../../functions/nta.functions";
+import { insertCognitoUserInNTAFunction } from "../../functions/nta-authority.functions";
 
 export class CognitoActions {
   async addStudent(event: APIGatewayProxyEvent) {
