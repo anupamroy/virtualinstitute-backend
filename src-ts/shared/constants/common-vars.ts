@@ -21,8 +21,8 @@ export const CORS_HEADERS = {
 };
 
 export const CognitoConfig = {
-  studentInstituteUserPoolId: 'ap-south-1_1Bppayy0s',
-  studentInstituteAppId: '2lh1m5lm7khd9hf2jfpdo04rvq',
+  studentInstituteUserPoolId: 'ap-south-1_GYBsglFix',
+  studentInstituteAppId: '12gn9davklo64a8rtn8mtvo2qv',
   ntaUserPoolId: 'ap-south-1_YOsP7cTUw',
   ntaAPIPasskey:
     '426b5e01-ba0f-42bf-8da9-2143f19ec57a-c909bce0-f3a4-4e67-8a3f-63958c77fdc8',
