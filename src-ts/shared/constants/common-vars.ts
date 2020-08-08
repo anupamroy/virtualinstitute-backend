@@ -21,7 +21,8 @@ export const CORS_HEADERS = {
 };
 
 export const CognitoConfig = {
-  studentInstituteUserPoolId: 'ap-south-1_75LKZuJ8p',
+  studentInstituteUserPoolId: 'ap-south-1_1Bppayy0s',
+  studentInstituteAppId: '2lh1m5lm7khd9hf2jfpdo04rvq',
   ntaUserPoolId: 'ap-south-1_YOsP7cTUw',
   ntaAPIPasskey:
     '426b5e01-ba0f-42bf-8da9-2143f19ec57a-c909bce0-f3a4-4e67-8a3f-63958c77fdc8',
@@ -63,14 +64,17 @@ export const ERRORS = {
     'Fees head name should not contain any special characters.',
   FEES_HEAD_NAME_ALREADY_EXISTS: 'Fees head name already exists',
   FEES_HEAD_NO_EXISTS: 'Fees head does not Exist',
-  FEES_HEAD_INSTITUTE_ID_NO_MATCH_PARENT : 'The Fees Head Institute does not match with the parent Fees head',
-  FEES_TYPE_NO_SPECIAL_CHARS: 'Fees Type name should not contain any special characters.',
+  FEES_HEAD_INSTITUTE_ID_NO_MATCH_PARENT:
+    'The Fees Head Institute does not match with the parent Fees head',
+  FEES_TYPE_NO_SPECIAL_CHARS:
+    'Fees Type name should not contain any special characters.',
   FEES_TYPE_NO_EXIST: 'Fees Type does not Exist',
   FEES_TYPE_NAME_ALREADY_EXISTS: 'Fees type name already exists',
   PARENT_ACCOUNT_HEAD_NO_EXISTS: 'Parent Accounts head Does not exist',
-  ACCOUNTS_HEAD_NO_SPECIAL_CHARS: 'Accounts head name should not contain any special characters.',
+  ACCOUNTS_HEAD_NO_SPECIAL_CHARS:
+    'Accounts head name should not contain any special characters.',
   ACCOUNTS_HEAD_NO_EXISTS: 'Accounts head does not Exist',
   ACCOUNTS_HEAD_NAME_ALREADY_EXISTS: 'Fees type name already exists',
-  GENERAL_UNAUTHORISED_ACCESS: "Unauthorised Access",
-  GENERAL_KEYS_MISSING: "Some keys Missing"
+  GENERAL_UNAUTHORISED_ACCESS: 'Unauthorised Access',
+  GENERAL_KEYS_MISSING: 'Some keys Missing',
 };
