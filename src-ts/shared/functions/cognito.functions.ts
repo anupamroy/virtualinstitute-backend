@@ -24,8 +24,8 @@ export const ProcessCognitoUserResponse = (
     )
     .catch((e) => createResponse(422, new APIResponse(true, e.message, e)));
 
-// export const createCognitoUser = (user: AdminCreateUserRequest) =>
-//   ProcessCognitoUserResponse(cognito.adminCreateUser(user).promise());
+export const createCognitoUser = (user: AdminCreateUserRequest) =>
+  ProcessCognitoUserResponse(cognito.adminCreateUser(user).promise());
 
 export const deleteCognitoUser = (UserPoolId: string, Username: string) =>
   processDynamoDBResponse(

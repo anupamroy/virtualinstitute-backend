@@ -1,42 +1,58 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { CognitoConfig, cognito } from "../../constants/common-vars";
-import { keysMissingResponse } from "../response.helper";
-import { parseBody, createResponse } from "../handler-common";
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import { CognitoConfig, cognito } from '../../constants/common-vars';
+import { keysMissingResponse } from '../response.helper';
+import { parseBody, createResponse } from '../handler-common';
 import {
   CreatePersonRequest,
   CreateStudentRequest,
-} from "../../model/request.model";
-import { AdminCreateUserRequest } from "aws-sdk/clients/cognitoidentityserviceprovider";
+} from '../../model/request.model';
+import { AdminCreateUserRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import {
-  createCognitoStudentObject,
   createCognitoNTAUserObject,
-} from "../../transforms/cognito.transform";
+  createCognitoStudentObject,
+} from '../../transforms/cognito.transform';
 import {
   setUserPassword,
   deleteCognitoUser,
-} from "../../functions/cognito.functions";
-import { APIResponse } from "../../model/request-method.model";
-import { NTATokenGuard, requestValidatorGuard } from "../requests/guard";
-import { insertCognitoUserInNTAFunction } from "../../functions/nta-authority.functions";
+} from '../../functions/cognito.functions';
+import { APIResponse } from '../../model/request-method.model';
+import { NTATokenGuard, requestValidatorGuard } from '../requests/guard';
+import { insertCognitoUserInNTAFunction } from '../../functions/nta-authority.functions';
+import { createCognitoUser } from '../../functions/cognito.functions';
+import { CreateInstituteUserRequest } from '../../model/request.model';
+import { createCognitoInstituteUserObject } from '../../transforms/cognito.transform';
 
 export class CognitoActions {
   async addStudent(event: APIGatewayProxyEvent) {
-  //   const body = parseBody<CreateStudentRequest>(event.body);
-  //   return requestValidatorGuard(
-  //     body,
-  //     new CreateStudentRequest(),
-  //     this.addStudentFunction,
-  //     [body]
-  //   );
+    const body = parseBody<CreateStudentRequest>(event.body);
+    return await this.addStudentFunction(body as any);
+    // return requestValidatorGuard(
+    //   body,
+    //   new CreateStudentRequest(),
+    //   this.addStudentFunction,
+    //   [body]
+    // );
   }
 
-  // async addStudentFunction(body: CreateStudentRequest) {
-  //   const request: AdminCreateUserRequest = createCognitoStudentObject(
-  //     body.registrationNumber,
-  //     body
-  //   );
-  //   return createCognitoUser(request);
-  // }
+  async addStudentFunction(body: CreateStudentRequest) {
+    const request: AdminCreateUserRequest = createCognitoStudentObject(
+      body.registration_number,
+      body
+    );
+    return createCognitoUser(request);
+  }
+
+  async addInstituteUserFunction(body: CreateInstituteUserRequest) {
+    const request: AdminCreateUserRequest = createCognitoInstituteUserObject(
+      body
+    );
+    return createCognitoUser(request);
+  }
+
+  // To Do Write this
+  async deleteStudent(event: APIGatewayProxyEvent) {
+    const studentId = event.pathParameters?.id;
+  }
 
   async addNTAUser(event: APIGatewayProxyEvent) {
     const body = parseBody<CreateStudentRequest>(event.body);
@@ -55,7 +71,7 @@ export class CognitoActions {
     body: CreateStudentRequest,
     event: APIGatewayProxyEvent
   ) {
-    const ntaId = event.headers["Nta-Authority-Id"];
+    const ntaId = event.headers['Nta-Authority-Id'];
     const request: AdminCreateUserRequest = createCognitoNTAUserObject(body);
     return cognito
       .adminCreateUser(request)
@@ -63,7 +79,7 @@ export class CognitoActions {
       .then((user) =>
         insertCognitoUserInNTAFunction(
           ntaId,
-          user.User?.Attributes?.find((attr) => attr.Name === "sub")?.Value + ""
+          user.User?.Attributes?.find((attr) => attr.Name === 'sub')?.Value + ''
         )
       )
       .catch((e) => createResponse(422, new APIResponse(true, e.message, e)));
@@ -91,7 +107,7 @@ export class CognitoActions {
     } else {
       return createResponse(
         400,
-        new APIResponse(true, "Key mobile Missing in URL")
+        new APIResponse(true, 'Key mobile Missing in URL')
       );
     }
   }

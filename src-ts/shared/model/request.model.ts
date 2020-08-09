@@ -1,5 +1,6 @@
+import { CreateInstituteUser } from '../services/nta-institute.service';
 export class CreatePersonRequest {
-  mobile: string = '';
+  phone_number: string = '';
   password: string = '';
   email: string = '';
   gender: string = '';
@@ -9,5 +10,10 @@ export class CreatePersonRequest {
 }
 
 export class CreateStudentRequest extends CreatePersonRequest {
-  registrationNumber: string = '';
+  registration_number: string = '';
+  TYPE: string = 'STUDENT';
+}
+
+export class CreateInstituteUserRequest extends CreatePersonRequest {
+  TYPE: string = 'INSTITUTE';
 }

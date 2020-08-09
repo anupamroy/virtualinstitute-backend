@@ -3,6 +3,7 @@ import {
   listAllNTAAuthorities,
   createNTAUser,
   deleteNTAUser,
+  newPasswordChallenge,
 } from '../shared/services/nta-authority.service';
 import {
   createNTAAuthority,
@@ -10,7 +11,6 @@ import {
 } from '../shared/services/nta-authority.service';
 import {
   checkToken,
-  newPasswordChallenge,
 } from '../shared/services/nta-institute.service';
 
 // NTA Authority

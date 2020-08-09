@@ -470,7 +470,7 @@ Resources:
             Method: DELETE
             RestApiId: !Ref NtaApi
 
-  # Status Change of NTA
+  # Status Change of NTA Masters
   StatusChangeFeesHead:
     Type: AWS::Serverless::Function
     Properties:
@@ -519,7 +519,60 @@ Resources:
             Method: PATCH
             RestApiId: !Ref NtaApi
 
-  # End NTA
+  # # End NTA
+
+  # # Institute Section
+  CreateInstituteUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createInstituteUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/user
+            Method: POST
+            RestApiId: !Ref NtaApi
+  # # End Institute Section
+
+  # # Student Section
+  CreateStudentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.createStudentHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/user
+            Method: POST
+            RestApiId: !Ref NtaApi
+
+  deleteStudentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.deleteStudentHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/user/{mobile}
+            Method: DELETE
+            RestApiId: !Ref NtaApi
+
+  # # End Student Section
 
   # Tables
   InstituteTableDynamo:
