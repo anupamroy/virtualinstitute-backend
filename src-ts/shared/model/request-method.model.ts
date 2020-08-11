@@ -1,4 +1,4 @@
-import { ObjectId } from './DB/imports/types.DB.model';
+import { ObjectId, Unit, Year } from './DB/imports/types.DB.model';
 export type RequestMethod =
   | 'GET'
   | 'PATCH'
@@ -48,10 +48,39 @@ export interface StatusChangeRequest {
   isActive: boolean;
 }
 
-export interface CreateFeesGroupRequest {}
-export interface CreateFeesMasterRequest {}
-export interface CreateCourseFeesRequest {}
+export interface CreateFeesGroupRequest extends GeneralMasterItemRequest {}
+export interface CreateFeesMasterRequest {
+  feesTypeId: ObjectId;
+  feesGroupId: ObjectId;
+  feesHeadId: ObjectId;
+  accountsHeadId: ObjectId;
+  payable: Payable;
+  payableBy: Date;
+  isConcession: boolean;
+  concessionUnit: Unit;
+  concessionAmount: number;
+  isLatefine: boolean;
+  latefineUnit: Unit;
+  latefineAmount: number;
+  isLatefineRevocalble: boolean;
+  amount: number;
+}
+export interface CreateCourseFeesRequest {
+  courseTypeId: ObjectId;
+  courseName: string;
+  courseCombinationIds: ObjectId[];
+  semester: number[];
+  quotas: ObjectId[];
+  admissionYear: Year;
+  feesId: ObjectId[];
+}
 
 export interface EditFeesGroupRequest {}
 export interface EditFeesMasterRequest {}
 export interface EditCourseFeesRequest {}
+
+export enum Payable {
+  'monthly',
+  'yearly',
+  'semester wise',
+}
