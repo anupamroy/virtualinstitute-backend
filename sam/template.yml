@@ -32,9 +32,26 @@ Resources:
         EndpointConfiguration: REGIONAL
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
+        DefaultAuthorizer: NTACognitoAuthorizer
+        Authorizers:
+          NTACognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
+
+  StudentInstituteApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Domain:
+        CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+        DomainName: api.nta-sys.tk
+        EndpointConfiguration: REGIONAL
+      Auth:
+        AddDefaultAuthorizerToCorsPreflight: False
         DefaultAuthorizer: InstituteCognitoAuthorizer
         Authorizers:
           InstituteCognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_GYBsglFix
+          NTACognitoAuthorizer:
             UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
 
   GatewayResponseDefault4XX:
