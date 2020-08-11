@@ -2,55 +2,87 @@ import { AWSHandler } from '../shared/helpers/handler-common';
 import {
   CreateInstituteUser,
   DeleteInstituteUser,
+  createFeesGroup,
+  createFeesMaster,
+  createCourseFees,
+  editFeesGroupById,
+  editFeesMasterById,
+  editCourseFeesById,
+  processConcessionApplicationById,
+  processLatefineApplicationById,
+  setSettingsPayment,
+  setSettingsApplicationUserLevels,
+  listFeesGroup,
+  listFeesMaster,
+  listCourseFees,
+  getFeesGroupById,
+  getFeesMasterById,
+  getCourseFeesById,
+  listConcessionApplications,
+  getConcessionApplicationById,
+  listLatefineApplications,
+  getLatefineApplicationById,
+  listStudentFees,
+  listLedger,
+  getLedgerById,
+  listSpecialFees,
+  listSettingsPayment,
+  listSettingsApplicationUserLevels,
+  deleteFeesGroupById,
+  deleteFeesMasterById,
+  deleteCourseFeesById,
+  statusChangeFeesGroupById,
+  statusChangeFeesMasterById,
+  statusChangeCourseFeesById,
 } from '../shared/services/nta-institute.service';
 
 const createInstituteUserHandler = AWSHandler('POST', CreateInstituteUser);
 const deleteInstituteUserHandler = AWSHandler('DELETE', DeleteInstituteUser);
 
-const createFeesGroupHandler = AWSHandler('POST', null);
-const createFeesMasterHandler = AWSHandler('POST', null);
-const createCourseFeesHandler = AWSHandler('POST', null);
+const createFeesGroupHandler = AWSHandler('POST', createFeesGroup);
+const createFeesMasterHandler = AWSHandler('POST', createFeesMaster);
+const createCourseFeesHandler = AWSHandler('POST', createCourseFees);
 
-const listFeesGroupHandler = AWSHandler('GET', null);
-const listFeesMasterHandler = AWSHandler('GET', null);
-const listCourseFeesHandler = AWSHandler('GET', null);
+const listFeesGroupHandler = AWSHandler('GET', listFeesGroup);
+const listFeesMasterHandler = AWSHandler('GET', listFeesMaster);
+const listCourseFeesHandler = AWSHandler('GET', listCourseFees);
 
-const getFeesGroupByIdHandler = AWSHandler('GET', null);
-const getFeesMasterByIdHandler = AWSHandler('GET', null);
-const getCourseFeesByIdHandler = AWSHandler('GET', null);
+const getFeesGroupByIdHandler = AWSHandler('GET', getFeesGroupById);
+const getFeesMasterByIdHandler = AWSHandler('GET', getFeesMasterById);
+const getCourseFeesByIdHandler = AWSHandler('GET', getCourseFeesById);
 
-const editFeesGroupByIdHandler = AWSHandler('POST', null);
-const editFeesMasterByIdHandler = AWSHandler('POST', null);
-const editCourseFeesByIdHandler = AWSHandler('POST', null);
+const editFeesGroupByIdHandler = AWSHandler('POST', editFeesGroupById);
+const editFeesMasterByIdHandler = AWSHandler('POST', editFeesMasterById);
+const editCourseFeesByIdHandler = AWSHandler('POST', editCourseFeesById);
 
-const deleteFeesGroupByIdHandler = AWSHandler('DELETE', null);
-const deleteFeesMasterByIdHandler = AWSHandler('DELETE', null);
-const deleteCourseFeesByIdHandler = AWSHandler('DELETE', null);
+const deleteFeesGroupByIdHandler = AWSHandler('DELETE', deleteFeesGroupById);
+const deleteFeesMasterByIdHandler = AWSHandler('DELETE', deleteFeesMasterById);
+const deleteCourseFeesByIdHandler = AWSHandler('DELETE', deleteCourseFeesById);
 
-const statusChangeFeesGroupByIdHandler = AWSHandler('PATCH', null);
-const statusChangeFeesMasterByIdHandler = AWSHandler('PATCH', null);
-const statusChangeCourseFeesByIdHandler = AWSHandler('PATCH', null);
+const statusChangeFeesGroupByIdHandler = AWSHandler('PATCH', statusChangeFeesGroupById);
+const statusChangeFeesMasterByIdHandler = AWSHandler('PATCH', statusChangeFeesMasterById);
+const statusChangeCourseFeesByIdHandler = AWSHandler('PATCH', statusChangeCourseFeesById);
 
-const listConcessionApplicationsHandler = AWSHandler('GET', null);
-const getConcessionApplicationByIdHandler = AWSHandler('GET', null);
-const processConcessionApplicationByIdHandler = AWSHandler('POST', null);
+const listConcessionApplicationsHandler = AWSHandler('GET', listConcessionApplications);
+const getConcessionApplicationByIdHandler = AWSHandler('GET', getConcessionApplicationById);
+const processConcessionApplicationByIdHandler = AWSHandler('POST', processConcessionApplicationById);
 
-const listLatefineApplicationsHandler = AWSHandler('GET', null);
-const getLatefineApplicationByIdHandler = AWSHandler('GET', null);
-const processLatefineApplicationByIdHandler = AWSHandler('POST', null);
+const listLatefineApplicationsHandler = AWSHandler('GET', listLatefineApplications);
+const getLatefineApplicationByIdHandler = AWSHandler('GET', getLatefineApplicationById);
+const processLatefineApplicationByIdHandler = AWSHandler('POST', processLatefineApplicationById);
 
-const listStudentFeesHandler = AWSHandler('GET', null);
+const listStudentFeesHandler = AWSHandler('GET', listStudentFees);
 
-const listLedgerHandler = AWSHandler('GET', null);
-const getLedgerByIdHandler = AWSHandler('GET', null);
+const listLedgerHandler = AWSHandler('GET', listLedger);
+const getLedgerByIdHandler = AWSHandler('GET', getLedgerById);
 
-const listSpecialFeesHandler = AWSHandler('GET', null);
+const listSpecialFeesHandler = AWSHandler('GET', listSpecialFees);
 
-const listSettingsPaymentHandler = AWSHandler('GET', null);
-const setSettingsPaymentHandler = AWSHandler('POST', null);
+const listSettingsPaymentHandler = AWSHandler('GET', listSettingsPayment);
+const setSettingsPaymentHandler = AWSHandler('POST', setSettingsPayment);
 
-const listSettingsApplicationUserLevelsHandler = AWSHandler('GET', null);
-const setSettingsApplicationUserLevelsHandler = AWSHandler('POST', null);
+const listSettingsApplicationUserLevelsHandler = AWSHandler('GET', listSettingsApplicationUserLevels);
+const setSettingsApplicationUserLevelsHandler = AWSHandler('POST', setSettingsApplicationUserLevels);
 
 export {
   createInstituteUserHandler,
