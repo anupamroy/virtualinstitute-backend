@@ -554,6 +554,518 @@ Resources:
             Path: /institute/user
             Method: POST
             RestApiId: !Ref NtaApi
+
+  I_CreateFeesGroup:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createFeesGroupHandler
+      Description: Create Fees Group.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/group
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_CreateFeesMaster:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createFeesMasterHandler
+      Description: Create Fees Master.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/master
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_CreateCourseFees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createCourseFeesHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/course-fees
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListFeesGroup:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listFeesGroupHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/group
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListFeesMaster:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listFeesMasterHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/master
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListCourseFees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listCourseFeesHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/course-fees
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_GetFeesGroupById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getFeesGroupByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/group/{id}
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_GetFeesMasterById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getFeesMasterByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/master/{id}
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_GetCourseFeesById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getCourseFeesByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/course-fees/{id}
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_EditFeesGroupById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.editFeesGroupByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/group/{id}
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_EditFeesMasterById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.editFeesMasterByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/master/{id}
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_EditCourseFeesById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.editCourseFeesByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/course-fees/{id}
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_StatusChangeFeesGroupById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.statusChangeFeesGroupByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/group/{id}
+            Method: PATCH
+            RestApiId: !Ref StudentInstituteApi
+
+  I_StatusChangeFeesMasterById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.statusChangeFeesMasterByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/master/{id}
+            Method: PATCH
+            RestApiId: !Ref StudentInstituteApi
+
+  I_StatusChangeCourseFeesById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.statusChangeCourseFeesByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/course-fees/{id}
+            Method: PATCH
+            RestApiId: !Ref StudentInstituteApi
+
+  I_DeleteFeesGroupById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteFeesGroupByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/group/{id}
+            Method: DELETE
+            RestApiId: !Ref StudentInstituteApi
+
+  I_DeleteFeesMasterById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteFeesMasterByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/fees/master/{id}
+            Method: DELETE
+            RestApiId: !Ref StudentInstituteApi
+
+  I_DeleteCourseFeesById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.deleteCourseFeesByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/course-fees/{id}
+            Method: DELETE
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListConcessionApplications:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listConcessionApplicationsHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/applications/concession
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListConcessionApplicationById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getConcessionApplicationByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/applications/concession/{id}
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ProcessConcessionApplicationById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.processConcessionApplicationByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/applications/concession/{id}
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListLateFineApplications:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listLatefineApplicationsHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/applications/latefine
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListLateFineApplicationById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getLatefineApplicationByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/applications/latefine/{id}
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ProcessLateFineApplicationById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.processLatefineApplicationByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/applications/latefine/{id}
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListStudentFees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listStudentFeesHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/student-fees
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListLedger:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listLedgerHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/ledger
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListLedgerById:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.getLedgerByIdHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/ledger/{id}
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListSpecialFees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listSpecialFeesHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/special-fees
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListSettingsPayment:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listSettingsPaymentHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/settings/payment
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_SetSettingsPayment:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.setSettingsPaymentHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/settings/payment
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  I_ListSettingsApplicationUsers:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.listSettingsApplicationUserLevelsHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/settings/application
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  I_SetSettingsApplicationUsers:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.setSettingsApplicationUserLevelsHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/settings/application
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
   # # End Institute Section
 
   # # Student Section
@@ -588,6 +1100,86 @@ Resources:
             Path: /student/user/{mobile}
             Method: DELETE
             RestApiId: !Ref NtaApi
+
+  Student_GetProfile:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/profile
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  Student_GetPaymentHistory:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/payment/history
+            Method: GET
+            RestApiId: !Ref StudentInstituteApi
+
+  Student_PayNow:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/payment/pay-now
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  Student_ApplicationConcession:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/application/concession
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
+
+  Student_ApplicationLatefine:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/application/latefine
+            Method: POST
+            RestApiId: !Ref StudentInstituteApi
 
   # # End Student Section
 
