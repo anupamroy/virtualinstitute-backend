@@ -1,4 +1,4 @@
-import { ObjectId, Unit, Year } from './DB/imports/types.DB.model';
+import { ObjectId, Unit, Year, Value } from './DB/imports/types.DB.model';
 export type RequestMethod =
   | 'GET'
   | 'PATCH'
@@ -59,11 +59,21 @@ export interface CreateFeesMasterRequest {
   isConcession: boolean;
   concessionUnit: Unit;
   concessionAmount: number;
+  maxConcession: Value;
   isLatefine: boolean;
   latefineUnit: Unit;
   latefineAmount: number;
+  maxLateFine: number;
   isLatefineRevocalble: boolean;
+  maximumLateFineRevocable: Value;
   amount: number;
+}
+
+export interface FeesMasterObject extends CreateFeesMasterRequest {
+  feesTypeName: string;
+  feesGroupName: string;
+  feesHeadName: string;
+  accountsHeadName: string;
 }
 export interface CreateCourseFeesRequest {
   courseTypeId: ObjectId;
