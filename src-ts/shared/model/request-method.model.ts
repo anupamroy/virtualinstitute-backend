@@ -48,7 +48,6 @@ export interface StatusChangeRequest {
 
 // export interface CreateFeesGroupRequest extends GeneralMasterItemRequest {}
 
-
 export interface CreateFeesMasterRequest {
   feesTypeId: ObjectId;
   feesGroupId: ObjectId;
@@ -83,6 +82,12 @@ export interface CreateCourseFeesRequest {
   quotas: ObjectId[];
   admissionYear: Year;
   feesId: ObjectId[];
+}
+
+export interface CourseFeesObject extends CreateCourseFeesRequest {
+  courseTypeName: string;
+  feesName: string;
+  quotaNames: string[];
 }
 
 export interface EditFeesGroupRequest {}
