@@ -32,8 +32,6 @@ export class CreateFeesHeadRequest extends ChildMasterItemRequest {
 
 export class CreateFeesTypeMasterRequest extends GeneralMasterItemRequest {}
 
-export class CreateFeesMasterRequest extends ChildMasterItemRequest {}
-
 export class CreateAccountsHeadMasterRequest extends ChildMasterItemRequest {}
 
 export interface StatusChangeRequest {

@@ -26,6 +26,11 @@ export const feesmasterObject: FeesMasterObject = {
   amount: 10000,
 };
 
+export const feesGroupItem: GeneralMasterItem = {
+  ...new GeneralMasterItem(),
+  name: 'Fees Group 1',
+};
+
 export const FeesGroupList: GeneralMasterItem[] = [];
 export const FeesMasterList: FeesMasterObject[] = [
   { ...feesmasterObject },
