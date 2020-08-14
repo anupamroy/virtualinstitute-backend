@@ -48,7 +48,9 @@ export interface StatusChangeRequest {
   isActive: boolean;
 }
 
-export interface CreateFeesGroupRequest extends GeneralMasterItemRequest {}
+// export interface CreateFeesGroupRequest extends GeneralMasterItemRequest {}
+
+
 export interface CreateFeesMasterRequest {
   feesTypeId: ObjectId;
   feesGroupId: ObjectId;

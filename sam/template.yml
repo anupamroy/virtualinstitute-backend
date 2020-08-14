@@ -555,7 +555,7 @@ Resources:
             Method: POST
             RestApiId: !Ref NtaApi
 
-  I_CreateFeesGroup:
+  InstCreateFeesGroup:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.createFeesGroupHandler
@@ -571,7 +571,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_CreateFeesMaster:
+  InstCreateFeesMaster:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.createFeesMasterHandler
@@ -587,7 +587,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_CreateCourseFees:
+  InstCreateCourseFees:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.createCourseFeesHandler
@@ -603,7 +603,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListFeesGroup:
+  InstListFeesGroup:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listFeesGroupHandler
@@ -619,7 +619,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListFeesMaster:
+  InstListFeesMaster:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listFeesMasterHandler
@@ -635,7 +635,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListCourseFees:
+  InstListCourseFees:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listCourseFeesHandler
@@ -651,7 +651,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_GetFeesGroupById:
+  InstGetFeesGroupById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.getFeesGroupByIdHandler
@@ -667,7 +667,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_GetFeesMasterById:
+  InstGetFeesMasterById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.getFeesMasterByIdHandler
@@ -683,7 +683,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_GetCourseFeesById:
+  InstGetCourseFeesById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.getCourseFeesByIdHandler
@@ -699,7 +699,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_EditFeesGroupById:
+  InstEditFeesGroupById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.editFeesGroupByIdHandler
@@ -715,7 +715,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_EditFeesMasterById:
+  InstEditFeesMasterById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.editFeesMasterByIdHandler
@@ -731,7 +731,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_EditCourseFeesById:
+  InstEditCourseFeesById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.editCourseFeesByIdHandler
@@ -747,7 +747,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_StatusChangeFeesGroupById:
+  InstStatusChangeFeesGroupById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.statusChangeFeesGroupByIdHandler
@@ -763,7 +763,7 @@ Resources:
             Method: PATCH
             RestApiId: !Ref StudentInstituteApi
 
-  I_StatusChangeFeesMasterById:
+  InstStatusChangeFeesMasterById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.statusChangeFeesMasterByIdHandler
@@ -779,7 +779,7 @@ Resources:
             Method: PATCH
             RestApiId: !Ref StudentInstituteApi
 
-  I_StatusChangeCourseFeesById:
+  InstStatusChangeCourseFeesById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.statusChangeCourseFeesByIdHandler
@@ -795,7 +795,7 @@ Resources:
             Method: PATCH
             RestApiId: !Ref StudentInstituteApi
 
-  I_DeleteFeesGroupById:
+  InstDeleteFeesGroupById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.deleteFeesGroupByIdHandler
@@ -811,7 +811,7 @@ Resources:
             Method: DELETE
             RestApiId: !Ref StudentInstituteApi
 
-  I_DeleteFeesMasterById:
+  InstDeleteFeesMasterById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.deleteFeesMasterByIdHandler
@@ -827,7 +827,7 @@ Resources:
             Method: DELETE
             RestApiId: !Ref StudentInstituteApi
 
-  I_DeleteCourseFeesById:
+  InstDeleteCourseFeesById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.deleteCourseFeesByIdHandler
@@ -843,7 +843,7 @@ Resources:
             Method: DELETE
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListConcessionApplications:
+  InstListConcessionApplications:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listConcessionApplicationsHandler
@@ -859,7 +859,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListConcessionApplicationById:
+  InstListConcessionApplicationById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.getConcessionApplicationByIdHandler
@@ -875,7 +875,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ProcessConcessionApplicationById:
+  InstProcessConcessionApplicationById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.processConcessionApplicationByIdHandler
@@ -891,7 +891,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListLateFineApplications:
+  InstListLateFineApplications:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listLatefineApplicationsHandler
@@ -907,7 +907,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListLateFineApplicationById:
+  InstListLateFineApplicationById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.getLatefineApplicationByIdHandler
@@ -923,7 +923,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ProcessLateFineApplicationById:
+  InstProcessLateFineApplicationById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.processLatefineApplicationByIdHandler
@@ -939,7 +939,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListStudentFees:
+  InstListStudentFees:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listStudentFeesHandler
@@ -955,7 +955,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListLedger:
+  InstListLedger:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listLedgerHandler
@@ -971,7 +971,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListLedgerById:
+  InstListLedgerById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.getLedgerByIdHandler
@@ -987,7 +987,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListSpecialFees:
+  InstListSpecialFees:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listSpecialFeesHandler
@@ -1003,7 +1003,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListSettingsPayment:
+  InstListSettingsPayment:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listSettingsPaymentHandler
@@ -1019,7 +1019,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_SetSettingsPayment:
+  InstSetSettingsPayment:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.setSettingsPaymentHandler
@@ -1035,7 +1035,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  I_ListSettingsApplicationUsers:
+  InstListSettingsApplicationUsers:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.listSettingsApplicationUserLevelsHandler
@@ -1051,7 +1051,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  I_SetSettingsApplicationUsers:
+  InstSetSettingsApplicationUsers:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-institute.setSettingsApplicationUserLevelsHandler
@@ -1101,7 +1101,7 @@ Resources:
             Method: DELETE
             RestApiId: !Ref NtaApi
 
-  Student_GetProfile:
+  StudentGetProfile:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-student.checkTokenHandler
@@ -1117,7 +1117,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  Student_GetPaymentHistory:
+  StudentGetPaymentHistory:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-student.checkTokenHandler
@@ -1133,7 +1133,7 @@ Resources:
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
-  Student_PayNow:
+  StudentPayNow:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-student.checkTokenHandler
@@ -1149,7 +1149,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  Student_ApplicationConcession:
+  StudentApplicationConcession:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-student.checkTokenHandler
@@ -1165,7 +1165,7 @@ Resources:
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
-  Student_ApplicationLatefine:
+  StudentApplicationLatefine:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-student.checkTokenHandler

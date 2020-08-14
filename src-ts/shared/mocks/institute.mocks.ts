@@ -1,29 +1,31 @@
-import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
-import { FeesMasterObject, Payable } from '../model/request-method.model';
+import { GeneralMasterItem } from "../model/DB/imports/misc.DB.model";
+import { FeesMasterObject, Payable } from "../model/request-method.model";
 
 // Objects By Id:
 export const feesmasterObject: FeesMasterObject = {
-  feesTypeId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
-  feesGroupId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
-  feesHeadId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
-  accountsHeadId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
-  feesTypeName: 'Fee Type 1',
-  feesGroupName: 'Fee Type 1',
-  feesHeadName: 'Fee Type 1',
-  accountsHeadName: 'Fee Type 1',
+  feesTypeId: "1d22f3b0-dcc6-11ea-9102-3b6b7e80223b",
+  feesGroupId: "1d22f3b0-dcc6-11ea-9102-3b6b7e80223b",
+  feesHeadId: "1d22f3b0-dcc6-11ea-9102-3b6b7e80223b",
+  accountsHeadId: "1d22f3b0-dcc6-11ea-9102-3b6b7e80223b",
+  feesTypeName: "Fee Type 1",
+  feesGroupName: "Fee Type 1",
+  feesHeadName: "Fee Type 1",
+  accountsHeadName: "Fee Type 1",
   payable: Payable.monthly,
   payableBy: new Date(),
   isConcession: true,
-  concessionUnit: 'PERCENT',
+  concessionUnit: "PERCENT",
   concessionAmount: 10,
   maxConcession: 10000,
   isLatefine: true,
-  latefineUnit: 'VALUE',
+  latefineUnit: "VALUE",
   latefineAmount: 10000,
   maxLateFine: 100000,
   isLatefineRevocalble: true,
   maximumLateFineRevocable: 10000,
   amount: 10000,
+  parentId: "",
+  name: "",
 };
 
 export const FeesGroupList: GeneralMasterItem[] = [];
