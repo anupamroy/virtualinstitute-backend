@@ -10,6 +10,7 @@ import {
   CONCESSION_APPLICATION_LIST_MOCK,
   LATEFINE_APPLICATION_LIST_MOCK,
   STUDENT_FEES_LIST_MOCK,
+  LEDGER_LIST_MOCK,
 } from '../mocks/institute.mocks';
 
 export const createFeesGroupFunction = async () => {
@@ -97,7 +98,7 @@ export const listStudentFeesFunction = async () => {
   );
 };
 export const listLedgerFunction = async () => {
-  return createResponse(200, new APIResponse(false));
+  return createResponse(200, new APIResponse(false, '', LEDGER_LIST_MOCK));
 };
 export const getLedgerByIdFunction = async () => {
   return createResponse(200, new APIResponse(false));

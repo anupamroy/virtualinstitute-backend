@@ -36,6 +36,26 @@ export const FEES_GROUP_MOCK: GeneralMasterItem = {
   name: 'Fees Group 1',
 };
 
+export const CONCESSION_APPLICATION_MOCK = {
+  applicantName: 'Student 1',
+  courseId: '60AD73D3-C8D4-4AC0-A457-F9DE9A63E539',
+  courseName: 'Course 1',
+  semester: 1,
+  concessionAmount: 1000,
+  date: new Date(),
+  status: 'Accepted',
+};
+
+export const LATEFINE_APPLICATION_MOCK = {
+  applicantName: 'Student 1',
+  courseId: '60AD73D3-C8D4-4AC0-A457-F9DE9A63E539',
+  courseName: 'Course 1',
+  semester: 1,
+  latefineAmount: 1000,
+  date: new Date(),
+  status: 'Accepted',
+};
+
 export const COURSE_FEES_MOCK: CourseFeesObject = {
   courseTypeId: '60AD73D3-C8D4-4AC0-A457-F9DE9A63E539',
   courseName: 'Course Name 1',
@@ -60,6 +80,17 @@ export const COURSE_FEES_MOCK: CourseFeesObject = {
   amount: 10000,
 };
 
+export const STUDENT_FEES_MOCK = {
+  id: '2A2670F5-2B47-4462-8005-247C19265B2A',
+  studentId: '2A2670F5-2B47-4462-8005-247C19265B2A',
+  studentName: 'Student 1',
+  amount: 10000,
+  transactionId: '2A2670F5-2B47-4462-8005-247C19265B2A',
+  transactionNumber: '23899742984',
+  challanId: '83CA6CC5-249F-4B8B-B2F2-C7734923DA97',
+  challanNumber: '2890381293',
+};
+
 export const FEES_GROUP_LIST_MOCK: GeneralMasterItem[] = [
   { ...FEES_GROUP_MOCK },
   { ...FEES_GROUP_MOCK },
@@ -81,12 +112,32 @@ export const COURSE_FEES_LIST_MOCK = [
   { ...COURSE_FEES_MOCK },
   { ...COURSE_FEES_MOCK },
 ];
-export const CONCESSION_APPLICATION_LIST_MOCK = [];
-export const LATEFINE_APPLICATION_LIST_MOCK = [];
-export const STUDENT_FEES_LIST_MOCK = [];
+
+export const CONCESSION_APPLICATION_LIST_MOCK = [
+  { ...CONCESSION_APPLICATION_MOCK },
+  { ...CONCESSION_APPLICATION_MOCK },
+  { ...CONCESSION_APPLICATION_MOCK },
+  { ...CONCESSION_APPLICATION_MOCK },
+  { ...CONCESSION_APPLICATION_MOCK },
+];
+export const LATEFINE_APPLICATION_LIST_MOCK = [
+  { ...LATEFINE_APPLICATION_MOCK },
+  { ...LATEFINE_APPLICATION_MOCK },
+  { ...LATEFINE_APPLICATION_MOCK },
+  { ...LATEFINE_APPLICATION_MOCK },
+  { ...LATEFINE_APPLICATION_MOCK },
+];
+export const STUDENT_FEES_LIST_MOCK = [
+  { ...STUDENT_FEES_MOCK },
+  { ...STUDENT_FEES_MOCK },
+  { ...STUDENT_FEES_MOCK },
+  { ...STUDENT_FEES_MOCK },
+  { ...STUDENT_FEES_MOCK },
+];
 export const LEDGER_ITEM_MOCK: AccountHead = {
   ...new AccountHead(),
   name: 'Account Head 1',
+  balance: 100000,
 };
 export const LEDGER_LIST_MOCK = [
   { ...LEDGER_ITEM_MOCK, name: 'Account Head 1' },
