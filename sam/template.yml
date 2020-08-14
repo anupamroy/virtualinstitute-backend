@@ -567,7 +567,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/group
+            Path: /institute/masters/fees/group
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
@@ -583,7 +583,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/master
+            Path: /institute/masters/fees/master
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
@@ -599,7 +599,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/course-fees
+            Path: /institute/masters/course-fees
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
@@ -615,7 +615,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/group
+            Path: /institute/masters/fees/group
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
@@ -631,7 +631,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/master
+            Path: /institute/masters/fees/master
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
@@ -647,7 +647,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/course-fees
+            Path: /institute/masters/course-fees
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
@@ -663,7 +663,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/group/{id}
+            Path: /institute/masters/fees/group/{id}
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
@@ -679,7 +679,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/master/{id}
+            Path: /institute/masters/fees/master/{id}
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
@@ -695,7 +695,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/course-fees/{id}
+            Path: /institute/masters/course-fees/{id}
             Method: GET
             RestApiId: !Ref StudentInstituteApi
 
@@ -711,7 +711,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/group/{id}
+            Path: /institute/masters/fees/group/{id}
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
@@ -727,7 +727,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/master/{id}
+            Path: /institute/masters/fees/master/{id}
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
@@ -743,7 +743,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/course-fees/{id}
+            Path: /institute/masters/course-fees/{id}
             Method: POST
             RestApiId: !Ref StudentInstituteApi
 
@@ -759,7 +759,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/group/{id}
+            Path: /institute/masters/fees/group/{id}
             Method: PATCH
             RestApiId: !Ref StudentInstituteApi
 
@@ -775,7 +775,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/master/{id}
+            Path: /institute/masters/fees/master/{id}
             Method: PATCH
             RestApiId: !Ref StudentInstituteApi
 
@@ -791,7 +791,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/course-fees/{id}
+            Path: /institute/masters/course-fees/{id}
             Method: PATCH
             RestApiId: !Ref StudentInstituteApi
 
@@ -807,7 +807,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/group/{id}
+            Path: /institute/masters/fees/group/{id}
             Method: DELETE
             RestApiId: !Ref StudentInstituteApi
 
@@ -823,7 +823,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/fees/master/{id}
+            Path: /institute/masters/fees/master/{id}
             Method: DELETE
             RestApiId: !Ref StudentInstituteApi
 
@@ -839,7 +839,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/course-fees/{id}
+            Path: /institute/masters/course-fees/{id}
             Method: DELETE
             RestApiId: !Ref StudentInstituteApi
 

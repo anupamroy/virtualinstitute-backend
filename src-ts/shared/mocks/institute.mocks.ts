@@ -7,7 +7,7 @@ import {
 import { AccountHead } from '../model/DB/institute.DB.model';
 
 // Objects By Id:
-export const feesmasterObject: FeesMasterObject = {
+export const FEES_MASTER_MOCK: FeesMasterObject = {
   feesTypeId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
   feesGroupId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
   feesHeadId: '1d22f3b0-dcc6-11ea-9102-3b6b7e80223b',
@@ -31,18 +31,19 @@ export const feesmasterObject: FeesMasterObject = {
   amount: 10000,
 };
 
-export const feesGroupItem: GeneralMasterItem = {
+export const FEES_GROUP_MOCK: GeneralMasterItem = {
   ...new GeneralMasterItem(),
   name: 'Fees Group 1',
 };
 
-export const courseFeesObject: CourseFeesObject = {
+export const COURSE_FEES_MOCK: CourseFeesObject = {
   courseTypeId: '60AD73D3-C8D4-4AC0-A457-F9DE9A63E539',
-  courseName: '',
+  courseName: 'Course Name 1',
   courseCombinationIds: [
     '9CB4B8E8-7232-4057-88F4-21ED07E907EF',
     '6F54F8E7-213F-4016-BF66-0BBFFDA5248F',
   ],
+  courseCombinationNames: ['Course Combination 1', 'Course Combination 2'],
   semester: [1, 2, 3],
   quotas: [
     'F8A1B41C-0894-445F-9EF6-C71EEA17ACE3',
@@ -53,44 +54,45 @@ export const courseFeesObject: CourseFeesObject = {
     '7F313750-ECD9-46CD-85B4-E5F93FD1155B',
     '21634F3D-F65F-4D28-A4C3-DD35EA937C4E',
   ],
-  courseTypeName: '',
-  feesName: '',
+  courseTypeName: 'Course Type 1',
+  feesName: 'Fee 1',
   quotaNames: ['GEN', 'ST', 'SC'],
+  amount: 10000,
 };
 
-export const FeesGroupList: GeneralMasterItem[] = [
-  { ...feesGroupItem },
-  { ...feesGroupItem },
-  { ...feesGroupItem },
-  { ...feesGroupItem },
-  { ...feesGroupItem },
+export const FEES_GROUP_LIST_MOCK: GeneralMasterItem[] = [
+  { ...FEES_GROUP_MOCK },
+  { ...FEES_GROUP_MOCK },
+  { ...FEES_GROUP_MOCK },
+  { ...FEES_GROUP_MOCK },
+  { ...FEES_GROUP_MOCK },
 ];
-export const FeesMasterList: FeesMasterObject[] = [
-  { ...feesmasterObject },
-  { ...feesmasterObject },
-  { ...feesmasterObject },
-  { ...feesmasterObject },
-  { ...feesmasterObject },
+export const FEES_MASTER_LIST_MOCK: FeesMasterObject[] = [
+  { ...FEES_MASTER_MOCK },
+  { ...FEES_MASTER_MOCK },
+  { ...FEES_MASTER_MOCK },
+  { ...FEES_MASTER_MOCK },
+  { ...FEES_MASTER_MOCK },
 ];
-export const CourseFeesList = [
-  { ...courseFeesObject },
-  { ...courseFeesObject },
-  { ...courseFeesObject },
-  { ...courseFeesObject },
-  { ...courseFeesObject },
+export const COURSE_FEES_LIST_MOCK = [
+  { ...COURSE_FEES_MOCK },
+  { ...COURSE_FEES_MOCK },
+  { ...COURSE_FEES_MOCK },
+  { ...COURSE_FEES_MOCK },
+  { ...COURSE_FEES_MOCK },
 ];
-export const ConcessionApplicationList = [];
-export const lateFineApplicationList = [];
-export const studentFeesList = [];
-export const ledgerItem: AccountHead = {
+export const CONCESSION_APPLICATION_LIST_MOCK = [];
+export const LATEFINE_APPLICATION_LIST_MOCK = [];
+export const STUDENT_FEES_LIST_MOCK = [];
+export const LEDGER_ITEM_MOCK: AccountHead = {
   ...new AccountHead(),
   name: 'Account Head 1',
 };
-export const LedgerList = [
-  { ...ledgerItem, name: 'Account Head 1' },
-  { ...ledgerItem, name: 'Account Head 2' },
-  { ...ledgerItem, name: 'Account Head 3' },
-  { ...ledgerItem, name: 'Account Head 4' },
-  { ...ledgerItem, name: 'Account Head 5' },
-  { ...ledgerItem, name: 'Account Head 6' },
+export const LEDGER_LIST_MOCK = [
+  { ...LEDGER_ITEM_MOCK, name: 'Account Head 1' },
+  { ...LEDGER_ITEM_MOCK, name: 'Account Head 2' },
+  { ...LEDGER_ITEM_MOCK, name: 'Account Head 3' },
+  { ...LEDGER_ITEM_MOCK, name: 'Account Head 4' },
+  { ...LEDGER_ITEM_MOCK, name: 'Account Head 5' },
+  { ...LEDGER_ITEM_MOCK, name: 'Account Head 6' },
 ];

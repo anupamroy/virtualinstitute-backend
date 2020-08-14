@@ -86,8 +86,10 @@ export interface CreateCourseFeesRequest {
 
 export interface CourseFeesObject extends CreateCourseFeesRequest {
   courseTypeName: string;
+  courseCombinationNames: string[];
   feesName: string;
   quotaNames: string[];
+  amount: number;
 }
 
 export interface EditFeesGroupRequest {}
