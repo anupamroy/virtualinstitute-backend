@@ -24,8 +24,6 @@ export const feesmasterObject: FeesMasterObject = {
   isLatefineRevocalble: true,
   maximumLateFineRevocable: 10000,
   amount: 10000,
-  parentId: "",
-  name: "",
 };
 
 export const feesGroupItem: GeneralMasterItem = {
