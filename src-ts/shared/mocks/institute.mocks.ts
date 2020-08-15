@@ -44,6 +44,12 @@ export const CONCESSION_APPLICATION_MOCK = {
   concessionAmount: 1000,
   date: new Date(),
   status: 'Accepted',
+  feesTypeId: '60AD73D3-C8D4-4AC0-A457-F9DE9A63E539',
+  feesTypeName: 'Fees Type 1',
+  feeAmount: 100000,
+  maxConcession: 20,
+  maxConcessionUnit: '%',
+  reason: 'Reason 1',
 };
 
 export const LATEFINE_APPLICATION_MOCK = {
