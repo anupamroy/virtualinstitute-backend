@@ -1,0 +1,168 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nta-master
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
+      AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"
+      AllowOrigin: "'*'"
+
+  Function:
+    Runtime: nodejs12.x
+    MemorySize: 128
+    Timeout: 100
+    # Environment:
+    #   Variables:
+    #     INSTITUTE_TABLE: !Ref InstituteTableDynamo
+
+Resources:
+  StudentApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Domain:
+        CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+        DomainName: api.nta-sys.tk
+        EndpointConfiguration: REGIONAL
+      Auth:
+        AddDefaultAuthorizerToCorsPreflight: False
+        DefaultAuthorizer: InstituteCognitoAuthorizer
+        Authorizers:
+          InstituteCognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_GYBsglFix
+          NTACognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
+
+  GatewayResponseDefault4XX:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
+        gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
+      ResponseType: DEFAULT_4XX
+      RestApiId: !Ref NtaApi
+
+  # # Student Section
+  CreateStudentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.createStudentHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/user
+            Method: POST
+            RestApiId: !Ref NtaApi
+
+  deleteStudentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.deleteStudentHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/user/{mobile}
+            Method: DELETE
+            RestApiId: !Ref NtaApi
+
+  StudentGetProfile:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/profile
+            Method: GET
+            RestApiId: !Ref StudentApi
+
+  StudentGetPaymentHistory:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/payment/history
+            Method: GET
+            RestApiId: !Ref StudentApi
+
+  StudentPayNow:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/payment/pay-now
+            Method: POST
+            RestApiId: !Ref StudentApi
+
+  StudentApplicationConcession:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/application/concession
+            Method: POST
+            RestApiId: !Ref StudentApi
+
+  StudentApplicationLatefine:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-student.checkTokenHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /student/application/latefine
+            Method: POST
+            RestApiId: !Ref StudentApi
+
+Outputs:
+  WebEndpoint:
+    Description: 'API Gateway endpoint URL for Prod stage'
+    Value: !Sub 'https://${StudentApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'
