@@ -60,6 +60,12 @@ export const LATEFINE_APPLICATION_MOCK = {
   latefineAmount: 1000,
   date: new Date(),
   status: 'Accepted',
+  feesTypeId: '60AD73D3-C8D4-4AC0-A457-F9DE9A63E539',
+  feesTypeName: 'Fees Type 1',
+  feeAmount: 100000,
+  maxLatefine: 20,
+  maxLatefineUnit: '%',
+  reason: 'Reason 1',
 };
 
 export const COURSE_FEES_MOCK: CourseFeesObject = {
@@ -81,9 +87,25 @@ export const COURSE_FEES_MOCK: CourseFeesObject = {
     '21634F3D-F65F-4D28-A4C3-DD35EA937C4E',
   ],
   courseTypeName: 'Course Type 1',
-  feesName: 'Fee 1',
+  feesList: [
+    {
+      id: '7F313750-ECD9-46CD-85B4-E5F93FD1155B',
+      feeStructureName: 'Saraswati pujua',
+      amount: 1000
+    },
+    {
+      id: '7F313750-ECD9-46CD-85B4-E5F93FD1155B',
+      feeStructureName: 'Library Fee',
+      amount: 1000
+    },
+    {
+      id: '7F313750-ECD9-46CD-85B4-E5F93FD1155B',
+      feeStructureName: 'Tution Fee',
+      amount: 10000
+    }
+  ],
   quotaNames: ['GEN', 'ST', 'SC'],
-  amount: 10000,
+  amount: 12000,
 };
 
 export const STUDENT_FEES_MOCK = {
