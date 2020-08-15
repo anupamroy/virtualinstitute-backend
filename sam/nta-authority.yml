@@ -519,6 +519,22 @@ Resources:
             Method: PATCH
             RestApiId: !Ref NtaApi
 
+  CreateInstituteUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-institute.createInstituteUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /institute/user
+            Method: POST
+            RestApiId: !Ref NtaApi
+
   # # End NTA
 
 Outputs:

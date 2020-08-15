@@ -50,38 +50,6 @@ Resources:
       RestApiId: !Ref NtaApi
 
   # # Student Section
-  CreateStudentFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-student.createStudentHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: '*'
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /student/user
-            Method: POST
-            RestApiId: !Ref NtaApi
-
-  deleteStudentFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-student.deleteStudentHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: '*'
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /student/user/{mobile}
-            Method: DELETE
-            RestApiId: !Ref NtaApi
-
   StudentGetProfile:
     Type: AWS::Serverless::Function
     Properties:

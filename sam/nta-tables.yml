@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nta-master
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Resources:
+  # Tables
+  InstituteTableDynamo:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'tableType'
+          AttributeType: 'S'
+        - AttributeName: 'id'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'tableType'
+          KeyType: 'HASH'
+        - AttributeName: 'id'
+          KeyType: 'RANGE'
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: InstituteTableDynamo
+
+  ErrorsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: ErrorsTable
