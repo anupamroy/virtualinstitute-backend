@@ -16,16 +16,15 @@
   },
   "scripts": {
     "test": "cd sam-project && jest",
-    "build": "npm run build:tsc && npm run build:sam",
-    "build:tsc": "tsc",
+    "build": "npm run tsc:build && npm run sam:build",
+    "tsc:build": "tsc",
     "tsc:watch": "tsc --watch",
     "build:install:dep": "cd sam && npm i && cd ..",
-    "build:sam": "cd sam && sam build && cd ..",
-    "build:sam:local": "npm run build:tsc && npm run sam:local",
+    "sam:build": "cd sam && sam build && cd ..",
     "sam:local": "cd sam && sam local start-api && cd ..",
-    "sam:build:local": "npm run build:sam && npm run sam:local",
     "dynamoDB": "docker run -p 8000:8000 amazon/dynamodb-local",
-    "deploy": "cd sam && sam deploy && cd ..",
-    "release": "npm run build && npm run deploy"
+    "sam:deploy": "cd sam && sam deploy && cd ..",
+    "sam:release": "npm run sam:build && npm run sam:deploy",
+    "release": "npm run build && npm run sam:deploy"
   }
 }
