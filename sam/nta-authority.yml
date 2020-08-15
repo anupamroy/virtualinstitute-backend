@@ -41,6 +41,27 @@ Resources:
           NTACognitoAuthorizer:
             UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
 
+  InstituteApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      # Domain:
+      #   CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+      #   DomainName: api.nta-sys.tk
+      #   EndpointConfiguration: REGIONAL
+      #   Route53:
+      #     HostedZoneId: Z01515053HIFJUQO6E9NB
+      #   BasePath:
+      #     - /institute
+      Auth:
+        AddDefaultAuthorizerToCorsPreflight: False
+        DefaultAuthorizer: InstituteCognitoAuthorizer
+        Authorizers:
+          InstituteCognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_GYBsglFix
+          NTACognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
+
   GatewayResponseDefault4XX:
     Type: AWS::ApiGateway::GatewayResponse
     Properties:
@@ -116,7 +137,7 @@ Resources:
             Method: POST
             RestApiId: !Ref NtaApi
 
-  deleteNTAUserFunction:
+  DeleteNTAUserFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-authority.deleteNTAUserHandler
@@ -179,7 +200,7 @@ Resources:
           Properties:
             Path: /masters/fees/head
             Method: POST
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   CreateAccountHead:
     Type: AWS::Serverless::Function
@@ -195,7 +216,7 @@ Resources:
           Properties:
             Path: /masters/accounts/head
             Method: POST
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   CreateFeesType:
     Type: AWS::Serverless::Function
@@ -211,7 +232,7 @@ Resources:
           Properties:
             Path: /masters/fees/type
             Method: POST
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   # List NTA Masters
   ListFeesHead:
@@ -228,7 +249,7 @@ Resources:
           Properties:
             Path: /masters/fees/head
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   ListAccountsHead:
     Type: AWS::Serverless::Function
@@ -244,7 +265,7 @@ Resources:
           Properties:
             Path: /masters/accounts/head
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   ListFeesType:
     Type: AWS::Serverless::Function
@@ -260,7 +281,7 @@ Resources:
           Properties:
             Path: /masters/fees/type
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   ListInstituteType:
     Type: AWS::Serverless::Function
@@ -276,7 +297,7 @@ Resources:
           Properties:
             Path: /masters/institute/type
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   # Get NTA Masters By Id
   GetFeesHeadByIDFunction:
@@ -293,7 +314,7 @@ Resources:
           Properties:
             Path: /masters/fees/head/{id}
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   GetFeesTypeByIDFunction:
     Type: AWS::Serverless::Function
@@ -309,7 +330,7 @@ Resources:
           Properties:
             Path: /masters/fees/type/{id}
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   GetAccountsHeadByIDFunction:
     Type: AWS::Serverless::Function
@@ -325,7 +346,7 @@ Resources:
           Properties:
             Path: /masters/accounts/head/{id}
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   # Check if NTA Masters Exist
   CheckFeesHeadExists:
@@ -342,7 +363,7 @@ Resources:
           Properties:
             Path: /masters/fees/head/check
             Method: POST
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   CheckFeesTypeExists:
     Type: AWS::Serverless::Function
@@ -358,7 +379,7 @@ Resources:
           Properties:
             Path: /masters/fees/type/check
             Method: POST
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   CheckAccountsHeadExists:
     Type: AWS::Serverless::Function
@@ -374,7 +395,7 @@ Resources:
           Properties:
             Path: /masters/accounts/head/check
             Method: POST
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   # Edit NTA Masters
   EditFeesHead:
