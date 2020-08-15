@@ -26,10 +26,14 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
-      Domain:
-        CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
-        DomainName: api.nta-sys.tk
-        EndpointConfiguration: REGIONAL
+      # Domain:
+      #   CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+      #   DomainName: api.nta-sys.tk
+      #   EndpointConfiguration: REGIONAL
+      #   Route53:
+      #     HostedZoneId: Z01515053HIFJUQO6E9NB
+      #   BasePath:
+      #     - /institute
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
         DefaultAuthorizer: InstituteCognitoAuthorizer
@@ -47,7 +51,7 @@ Resources:
         gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
         gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
       ResponseType: DEFAULT_4XX
-      RestApiId: !Ref NtaApi
+      RestApiId: !Ref InstituteApi
 
   # # Institute Section
   InstCreateFeesGroup:
@@ -62,7 +66,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/group
+            Path: /masters/fees/group
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -78,7 +82,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/master
+            Path: /masters/fees/master
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -94,7 +98,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/course-fees
+            Path: /masters/course-fees
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -110,7 +114,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/group
+            Path: /masters/fees/group
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -126,7 +130,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/master
+            Path: /masters/fees/master
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -142,7 +146,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/course-fees
+            Path: /masters/course-fees
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -158,7 +162,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/group/{id}
+            Path: /masters/fees/group/{id}
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -174,7 +178,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/master/{id}
+            Path: /masters/fees/master/{id}
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -190,7 +194,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/course-fees/{id}
+            Path: /masters/course-fees/{id}
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -206,7 +210,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/group/{id}
+            Path: /masters/fees/group/{id}
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -222,7 +226,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/master/{id}
+            Path: /masters/fees/master/{id}
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -238,7 +242,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/course-fees/{id}
+            Path: /masters/course-fees/{id}
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -254,7 +258,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/group/{id}
+            Path: /masters/fees/group/{id}
             Method: PATCH
             RestApiId: !Ref InstituteApi
 
@@ -270,7 +274,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/master/{id}
+            Path: /masters/fees/master/{id}
             Method: PATCH
             RestApiId: !Ref InstituteApi
 
@@ -286,7 +290,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/course-fees/{id}
+            Path: /masters/course-fees/{id}
             Method: PATCH
             RestApiId: !Ref InstituteApi
 
@@ -302,7 +306,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/group/{id}
+            Path: /masters/fees/group/{id}
             Method: DELETE
             RestApiId: !Ref InstituteApi
 
@@ -318,7 +322,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/fees/master/{id}
+            Path: /masters/fees/master/{id}
             Method: DELETE
             RestApiId: !Ref InstituteApi
 
@@ -334,7 +338,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/masters/course-fees/{id}
+            Path: /masters/course-fees/{id}
             Method: DELETE
             RestApiId: !Ref InstituteApi
 
@@ -350,7 +354,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/applications/concession
+            Path: /applications/concession
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -366,7 +370,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/applications/concession/{id}
+            Path: /applications/concession/{id}
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -382,7 +386,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/applications/concession/{id}
+            Path: /applications/concession/{id}
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -398,7 +402,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/applications/latefine
+            Path: /applications/latefine
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -414,7 +418,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/applications/latefine/{id}
+            Path: /applications/latefine/{id}
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -430,7 +434,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/applications/latefine/{id}
+            Path: /applications/latefine/{id}
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -446,7 +450,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/student-fees
+            Path: /student-fees
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -462,7 +466,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/ledger
+            Path: /ledger
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -478,7 +482,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/ledger/{id}
+            Path: /ledger/{id}
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -494,7 +498,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/special-fees
+            Path: /special-fees
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -510,7 +514,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/settings/payment
+            Path: /settings/payment
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -526,7 +530,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/settings/payment
+            Path: /settings/payment
             Method: POST
             RestApiId: !Ref InstituteApi
 
@@ -542,7 +546,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/settings/application
+            Path: /settings/application
             Method: GET
             RestApiId: !Ref InstituteApi
 
@@ -558,7 +562,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /institute/settings/application
+            Path: /settings/application
             Method: POST
             RestApiId: !Ref InstituteApi
   # # End Institute Section

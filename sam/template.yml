@@ -6,6 +6,11 @@ Transform:
   - AWS::Serverless-2016-10-31
 
 Resources:
+  NTADomain:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: ./nta-domain.yml
+
   DynamoDBTables:
     Type: AWS::Serverless::Application
     Properties:
@@ -15,7 +20,7 @@ Resources:
     Type: AWS::Serverless::Application
     Properties:
       Location: ./nta-authority.yml
-    
+
   NTAInstitute:
     Type: AWS::Serverless::Application
     Properties:

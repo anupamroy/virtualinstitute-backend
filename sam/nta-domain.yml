@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nta-master
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Resources:
+  NTADomain:
+    Type: 'AWS::ApiGatewayV2::DomainName'
+    Properties:
+      DomainName: api.nta-sys.tk
+      DomainNameConfigurations:
+        - EndpointType: REGIONAL
+          CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+  # NTADomainMapping:
+  #   Type: AWS::ApiGateway::BasePathMapping
+  #   Properties:
+  #     BasePath:
+  #       - /nta
+  #     DomainName: api.nta-sys.tk
+  #     RestApiId: !Ref NtaApi

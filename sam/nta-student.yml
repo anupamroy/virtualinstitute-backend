@@ -26,10 +26,14 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
-      Domain:
-        CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
-        DomainName: api.nta-sys.tk
-        EndpointConfiguration: REGIONAL
+      # Domain:
+      #   CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+      #   DomainName: api.nta-sys.tk
+      #   EndpointConfiguration: REGIONAL
+      #   Route53:
+      #     HostedZoneId: Z01515053HIFJUQO6E9NB
+      #   BasePath:
+      #     - /student
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
         DefaultAuthorizer: InstituteCognitoAuthorizer
@@ -47,7 +51,7 @@ Resources:
         gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
         gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
       ResponseType: DEFAULT_4XX
-      RestApiId: !Ref NtaApi
+      RestApiId: !Ref StudentApi
 
   # # Student Section
   StudentGetProfile:
@@ -62,7 +66,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /student/profile
+            Path: /profile
             Method: GET
             RestApiId: !Ref StudentApi
 
@@ -78,7 +82,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /student/payment/history
+            Path: /payment/history
             Method: GET
             RestApiId: !Ref StudentApi
 
@@ -94,7 +98,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /student/payment/pay-now
+            Path: /payment/pay-now
             Method: POST
             RestApiId: !Ref StudentApi
 
@@ -110,7 +114,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /student/application/concession
+            Path: /application/concession
             Method: POST
             RestApiId: !Ref StudentApi
 
@@ -126,7 +130,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /student/application/latefine
+            Path: /application/latefine
             Method: POST
             RestApiId: !Ref StudentApi
 

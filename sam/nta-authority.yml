@@ -26,10 +26,14 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
-      Domain:
-        CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
-        DomainName: api.nta-sys.tk
-        EndpointConfiguration: REGIONAL
+      # Domain:
+      #   CertificateArn: arn:aws:acm:ap-south-1:725755216375:certificate/4b62cb86-813f-49f9-b526-718c9c21ef28
+      #   DomainName: api.nta-sys.tk
+      #   EndpointConfiguration: REGIONAL
+      #   Route53:
+      #     HostedZoneId: Z01515053HIFJUQO6E9NB
+      #   BasePath:
+      #     - /nta
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
         DefaultAuthorizer: NTACognitoAuthorizer
@@ -60,7 +64,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA
+            Path: /
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -76,7 +80,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/authority/{id}
+            Path: /authority/{id}
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -92,7 +96,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/authority
+            Path: /authority
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -108,7 +112,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/user
+            Path: /user
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -124,7 +128,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/user/{mobile}
+            Path: /user/{mobile}
             Method: DELETE
             RestApiId: !Ref NtaApi
 
@@ -140,7 +144,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/user/check
+            Path: /user/check
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -156,7 +160,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/user/challenge
+            Path: /user/challenge
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -173,7 +177,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head
+            Path: /masters/fees/head
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -189,7 +193,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head
+            Path: /masters/accounts/head
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -205,7 +209,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type
+            Path: /masters/fees/type
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -222,7 +226,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head
+            Path: /masters/fees/head
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -238,7 +242,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head
+            Path: /masters/accounts/head
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -254,7 +258,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type
+            Path: /masters/fees/type
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -270,7 +274,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/institute/type
+            Path: /masters/institute/type
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -287,7 +291,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head/{id}
+            Path: /masters/fees/head/{id}
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -303,7 +307,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type/{id}
+            Path: /masters/fees/type/{id}
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -319,7 +323,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head/{id}
+            Path: /masters/accounts/head/{id}
             Method: GET
             RestApiId: !Ref NtaApi
 
@@ -336,7 +340,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head/check
+            Path: /masters/fees/head/check
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -352,7 +356,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type/check
+            Path: /masters/fees/type/check
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -368,7 +372,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head/check
+            Path: /masters/accounts/head/check
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -385,7 +389,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head/{id}
+            Path: /masters/fees/head/{id}
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -401,7 +405,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type/{id}
+            Path: /masters/fees/type/{id}
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -417,7 +421,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head/{id}
+            Path: /masters/accounts/head/{id}
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -434,7 +438,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head/{id}
+            Path: /masters/fees/head/{id}
             Method: DELETE
             RestApiId: !Ref NtaApi
 
@@ -450,7 +454,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type/{id}
+            Path: /masters/fees/type/{id}
             Method: DELETE
             RestApiId: !Ref NtaApi
 
@@ -466,7 +470,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head/{id}
+            Path: /masters/accounts/head/{id}
             Method: DELETE
             RestApiId: !Ref NtaApi
 
@@ -483,7 +487,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/head/{id}
+            Path: /masters/fees/head/{id}
             Method: PATCH
             RestApiId: !Ref NtaApi
 
@@ -499,7 +503,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/fees/type/{id}
+            Path: /masters/fees/type/{id}
             Method: PATCH
             RestApiId: !Ref NtaApi
 
@@ -515,7 +519,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /NTA/masters/accounts/head/{id}
+            Path: /masters/accounts/head/{id}
             Method: PATCH
             RestApiId: !Ref NtaApi
 
