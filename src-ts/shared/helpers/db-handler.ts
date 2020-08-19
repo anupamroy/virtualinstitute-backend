@@ -1,15 +1,15 @@
-import { CommonItems } from "../constants/common-vars";
+import { CommonItems, TABLE_NAMES } from '../constants/common-vars';
 import { createResponse } from "./handler-common";
 import { APIResponse } from "../model/request-method.model";
 
 // import { documentClient } from "../constants/common-vars";
 import { TableName } from "../model/DB/imports/types.DB.model";
 export const DynamoDBActions = {
-  putItem: (Item: any, TableName: string): Promise<any> =>
+  putItem: (Item: any, TableName = TABLE_NAMES.instituteTable): Promise<any> =>
     CommonItems.documentClient.put({ TableName, Item }).promise(),
-  get: (Key: any, TableName: string): Promise<any> =>
+  get: (Key: any, TableName = TABLE_NAMES.instituteTable): Promise<any> =>
     CommonItems.documentClient.get({ TableName, Key }).promise(),
-  getItemById: (id: string, tableType: TableName, TableName: string) =>
+  getItemById: (id: string, tableType: TableName, TableName = TABLE_NAMES.instituteTable) =>
     CommonItems.documentClient
       .query({
         TableName,

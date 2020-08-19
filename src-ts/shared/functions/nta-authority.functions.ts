@@ -4,26 +4,62 @@ import {
   processDynamoDBResponse,
 } from '../helpers/db-handler';
 import { TABLE_NAMES } from '../constants/common-vars';
-import { CreateNTAAuthorityRequest } from '../model/request-method.model';
+import {
+  CreateNTAAuthorityRequest,
+  CreateNTAPhoneNumberRequest,
+  CreateNTAEmailRequest,
+} from '../model/request-method.model';
 import {
   getContentsByType,
   getCognitoUserFromToken,
 } from '../helpers/general.helpers';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import { ObjectId } from '../model/DB/imports/types.DB.model';
+import {
+  DBOrganization,
+  DBOrgPhone,
+  DBOrgEmail,
+} from '../model/DB/org.DB.model';
 
+// *Create NTA Authority
 export const createNTAAuthorityFunction = async (
   body: CreateNTAAuthorityRequest
 ) => {
-  const ntaAuthority = new NTA();
-  ntaAuthority.ntaName = body.ntaName;
-  return processDynamoDBResponse(
-    DynamoDBActions.putItem(ntaAuthority, TABLE_NAMES.instituteTable)
-  );
+  const ntaAuthority = new DBOrganization();
+  ntaAuthority.name = body.organizationName;
+  ntaAuthority.orgLogo = body.organizationIcon;
+  ntaAuthority.orgInstituteType = body.organizationType;
+  ntaAuthority.orgShortCode =
+    body.organizationShortCode || ntaAuthority.getShortCode();
+  return processDynamoDBResponse(DynamoDBActions.putItem(ntaAuthority));
 };
 
-export const listNTAAuthorityFunction = async (ntaId: ObjectId) => {
-  return processDynamoDBResponse(getNTAByIDFunction(ntaId));
+export const createNTAPhoneNumberFunction = async (
+  body: CreateNTAPhoneNumberRequest,
+  orgId: ObjectId
+) => {
+  const ntaPhoneNumber = new DBOrgPhone(orgId);
+  ntaPhoneNumber.phoneText = body.phoneText;
+  ntaPhoneNumber.phone = body.phone;
+  ntaPhoneNumber.phoneType = body.phoneType;
+  ntaPhoneNumber.phoneTimings = body.phoneTimings;
+  ntaPhoneNumber.phoneDays = body.phoneDays;
+  ntaPhoneNumber.phoneShift = body.phoneShift;
+  ntaPhoneNumber.associatedPost = body.associatedPost;
+  return processDynamoDBResponse(DynamoDBActions.putItem(ntaPhoneNumber));
+};
+
+export const createNTAEmail = async (
+  body: CreateNTAEmailRequest,
+  orgId: ObjectId
+) => {
+  const ntaEmail = new DBOrgEmail(orgId);
+  ntaEmail.emailText = body.emailText;
+  ntaEmail.emailId = body.emailId;
+  ntaEmail.emailType = body.emailType;
+  ntaEmail.emailDays = body.emailDays;
+  ntaEmail.associatedPost = body.associatedPost;
+  return processDynamoDBResponse(DynamoDBActions.putItem(ntaEmail));
 };
 
 export const listAllNTAAuthoritiesFunction = async () => {
@@ -32,8 +68,10 @@ export const listAllNTAAuthoritiesFunction = async () => {
   );
 };
 
-export const saveNTAAuthority = (ntaAuthority: NTA) =>
-  DynamoDBActions.putItem(ntaAuthority, TABLE_NAMES.instituteTable);
+// TODO: Later
+export const listNTAAuthorityFunction = async (ntaId: ObjectId) => {
+  return processDynamoDBResponse(getNTAByIDFunction(ntaId));
+};
 
 export const getNTAByIDFunction = (ntaId: string) => {
   return DynamoDBActions.getItemById(

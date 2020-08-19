@@ -38,8 +38,30 @@ export interface StatusChangeRequest {
   isActive: boolean;
 }
 
+// NTA Authority
 export class CreateNTAAuthorityRequest {
-  ntaName: string = '';
+  organizationName: string = '';
+  organizationType: string = '';
+  organizationIcon: string = '';
+  organizationShortCode: string = '';
+}
+
+export class CreateNTAPhoneNumberRequest {
+  phone: string = '';
+  phoneText: string = '';
+  phoneType: string = '';
+  phoneTimings: string = '';
+  phoneDays: string = '';
+  phoneShift: string = '';
+  associatedPost: string = '';
+}
+
+export class CreateNTAEmailRequest {
+  emailId: string = '';
+  emailText: string = '';
+  emailType: string = '';
+  emailDays: string = '';
+  associatedPost: string = '';
 }
 
 export interface StatusChangeRequest {
