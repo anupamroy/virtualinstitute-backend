@@ -42,7 +42,7 @@ export interface StatusChangeRequest {
 export class CreateNTAAuthorityRequest {
   organizationName: string = '';
   organizationType: string = '';
-  organizationIcon: string = '';
+  organizationIcon: File = {} as any;
   organizationShortCode: string = '';
 }
 
