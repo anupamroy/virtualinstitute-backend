@@ -11,18 +11,24 @@ import { APIGatewayProxyEvent } from 'aws-lambda';
 import { parseBody } from '../../shared/helpers/handler-common';
 import { CreateNTAAuthorityRequest } from '../../shared/model/request-method.model';
 import { cognitoActions } from '../../shared/helpers/cognito/cognito.actions';
+import { parseMultiPart } from '../helpers/requests/request.helper';
 
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
-  const body = parseBody<CreateNTAAuthorityRequest>(event.body);
-  return await NTATokenGuard(
-    event,
-    await requestValidatorGuard(
-      body,
-      new CreateNTAAuthorityRequest(),
-      createNTAAuthorityFunction,
-      [body]
-    )
-  );
+  // console.log(event.body);
+  // const body = event.body as any;
+  // console.log(body);
+  // console.log(event);
+  console.log(parseMultiPart(event));
+  // const body = parseBody<CreateNTAAuthorityRequest>(event.body);
+  // return await NTATokenGuard(
+  //   event,
+  //   await requestValidatorGuard(
+  //     body,
+  //     new CreateNTAAuthorityRequest(),
+  //     createNTAAuthorityFunction,
+  //     [body]
+  //   )
+  // );
 };
 
 export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
