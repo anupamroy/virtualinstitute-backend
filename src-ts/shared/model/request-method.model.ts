@@ -41,7 +41,7 @@ export interface StatusChangeRequest {
 // NTA Authority
 export class CreateNTAAuthorityRequest {
   organizationName: string = '';
-  organizationType: string = '';
+  organizationType: 'SELLER' | 'INSTITUTE' = 'SELLER';
   organizationIcon: File = {} as any;
   organizationShortCode: string = '';
 }

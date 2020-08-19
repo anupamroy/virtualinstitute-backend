@@ -27,7 +27,7 @@ export const createNTAAuthorityFunction = async (
 ) => {
   const ntaAuthority = new DBOrganization();
   ntaAuthority.name = body.organizationName;
-  ntaAuthority.orgLogo = body.organizationIcon;
+  // ntaAuthority.orgLogo = body.organizationIcon;
   ntaAuthority.orgInstituteType = body.organizationType;
   ntaAuthority.orgShortCode =
     body.organizationShortCode || ntaAuthority.getShortCode();
