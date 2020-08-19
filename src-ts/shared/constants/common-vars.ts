@@ -37,10 +37,10 @@ export const USER_PASSWORD =
   'e9dd7046-d1af-11ea-b33d-976e79865d9c-eaf73d4a-d1af-11ea-bb68-6350c5c6f354';
 
 export const TABLE_NAMES = {
-  studentTable: 'StudentsTable',
+  // studentTable: 'StudentsTable',
   instituteTable: 'InstituteTableV1',
-  feesTable: 'FeesTable',
-  transactionsTable: 'TransactionsTable',
+  // feesTable: 'FeesTable',
+  // transactionsTable: 'TransactionsTable',
 };
 
 export const NTA_MASTER_SET_ID = 'debe7d4a-d29a-11ea-b256-073ae46f3a1a';
