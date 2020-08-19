@@ -15,6 +15,7 @@ import {
 } from '../helpers/general.helpers';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import { ObjectId } from '../model/DB/imports/types.DB.model';
+import { uploadFileToS3 } from '../helpers/s3.handler';
 import {
   DBOrganization,
   DBOrgPhone,
@@ -25,13 +26,18 @@ import {
 export const createNTAAuthorityFunction = async (
   body: CreateNTAAuthorityRequest
 ) => {
+  // console.log(body.organizationIcon.content);
   const ntaAuthority = new DBOrganization();
   ntaAuthority.name = body.organizationName;
-  // ntaAuthority.orgLogo = body.organizationIcon;
+  ntaAuthority.orgLogo = (await uploadFileToS3(
+    body.organizationIcon.filename,
+    body.organizationIcon
+  )) as any;
   ntaAuthority.orgInstituteType = body.organizationType;
   ntaAuthority.orgShortCode =
     body.organizationShortCode || ntaAuthority.getShortCode();
-  return processDynamoDBResponse(DynamoDBActions.putItem(ntaAuthority));
+  // console.log(body, ntaAuthority.orgLogo);
+  // return processDynamoDBResponse(DynamoDBActions.putItem(ntaAuthority));
 };
 
 export const createNTAPhoneNumberFunction = async (

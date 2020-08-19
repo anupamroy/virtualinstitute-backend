@@ -78,3 +78,8 @@ export const ERRORS = {
   GENERAL_UNAUTHORISED_ACCESS: 'Unauthorised Access',
   GENERAL_KEYS_MISSING: 'Some keys Missing',
 };
+
+
+export const S3_BUCKETS = {
+  PRIMARY: 'virtualinstitutestorage'
+}

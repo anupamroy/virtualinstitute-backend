@@ -1,4 +1,5 @@
 import { ObjectId, Unit, Year, Value } from './DB/imports/types.DB.model';
+
 export type RequestMethod =
   | 'GET'
   | 'PATCH'
@@ -42,7 +43,7 @@ export interface StatusChangeRequest {
 export class CreateNTAAuthorityRequest {
   organizationName: string = '';
   organizationType: 'SELLER' | 'INSTITUTE' = 'SELLER';
-  organizationIcon: File = {} as any;
+  organizationIcon: DecodedFile = {} as any;
   organizationShortCode: string = '';
 }
 
@@ -122,4 +123,11 @@ export enum Payable {
   'monthly',
   'yearly',
   'semester wise',
+}
+
+export interface DecodedFile {
+  type: string;
+  filename: string;
+  contentType: string;
+  content: ArrayBuffer;
 }
