@@ -11,13 +11,25 @@ export class DBOrganization extends GeneralDBItem {
   }
   public set name(value: string) {
     this._name = value;
+    // TODO: Show the Suggestion in FE, but keep it editable. This will be commented out here, and only in FE.
     this.orgShortCode = this.name?.match(/\b([A-Z])/g)?.join("") || "";
   }
+  // TODO: Create completely another table where it has masters. With PK ORGTYPE
   orgType: "SELLER" | "INSTITUTE" = "SELLER";
   orgLogo: LinkURL = "";
   parentId: ObjectId = "";
   sellerId: ObjectId = "";
   orgShortCode: string = "";
+}
+
+export class DBORGAddress extends GeneralDBItem {
+  address: string = "";
+  addressText: string = "";
+  constructor(orgPK: string) {
+    super();
+    this.id = orgPK + "#ADDRESS" + uuid();
+    this.tableType = orgPK;
+  }
 }
 
 export class DBOrgPhone extends GeneralDBItem {
@@ -28,10 +40,10 @@ export class DBOrgPhone extends GeneralDBItem {
   phoneDays: string = "";
   phoneShift: string = "";
   associatedPost: string = "";
-  constructor(orgTableType: string) {
+  constructor(orgPK: string) {
     super();
-    this.id = orgTableType + "#PHONE" + uuid();
-    this.tableType = orgTableType;
+    this.id = orgPK + "#PHONE" + uuid();
+    this.tableType = orgPK;
   }
 }
 
@@ -48,6 +60,8 @@ export class DBOrgEmail extends GeneralDBItem {
   }
 }
 
+// TODO: ORG Social
+
 export class DBOrgSettings extends GeneralDBItem {
   otp: boolean = false;
   password: boolean = false;
@@ -61,14 +75,24 @@ export class DBOrgSettings extends GeneralDBItem {
 export class DBOrgAffiliation extends GeneralDBItem {
   affiliationStartDate: Date = new Date();
   affiliationEndDate: Date = new Date();
-  affiliationAuthority: string = '';
-  affiliationGrade: string = '';
-  certificationDocument: LinkURL = '';
-  affiliationStatus: string = '';
-  affiliationType: string = '';
+  affiliationAuthority: string = "";
+  affiliationGrade: string = "";
+  certificationDocument: LinkURL = "";
+  affiliationStatus: string = "";
+  affiliationType: string = "";
   constructor(orgTableType: string) {
     super();
     this.id = orgTableType + "#AFFILIATION";
+    this.tableType = orgTableType;
+  }
+}
+
+export class DBOrganizationDocument extends GeneralDBItem {
+  documentLink: LinkURL = "";
+  documentType: string = "";
+  constructor(orgTableType: string) {
+    super();
+    this.id = orgTableType + "#DOCUMENT" + uuid();
     this.tableType = orgTableType;
   }
 }
