@@ -8,7 +8,7 @@ Transform:
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
-    BinaryMediaTypes: ['*/*']
+    BinaryMediaTypes: ['*~1*']
     Cors:
       AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
       AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"

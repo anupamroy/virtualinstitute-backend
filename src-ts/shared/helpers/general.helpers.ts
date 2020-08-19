@@ -170,3 +170,6 @@ export const setUpdationDetailsOfObject = (
   object.updated_by = userId;
   object.updated_at = new Date().toISOString();
 };
+
+export const base64Decode = (b64Encoded: string) =>
+  Buffer.from(b64Encoded, 'base64').toString();
