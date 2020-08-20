@@ -129,5 +129,5 @@ export interface DecodedFile {
   type: string;
   filename: string;
   contentType: string;
-  content: ArrayBuffer;
+  content: Buffer;
 }

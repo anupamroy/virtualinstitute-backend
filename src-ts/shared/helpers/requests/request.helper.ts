@@ -1,10 +1,10 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import { REQUEST_HEADERS, CognitoConfig } from '../../constants/common-vars';
-import { base64Decode } from '../general.helpers';
-const multipart = require('aws-lambda-multipart-parser');
+const parser = require('lambda-multipart-parser');
 
 export const requestValidator = (object: any, classInstance: any) =>
-  object && Object.keys(classInstance).every((key) => object[key]);
+  object &&
+  Object.keys(classInstance).every((key) => object[key] !== undefined);
 
 export const checkIfNTATokenValid = (event: APIGatewayProxyEvent) => {
   return (
@@ -12,8 +12,9 @@ export const checkIfNTATokenValid = (event: APIGatewayProxyEvent) => {
   );
 };
 
-export const parseMultiPart = <T>(event: APIGatewayProxyEvent) => {
-  // We need to decode the even body which comes as base64 encoded
-  const eventClone = { ...event, body: base64Decode(event.body || '') };
-  return multipart.parse(eventClone, true) as T;
+export const parseMultiPart = async <T>(event: APIGatewayProxyEvent) => {
+  const result = await parser.parse(event);
+  result.files.forEach((file: any) => (result[file.fieldname] = file));
+  delete result.files;
+  return result as T;
 };
