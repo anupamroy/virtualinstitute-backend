@@ -12,7 +12,7 @@ Resources:
     Properties: 
       BucketName: virtualinstitutestorage
       # TODO: Enable this configuration
-      CorsConfiguration:
+      # CorsConfiguration:
       #   AllowedHeaders: "'*'"
       #   AllowedOrigins: "'*'"
       #   AllowedMethods: "'*'"
