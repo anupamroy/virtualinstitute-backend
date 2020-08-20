@@ -11,10 +11,11 @@ export const uploadFileToS3 = async (Key: string, file: DecodedFile) => {
   const S3Params: S3.Types.PutObjectRequest = {
     Bucket: S3_BUCKETS.PRIMARY,
     Key,
-    Body: file.content + '',
+    Body: file.content,
     ContentType: file.contentType,
     ACL: 'public-read',
   };
-//   console.log(file.content, typeof file.content, enc.decode(file.content));
+  console.log(file.contentType);
+  // console.log(file.content, typeof file.content, enc.encode(file.content + ''));
   return await S3Object.upload(S3Params).promise();
 };

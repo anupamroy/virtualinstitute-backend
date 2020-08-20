@@ -1,0 +1,5 @@
+services:
+  cognito:
+    image: humanmade/local-cognito
+    ports:
+      - 3000

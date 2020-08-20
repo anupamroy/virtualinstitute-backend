@@ -15,5 +15,5 @@ export const checkIfNTATokenValid = (event: APIGatewayProxyEvent) => {
 export const parseMultiPart = <T>(event: APIGatewayProxyEvent) => {
   // We need to decode the even body which comes as base64 encoded
   const eventClone = { ...event, body: base64Decode(event.body || '') };
-  return multipart.parse(eventClone, false) as T;
+  return multipart.parse(eventClone, true) as T;
 };

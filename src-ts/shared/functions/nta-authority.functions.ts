@@ -36,7 +36,7 @@ export const createNTAAuthorityFunction = async (
   ntaAuthority.orgInstituteType = body.organizationType;
   ntaAuthority.orgShortCode =
     body.organizationShortCode || ntaAuthority.getShortCode();
-  console.log(ntaAuthority.orgLogo);
+  // console.log(ntaAuthority.orgLogo);
   // return processDynamoDBResponse(DynamoDBActions.putItem(ntaAuthority));
 };
 
