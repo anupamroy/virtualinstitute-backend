@@ -15,7 +15,7 @@ import { parseMultiPart } from '../helpers/requests/request.helper';
 
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
   // console.log('event', event);
-  const body = parseMultiPart<CreateNTAAuthorityRequest>(event);
+  const body = await parseMultiPart<CreateNTAAuthorityRequest>(event);
   return await NTATokenGuard(
     event,
     await requestValidatorGuard(

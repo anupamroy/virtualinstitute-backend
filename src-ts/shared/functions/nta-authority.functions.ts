@@ -26,7 +26,6 @@ import {
 export const createNTAAuthorityFunction = async (
   body: CreateNTAAuthorityRequest
 ) => {
-  // console.log(body.organizationIcon.content);
   const ntaAuthority = new DBOrganization();
   ntaAuthority.name = body.organizationName;
   ntaAuthority.orgLogo = (await uploadFileToS3(
@@ -36,8 +35,10 @@ export const createNTAAuthorityFunction = async (
   ntaAuthority.orgInstituteType = body.organizationType;
   ntaAuthority.orgShortCode =
     body.organizationShortCode || ntaAuthority.getShortCode();
-  // console.log(ntaAuthority.orgLogo);
-  // return processDynamoDBResponse(DynamoDBActions.putItem(ntaAuthority));
+  return processDynamoDBResponse(
+    DynamoDBActions.putItem(ntaAuthority),
+    ntaAuthority.tableType
+  );
 };
 
 export const createNTAPhoneNumberFunction = async (
