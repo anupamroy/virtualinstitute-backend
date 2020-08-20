@@ -16,15 +16,13 @@ import { parseMultiPart } from '../helpers/requests/request.helper';
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
   // console.log('event', event);
   const body = await parseMultiPart<CreateNTAAuthorityRequest>(event);
-  return await NTATokenGuard(
-    event,
-    await requestValidatorGuard(
-      body,
-      new CreateNTAAuthorityRequest(),
-      createNTAAuthorityFunction,
-      [body]
-    )
+  const result = await requestValidatorGuard(
+    body,
+    new CreateNTAAuthorityRequest(),
+    createNTAAuthorityFunction,
+    [body]
   );
+  return await result();
 };
 
 export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
