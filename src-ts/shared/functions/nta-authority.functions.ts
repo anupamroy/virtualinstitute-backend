@@ -31,7 +31,7 @@ export const createNTAAuthorityFunction = async (
   ntaAuthority.orgLogo = (await uploadFileToS3(
     body.organizationIcon.filename,
     body.organizationIcon
-  )) as any;
+  )).Location;
   ntaAuthority.orgInstituteType = body.organizationType;
   ntaAuthority.orgShortCode =
     body.organizationShortCode || ntaAuthority.getShortCode();
