@@ -41,71 +41,78 @@ export const createOrganization = async (event: APIGatewayProxyEvent) => {
 
 export const CreateOrgAddress = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgAddressRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgAddressRequest(),
     createOrgAddressFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
 export const CreateOrgPhoneNumber = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgPhoneNumberRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgPhoneNumberRequest(),
     createOrgPhoneNumberFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
 export const CreateOrgEmailId = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgEmailRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgEmailRequest(),
     createOrgEmailFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
 export const CreateOrgRegistration = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgRegistrationRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgRegistrationRequest(),
     createOrgRegistrationFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
 export const CreateOrgDocument = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgDocumentRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgDocumentRequest(),
     createOrgDocumentFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
 export const CreateOrgSettings = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgSettingsRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgSettingsRequest(),
     createOrgSettingsFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
 export const CreateOrgAffiliation = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrgAffiliationRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
   const result = await requestValidatorGuard(
     body,
     new CreateOrgAffiliationRequest(),
     createOrgAffiliationFunction,
-    [body]
+    [body, orgId]
   );
   return await result();
 };
