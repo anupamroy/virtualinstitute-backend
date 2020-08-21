@@ -59,3 +59,16 @@ export type FeeTableName =
   | "FEE_HEAD_MASTER"
   | "FEE_TYPE_MASTER"
   | "ACCOUNTS_HEAD_MASTER";
+
+export type DBOrgObjectType =
+  | "ADDRESS"
+  | "PHONE"
+  | "EMAIL"
+  | "SOCIAL"
+  | "REGISTRATION"
+  | "DOCUMENT"
+  | "SETTINGS"
+  | "SUBSCRIPTION"
+  | "AFFILIATION";
+
+// TODO: Masters: Subscription Type, Modules, Global Institution Types,

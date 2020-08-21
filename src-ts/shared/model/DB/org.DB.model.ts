@@ -1,6 +1,6 @@
 import { GeneralDBItem } from "./imports/DB.model";
 import { v4 as uuid } from "uuid";
-import { LinkURL, ObjectId } from "./imports/types.DB.model";
+import { LinkURL, ObjectId, DBOrgObjectType } from "./imports/types.DB.model";
 
 export class DBOrganization extends GeneralDBItem {
   tableType = "#ORG" + uuid();
@@ -13,23 +13,29 @@ export class DBOrganization extends GeneralDBItem {
   parentId: ObjectId = "";
   sellerId: ObjectId = "";
   orgShortCode: string = "";
-
+  isDraft: boolean = true;
   getShortCode() {
     return (this.orgShortCode = this.name?.match(/\b([A-Z])/g)?.join("") || "");
   }
 }
 
-export class DBORGAddress extends GeneralDBItem {
-  address: string = "";
-  addressText: string = "";
-  constructor(orgPK: string) {
+export class DBOrgItem extends GeneralDBItem {
+  constructor(orgTableType: string, objectType: DBOrgObjectType) {
     super();
-    this.id = "#" + orgPK + "#ADDRESS" + uuid();
-    this.tableType = orgPK;
+    this.id = "#" + orgTableType + "#" + objectType;
+    this.tableType = orgTableType;
   }
 }
 
-export class DBOrgPhone extends GeneralDBItem {
+export class DBORGAddress extends DBOrgItem {
+  address: string = "";
+  addressText: string = "";
+  constructor(orgPK: string) {
+    super(orgPK, "ADDRESS");
+  }
+}
+
+export class DBOrgPhone extends DBOrgItem {
   phoneText: string = "";
   phone: string = "";
   phoneType: string = "";
@@ -38,69 +44,70 @@ export class DBOrgPhone extends GeneralDBItem {
   phoneShift: string = "";
   associatedPost: string = "";
   constructor(orgPK: string) {
-    super();
-    this.id = "#" + orgPK + "#PHONE" + uuid();
-    this.tableType = orgPK;
+    super(orgPK, "PHONE");
   }
 }
 
-export class DBOrgEmail extends GeneralDBItem {
+export class DBOrgEmail extends DBOrgItem {
   emailText: string = "";
   emailId: string = "";
   emailType: string = "";
   emailDays: string = "";
   associatedPost: string = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = "#" + orgTableType + "#EMAIL" + uuid();
-    this.tableType = orgTableType;
+  constructor(orgPK: string) {
+    super(orgPK, "EMAIL");
   }
 }
 
 // TODO: ORG Social
 
-export class DBOrgRegistration extends GeneralDBItem {
+export class DBOrgRegistration extends DBOrgItem {
   registrationType: ObjectId = "";
   registrationNumber: string = "";
   registrationCertificateLink: LinkURL = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = "#" + orgTableType + "#EMAIL" + uuid();
-    this.tableType = orgTableType;
+  constructor(orgPK: string) {
+    super(orgPK, "REGISTRATION");
   }
 }
 
-export class DBOrgDocument extends GeneralDBItem {
+export class DBOrgDocument extends DBOrgItem {
   documentLink: LinkURL = "";
   documentType: string = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = "#" + orgTableType + "#DOCUMENT" + uuid();
-    this.tableType = orgTableType;
+  documentNumber: string = "";
+  documentValidUpto: Date = new Date();
+  constructor(orgPK: string) {
+    super(orgPK, "DOCUMENT");
   }
 }
 
-export class DBOrgSettings extends GeneralDBItem {
+export class DBOrgSettings extends DBOrgItem {
   otp: boolean = false;
   password: boolean = false;
-  constructor(orgTableType: string) {
-    super();
-    this.id = "#" + orgTableType + "#SOCIAL";
-    this.tableType = orgTableType;
+  constructor(orgPK: string) {
+    super(orgPK, "SETTINGS");
   }
 }
 
-export class DBOrgAffiliation extends GeneralDBItem {
+export class DBOrgSubscription extends DBOrgItem {
+  moduleId: ObjectId = "";
+  subscriptionPackageId: ObjectId = "";
+  subscriptionFrom: string = new Date().toISOString();
+  subscriptionUpto: string = new Date().toISOString();
+  subscriptionTypeId: ObjectId = "";
+  constructor(orgPK: string) {
+    super(orgPK, "SUBSCRIPTION");
+  }
+}
+
+export class DBOrgAffiliation extends DBOrgItem {
   affiliationStartDate: Date = new Date();
   affiliationEndDate: Date = new Date();
   affiliationAuthority: string = "";
   affiliationGrade: string = "";
-  certificationDocument: LinkURL = "";
+  certificationDocumentLink: LinkURL = "";
   affiliationStatus: string = "";
   affiliationType: string = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = "#" + orgTableType + "#AFFILIATION";
-    this.tableType = orgTableType;
+  constructor(orgPK: string) {
+    super(orgPK, "AFFILIATION");
   }
 }

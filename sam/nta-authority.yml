@@ -86,7 +86,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -102,7 +102,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/address
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -118,7 +118,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/phone
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -134,7 +134,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/email
             Method: POST
             RestApiId: !Ref NtaApi
             
@@ -150,7 +150,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/registration
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -166,7 +166,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/document
             Method: POST
             RestApiId: !Ref NtaApi
             
@@ -182,7 +182,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/settings
             Method: POST
             RestApiId: !Ref NtaApi
 
@@ -198,7 +198,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /organization/affiliation
             Method: POST
             RestApiId: !Ref NtaApi
 

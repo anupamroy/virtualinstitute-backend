@@ -13,11 +13,14 @@ import {
   CreateOrgDocumentRequest,
   CreateOrgSettingsRequest,
   CreateOrgAffiliationRequest,
+  CreateOrgSubscriptionRequest,
+  FileMetaData,
 } from "../model/request-method.model";
 import {
   getContentsByType,
   getCognitoUserFromToken,
   getFileExtension,
+  CreateS3FolderStructure,
 } from "../helpers/general.helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { ObjectId } from "../model/DB/imports/types.DB.model";
@@ -31,7 +34,9 @@ import {
   DBOrgSettings,
   DBOrgAffiliation,
   DBOrgDocument,
+  DBOrgSubscription,
 } from "../model/DB/org.DB.model";
+import { FileUrlObject } from "../model/response.model";
 
 // *Create NTA Authority
 export const createOrganizationFunction = async (
@@ -43,11 +48,14 @@ export const createOrganizationFunction = async (
   organization.orgShortCode =
     body.organizationShortCode || organization.getShortCode();
   // const { logoUrl, S3Url } =
-  organization.orgLogo = await processorgLogo(organization, body);
-  return processDynamoDBResponse(DynamoDBActions.putItem(organization), {
-    id: organization.tableType.replace("#", ""),
-    logoUrl: organization.orgLogo,
-  });
+  organization.orgLogo = getOrgLogoPath(organization, body);
+  return processDynamoDBResponse(
+    DynamoDBActions.putItem(organization),
+    new FileUrlObject(
+      organization.tableType.replace("#", ""),
+      organization.orgLogo
+    )
+  );
 };
 
 export const createOrgAddressFunction = async (
@@ -93,7 +101,16 @@ export const createOrgRegistrationFunction = async (
   orgId: ObjectId
 ) => {
   const orgRegistration = new DBOrgRegistration(orgId);
-  return processDynamoDBResponse(DynamoDBActions.putItem(orgRegistration));
+  orgRegistration.registrationType = body.registrationNumber;
+  orgRegistration.registrationNumber = body.registrationNumber;
+  orgRegistration.registrationCertificateLink = getOrgRegistrationDocumentPath(
+    orgId,
+    body.registrationCertificate
+  );
+  return processDynamoDBResponse(
+    DynamoDBActions.putItem(orgRegistration),
+    new FileUrlObject(orgId, orgRegistration.registrationCertificateLink)
+  );
 };
 
 export const createOrgDocumentFunction = async (
@@ -101,7 +118,17 @@ export const createOrgDocumentFunction = async (
   orgId: ObjectId
 ) => {
   const orgDocument = new DBOrgDocument(orgId);
-  return processDynamoDBResponse(DynamoDBActions.putItem(orgDocument));
+  orgDocument.documentNumber = body.documentNumber;
+  orgDocument.documentValidUpto = body.documentValidUpto;
+  orgDocument.documentType = body.documentType;
+  orgDocument.documentLink = getOrgRegistrationDocumentPath(
+    orgId,
+    body.document
+  );
+  return processDynamoDBResponse(
+    DynamoDBActions.putItem(orgDocument),
+    new FileUrlObject(orgId, orgDocument.documentLink)
+  );
 };
 
 export const createOrgSettingsFunction = async (
@@ -109,6 +136,21 @@ export const createOrgSettingsFunction = async (
   orgId: ObjectId
 ) => {
   const orgSettings = new DBOrgSettings(orgId);
+  orgSettings.otp = body.otp;
+  orgSettings.password = body.password;
+  return processDynamoDBResponse(DynamoDBActions.putItem(orgSettings));
+};
+
+export const createOrgSubscriptionFunction = async (
+  body: CreateOrgSubscriptionRequest,
+  orgId: ObjectId
+) => {
+  const orgSettings = new DBOrgSubscription(orgId);
+  orgSettings.moduleId = body.moduleId;
+  orgSettings.subscriptionPackageId = body.subscriptionPackageId;
+  orgSettings.subscriptionFrom = body.subscriptionFrom;
+  orgSettings.subscriptionUpto = body.subscriptionUpto;
+  orgSettings.subscriptionTypeId = body.subscriptionTypeId;
   return processDynamoDBResponse(DynamoDBActions.putItem(orgSettings));
 };
 
@@ -117,7 +159,20 @@ export const createOrgAffiliationFunction = async (
   orgId: ObjectId
 ) => {
   const orgAffiliation = new DBOrgAffiliation(orgId);
-  return processDynamoDBResponse(DynamoDBActions.putItem(orgAffiliation));
+  orgAffiliation.affiliationStartDate = body.affiliationStartDate;
+  orgAffiliation.affiliationEndDate = body.affiliationEndDate;
+  orgAffiliation.affiliationAuthority = body.affiliationAuthority;
+  orgAffiliation.affiliationGrade = body.affiliationGrade;
+  orgAffiliation.affiliationStatus = body.affiliationStatus;
+  orgAffiliation.affiliationType = body.affiliationType;
+  orgAffiliation.certificationDocumentLink = getAffiliationDocumentPath(
+    orgId,
+    body.certificationDocument
+  );
+  return processDynamoDBResponse(
+    DynamoDBActions.putItem(orgAffiliation),
+    new FileUrlObject(orgId, orgAffiliation.certificationDocumentLink)
+  );
 };
 
 export const listAllNTAAuthoritiesFunction = async () => {
@@ -179,23 +234,30 @@ export const getNTAById = (ntaId: string) =>
   );
 
 // *Helpers
-export const processorgLogo = async (
+export const getOrgLogoPath = (
   organization: DBOrganization,
   body: CreateOrganizationRequest
 ) => {
-  // Process Image
   const extension = getFileExtension(body.organizationIcon);
-  const logoUrl = S3_FOLDER_STRUCTURE.getLogoPath(
+  const logoUrl = CreateS3FolderStructure.getLogoPath(
     organization.tableType,
     "logo." + extension
   );
-  // const S3Url = await getSignedUrlS3(
-  //   logoUrl,
-  //   body.organizationIcon.contentType
-  // );
   return logoUrl;
-  //  {
-  //   ,
-  //   // S3Url,
-  // };
+};
+
+export const getOrgRegistrationDocumentPath = (
+  orgId: string,
+  fileMetaData: FileMetaData
+) => {
+  const extension = getFileExtension(fileMetaData);
+  return CreateS3FolderStructure.getRegistrationDocumentPath(orgId, extension);
+};
+
+export const getAffiliationDocumentPath = (
+  orgId: string,
+  fileMetaData: FileMetaData
+) => {
+  const extension = getFileExtension(fileMetaData);
+  return CreateS3FolderStructure.getAffiliationDocumentPath(orgId, extension);
 };

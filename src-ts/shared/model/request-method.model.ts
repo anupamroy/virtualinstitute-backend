@@ -71,13 +71,42 @@ export class CreateOrgEmailRequest {
   associatedPost: string = "";
 }
 
-export class CreateOrgRegistrationRequest {}
+export class CreateOrgRegistrationRequest {
+  orgRegistrationType: string = "";
+  registrationNumber: string = "";
+  registrationCertificate: FileMetaData = new FileMetaData();
+}
 
-export class CreateOrgDocumentRequest {}
+export class CreateOrgDocumentRequest {
+  documentType: string = "";
+  document: FileMetaData = new FileMetaData();
+  documentNumber: string = "";
+  documentValidUpto: Date = new Date();
+}
 
-export class CreateOrgSettingsRequest {}
+export class CreateOrgSettingsRequest {
+  otp: boolean = false;
+  password: boolean = false;
+}
 
-export class CreateOrgAffiliationRequest {}
+// TODO:
+export class CreateOrgSubscriptionRequest {
+  moduleId: ObjectId = "";
+  subscriptionPackageId: ObjectId = "";
+  subscriptionFrom: string = new Date().toISOString();
+  subscriptionUpto: string = new Date().toISOString();
+  subscriptionTypeId: ObjectId = "";
+}
+
+export class CreateOrgAffiliationRequest {
+  affiliationStartDate: Date = new Date();
+  affiliationEndDate: Date = new Date();
+  affiliationAuthority: string = "";
+  affiliationGrade: string = "";
+  certificationDocument: FileMetaData = new FileMetaData();
+  affiliationStatus: string = "";
+  affiliationType: string = "";
+}
 
 export interface StatusChangeRequest {
   isActive: boolean;
