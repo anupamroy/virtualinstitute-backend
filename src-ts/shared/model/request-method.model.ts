@@ -1,18 +1,18 @@
-import { ObjectId, Unit, Year, Value } from './DB/imports/types.DB.model';
+import { ObjectId, Unit, Year, Value } from "./DB/imports/types.DB.model";
 
 export type RequestMethod =
-  | 'GET'
-  | 'PATCH'
-  | 'PUT'
-  | 'POST'
-  | 'DELETE'
-  | 'OPTIONS';
+  | "GET"
+  | "PATCH"
+  | "PUT"
+  | "POST"
+  | "DELETE"
+  | "OPTIONS";
 
 export class APIResponse {
   hasError = false;
-  error = '';
+  error = "";
   data: any;
-  constructor(hasError = false, error = '', data: any = null) {
+  constructor(hasError = false, error = "", data: any = null) {
     this.hasError = hasError;
     this.error = error;
     this.data = data;
@@ -20,15 +20,15 @@ export class APIResponse {
 }
 
 export class GeneralMasterItemRequest {
-  name: string = '';
+  name: string = "";
 }
 
 export class ChildMasterItemRequest extends GeneralMasterItemRequest {
-  parentId: ObjectId = '';
+  parentId: ObjectId = "";
 }
 
 export class CreateFeesHeadRequest extends ChildMasterItemRequest {
-  instituteTypeId: ObjectId = '';
+  instituteTypeId: ObjectId = "";
 }
 
 export class CreateFeesTypeMasterRequest extends GeneralMasterItemRequest {}
@@ -40,30 +40,44 @@ export interface StatusChangeRequest {
 }
 
 // NTA Authority
-export class CreateNTAAuthorityRequest {
-  organizationName: string = '';
-  organizationType: 'SELLER' | 'INSTITUTE' = 'SELLER';
+export class CreateOrganizationRequest {
+  organizationName: string = "";
+  organizationType: "SELLER" | "INSTITUTE" = "SELLER";
+  institutionType: ObjectId = "";
   organizationIcon: FileMetaData = new FileMetaData();
-  organizationShortCode: string = '';
+  organizationShortCode: string = "";
 }
 
-export class CreateNTAPhoneNumberRequest {
-  phone: string = '';
-  phoneText: string = '';
-  phoneType: string = '';
-  phoneTimings: string = '';
-  phoneDays: string = '';
-  phoneShift: string = '';
-  associatedPost: string = '';
+export class CreateOrgAddressRequest {
+  address: string = "";
+  addressText: string = "";
 }
 
-export class CreateNTAEmailRequest {
-  emailId: string = '';
-  emailText: string = '';
-  emailType: string = '';
-  emailDays: string = '';
-  associatedPost: string = '';
+export class CreateOrgPhoneNumberRequest {
+  phone: string = "";
+  phoneText: string = "";
+  phoneType: string = "";
+  phoneTimings: string = "";
+  phoneDays: string = "";
+  phoneShift: string = "";
+  associatedPost: string = "";
 }
+
+export class CreateOrgEmailRequest {
+  emailId: string = "";
+  emailText: string = "";
+  emailType: string = "";
+  emailDays: string = "";
+  associatedPost: string = "";
+}
+
+export class CreateOrgRegistrationRequest {}
+
+export class CreateOrgDocumentRequest {}
+
+export class CreateOrgSettingsRequest {}
+
+export class CreateOrgAffiliationRequest {}
 
 export interface StatusChangeRequest {
   isActive: boolean;
@@ -120,9 +134,9 @@ export interface EditFeesMasterRequest {}
 export interface EditCourseFeesRequest {}
 
 export enum Payable {
-  'monthly',
-  'yearly',
-  'semester wise',
+  "monthly",
+  "yearly",
+  "semester wise",
 }
 
 export interface DecodedFile {
@@ -132,9 +146,8 @@ export interface DecodedFile {
   content: Buffer;
 }
 
-
 export class FileMetaData {
-  name: string = '';
-  contentType: string = '';
-  size: string = '';
+  name: string = "";
+  contentType: string = "";
+  size: string = "";
 }

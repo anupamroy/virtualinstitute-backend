@@ -1,35 +1,55 @@
-import { AWSHandler } from '../shared/helpers/handler-common';
+import { AWSHandler } from "../shared/helpers/handler-common";
 import {
   listAllNTAAuthorities,
   createNTAUser,
   deleteNTAUser,
   newPasswordChallenge,
-} from '../shared/services/nta-authority.service';
+  CreateOrgAddress,
+  CreateOrgPhoneNumber,
+  CreateOrgEmailId,
+  CreateOrgRegistration,
+  CreateOrgDocument,
+  CreateOrgSettings,
+  CreateOrgAffiliation,
+} from "../shared/services/nta-authority.service";
 import {
-  createNTAAuthority,
+  createOrganization,
   listNTAAuthority,
-} from '../shared/services/nta-authority.service';
-import {
-  checkToken,
-} from '../shared/services/nta-institute.service';
+} from "../shared/services/nta-authority.service";
+import { checkToken } from "../shared/services/nta-institute.service";
 
 // NTA Authority
-const listAllNTAAuthoritiesHandler = AWSHandler('GET', listAllNTAAuthorities);
-const listNTAAuthorityHandler = AWSHandler('GET', listNTAAuthority);
-const createNTAAuthorityHandler = AWSHandler('POST', createNTAAuthority);
+const listAllNTAAuthoritiesHandler = AWSHandler("GET", listAllNTAAuthorities);
+const listNTAAuthorityHandler = AWSHandler("GET", listNTAAuthority);
+const CreateOrganizationHandler = AWSHandler("POST", createOrganization);
 
-const createNTAUserHandler = AWSHandler('POST', createNTAUser);
-const deleteNTAUserHandler = AWSHandler('DELETE', deleteNTAUser);
+const CreateOrgAddressHandler = AWSHandler("POST", CreateOrgAddress);
+const CreateOrgPhoneNumberHandler = AWSHandler("POST", CreateOrgPhoneNumber);
+const CreateOrgEmailIdHandler = AWSHandler("POST", CreateOrgEmailId);
+const CreateOrgRegistrationHandler = AWSHandler("POST", CreateOrgRegistration);
+const CreateOrgDocumentHandler = AWSHandler("POST", CreateOrgDocument);
+const CreateOrgSettingsHandler = AWSHandler("POST", CreateOrgSettings);
+const CreateOrgAffiliationHandler = AWSHandler("POST", CreateOrgAffiliation);
 
-const checkTokenHandler = AWSHandler('GET', checkToken);
-const newPasswordChallengeHandler = AWSHandler('POST', newPasswordChallenge);
+const createNTAUserHandler = AWSHandler("POST", createNTAUser);
+const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
+
+const checkTokenHandler = AWSHandler("GET", checkToken);
+const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);
 
 export {
-  createNTAAuthorityHandler,
+  CreateOrganizationHandler,
   listNTAAuthorityHandler,
   listAllNTAAuthoritiesHandler,
   createNTAUserHandler,
   deleteNTAUserHandler,
   checkTokenHandler,
   newPasswordChallengeHandler,
+  CreateOrgAddressHandler,
+  CreateOrgPhoneNumberHandler,
+  CreateOrgEmailIdHandler,
+  CreateOrgRegistrationHandler,
+  CreateOrgDocumentHandler,
+  CreateOrgSettingsHandler,
+  CreateOrgAffiliationHandler,
 };
