@@ -79,7 +79,23 @@ export const ERRORS = {
   GENERAL_KEYS_MISSING: 'Some keys Missing',
 };
 
-
 export const S3_BUCKETS = {
-  PRIMARY: 'virtualinstitutestorage'
+  PRIMARY: 'virtualinstitutestorage',
+};
+
+export class S3_FOLDER_STRUCTURE {
+  static ORGANIZATION = 'org_meta';
+  static IMAGES = '/images';
+  static LOGO = '/logo';
+  static getLogoPath(orgId: string, imageName: string) {
+    return (
+      this.ORGANIZATION +
+      '/' +
+      orgId.replace(/#/g, '') +
+      this.IMAGES +
+      this.LOGO +
+      '/' +
+      imageName
+    );
+  }
 }
