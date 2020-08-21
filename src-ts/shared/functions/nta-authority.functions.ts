@@ -3,7 +3,7 @@ import {
   DynamoDBActions,
   processDynamoDBResponse,
 } from '../helpers/db-handler';
-import { TABLE_NAMES } from '../constants/common-vars';
+import { TABLE_NAMES, S3_FOLDER_STRUCTURE } from '../constants/common-vars';
 import {
   CreateNTAAuthorityRequest,
   CreateNTAPhoneNumberRequest,
@@ -12,10 +12,11 @@ import {
 import {
   getContentsByType,
   getCognitoUserFromToken,
+  getFileExtension,
 } from '../helpers/general.helpers';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import { ObjectId } from '../model/DB/imports/types.DB.model';
-import { uploadFileToS3 } from '../helpers/s3.handler';
+import { uploadFileToS3, getSignedUrlS3 } from '../helpers/s3.handler';
 import {
   DBOrganization,
   DBOrgPhone,
@@ -26,19 +27,17 @@ import {
 export const createNTAAuthorityFunction = async (
   body: CreateNTAAuthorityRequest
 ) => {
-  const ntaAuthority = new DBOrganization();
-  ntaAuthority.name = body.organizationName;
-  ntaAuthority.orgLogo = (await uploadFileToS3(
-    body.organizationIcon.filename,
-    body.organizationIcon
-  )).Location;
-  ntaAuthority.orgInstituteType = body.organizationType;
-  ntaAuthority.orgShortCode =
-    body.organizationShortCode || ntaAuthority.getShortCode();
-  return processDynamoDBResponse(
-    DynamoDBActions.putItem(ntaAuthority),
-    ntaAuthority.tableType
-  );
+  const organization = new DBOrganization();
+  organization.name = body.organizationName;
+  organization.orgInstituteType = body.organizationType;
+  organization.orgShortCode =
+    body.organizationShortCode || organization.getShortCode();
+  const { logoUrl, S3Url } = await processorgLogo(organization, body);
+  organization.orgLogo = logoUrl;
+  return processDynamoDBResponse(DynamoDBActions.putItem(organization), {
+    id: organization.tableType,
+    path: S3Url,
+  });
 };
 
 export const createNTAPhoneNumberFunction = async (
@@ -126,3 +125,24 @@ export const getNTAById = (ntaId: string) =>
   DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable).then(
     (nta) => nta.Item
   );
+
+// *Helpers
+export const processorgLogo = async (
+  organization: DBOrganization,
+  body: CreateNTAAuthorityRequest
+) => {
+  // Process Image
+  const extension = getFileExtension(body.organizationIcon);
+  const logoUrl = S3_FOLDER_STRUCTURE.getLogoPath(
+    organization.tableType,
+    'logo.' + extension
+  );
+  const S3Url = await getSignedUrlS3(
+    logoUrl,
+    body.organizationIcon.contentType
+  );
+  return {
+    logoUrl,
+    S3Url,
+  };
+};

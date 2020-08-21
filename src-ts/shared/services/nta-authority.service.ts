@@ -14,8 +14,9 @@ import { cognitoActions } from '../../shared/helpers/cognito/cognito.actions';
 import { parseMultiPart } from '../helpers/requests/request.helper';
 
 export const createNTAAuthority = async (event: APIGatewayProxyEvent) => {
-  // console.log('event', event);
-  const body = await parseMultiPart<CreateNTAAuthorityRequest>(event);
+  const body = await parseBody<CreateNTAAuthorityRequest>(event.body);
+  console.log(body);
+  console.log(typeof body);
   const result = await requestValidatorGuard(
     body,
     new CreateNTAAuthorityRequest(),

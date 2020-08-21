@@ -12,6 +12,7 @@ import { getNTAById } from '../functions/nta-authority.functions';
 import { EVENT_HEADERS_LOCAL } from '../constants/common-vars';
 import { GeneralDBItem } from '../model/DB/imports/DB.model';
 import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
+import { FileMetaData } from '../model/request-method.model';
 
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
@@ -173,3 +174,6 @@ export const setUpdationDetailsOfObject = (
 
 export const base64Decode = (b64Encoded: string) =>
   Buffer.from(b64Encoded, 'base64').toString();
+
+export const getFileExtension = (file: FileMetaData) =>
+  file.name.split('.').slice(-1).pop();

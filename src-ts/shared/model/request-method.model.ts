@@ -43,7 +43,7 @@ export interface StatusChangeRequest {
 export class CreateNTAAuthorityRequest {
   organizationName: string = '';
   organizationType: 'SELLER' | 'INSTITUTE' = 'SELLER';
-  organizationIcon: DecodedFile = {} as any;
+  organizationIcon: FileMetaData = new FileMetaData();
   organizationShortCode: string = '';
 }
 
@@ -130,4 +130,11 @@ export interface DecodedFile {
   filename: string;
   contentType: string;
   content: Buffer;
+}
+
+
+export class FileMetaData {
+  name: string = '';
+  contentType: string = '';
+  size: string = '';
 }
