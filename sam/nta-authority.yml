@@ -234,7 +234,7 @@ Resources:
             Method: GET
             RestApiId: !Ref NtaApi
 
-  CreateOrganizationUserFunction:
+  CreateSellerUserFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-authority.createNTAUserHandler
@@ -246,7 +246,23 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path:  /organization/{orgId}/masteruser
+            Path:  /organization/{orgId}/user/seller
+            Method: POST
+            RestApiId: !Ref NtaApi
+
+  CreateInstituteUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-authority.CreateInstituteMasterUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path:  /organization/{orgId}/user/institute
             Method: POST
             RestApiId: !Ref NtaApi
 
