@@ -1,9 +1,9 @@
-import { NTA, NTAUser } from '../model/DB/nta.DB.model';
+import { NTA, NTAUser } from "../model/DB/nta.DB.model";
 import {
   DynamoDBActions,
   processDynamoDBResponse,
-} from '../helpers/db-handler';
-import { TABLE_NAMES, S3_FOLDER_STRUCTURE } from '../constants/common-vars';
+} from "../helpers/db-handler";
+import { TABLE_NAMES } from "../constants/common-vars";
 import {
   CreateOrganizationRequest,
   CreateOrgPhoneNumberRequest,
@@ -15,16 +15,15 @@ import {
   CreateOrgAffiliationRequest,
   CreateOrgSubscriptionRequest,
   FileMetaData,
-} from '../model/request-method.model';
+} from "../model/request-method.model";
 import {
   getContentsByType,
   getCognitoUserFromToken,
   getFileExtension,
   CreateS3FolderStructure,
-} from '../helpers/general.helpers';
-import { APIGatewayProxyEvent } from 'aws-lambda';
-import { ObjectId } from '../model/DB/imports/types.DB.model';
-import { uploadFileToS3, getSignedUrlS3 } from '../helpers/s3.handler';
+} from "../helpers/general.helpers";
+import { APIGatewayProxyEvent } from "aws-lambda";
+import { ObjectId } from "../model/DB/imports/types.DB.model";
 import {
   DBOrganization,
   DBOrgPhone,
@@ -35,26 +34,34 @@ import {
   DBOrgAffiliation,
   DBOrgDocument,
   DBOrgSubscription,
-} from '../model/DB/org.DB.model';
-import { FileUrlObject } from '../model/response.model';
-import { CreateInstituteUserRequest } from '../model/request.model';
-import { cognitoActions } from '../helpers/cognito/cognito.actions';
-import { InstituteUser } from '../model/DB/institute.DB.model';
+} from "../model/DB/org.DB.model";
+import { FileUrlObject } from "../model/response.model";
+import { CreateInstituteUserRequest } from "../model/request.model";
+import { cognitoActions } from "../helpers/cognito/cognito.actions";
+import { InstituteUser } from "../model/DB/institute.DB.model";
+import {
+  setValuesInOrg,
+  setValuesInOrgAddress,
+  setValuesInOrgPhone,
+  setValesInOrgEmail,
+  setValuesInOrgRegistration,
+  setValuesInOrgDocument,
+  setValuesInOrgSettings,
+  setValuesInOrgSubscription,
+  setValuesInOrgAffiliation,
+} from "../transforms/nta-authority.transform";
 
 // *Create NTA Authority
 export const createOrganizationFunction = async (
   body: CreateOrganizationRequest
 ) => {
   const organization = new DBOrganization();
-  organization.name = body.organizationName;
-  organization.orgInstituteType = body.organizationType;
-  organization.orgShortCode =
-    body.organizationShortCode || organization.getShortCode();
+  setValuesInOrg(body, organization);
   organization.orgLogo = getOrgLogoPath(organization, body);
   return processDynamoDBResponse(
     DynamoDBActions.putItem(organization),
     new FileUrlObject(
-      organization.tableType.replace('#', ''),
+      organization.tableType.replace("#", ""),
       organization.orgLogo
     )
   );
@@ -65,8 +72,7 @@ export const createOrgAddressFunction = async (
   orgId: ObjectId
 ) => {
   const orgAddress = new DBORGAddress(orgId);
-  orgAddress.address = body.address;
-  orgAddress.addressText = body.addressText;
+  setValuesInOrgAddress(body, orgAddress);
   return processDynamoDBResponse(DynamoDBActions.putItem(orgAddress));
 };
 
@@ -75,13 +81,7 @@ export const createOrgPhoneNumberFunction = async (
   orgId: ObjectId
 ) => {
   const orgPhoneNumber = new DBOrgPhone(orgId);
-  orgPhoneNumber.phoneText = body.phoneText;
-  orgPhoneNumber.phone = body.phone;
-  orgPhoneNumber.phoneType = body.phoneType;
-  orgPhoneNumber.phoneTimings = body.phoneTimings;
-  orgPhoneNumber.phoneDays = body.phoneDays;
-  orgPhoneNumber.phoneShift = body.phoneShift;
-  orgPhoneNumber.associatedPost = body.associatedPost;
+  setValuesInOrgPhone(body, orgPhoneNumber);
   return processDynamoDBResponse(DynamoDBActions.putItem(orgPhoneNumber));
 };
 
@@ -90,11 +90,7 @@ export const createOrgEmailFunction = async (
   orgId: ObjectId
 ) => {
   const orgEmail = new DBOrgEmail(orgId);
-  orgEmail.emailText = body.emailText;
-  orgEmail.emailId = body.emailId;
-  orgEmail.emailType = body.emailType;
-  orgEmail.emailDays = body.emailDays;
-  orgEmail.associatedPost = body.associatedPost;
+  setValesInOrgEmail(body, orgEmail);
   return processDynamoDBResponse(DynamoDBActions.putItem(orgEmail));
 };
 
@@ -103,8 +99,7 @@ export const createOrgRegistrationFunction = async (
   orgId: ObjectId
 ) => {
   const orgRegistration = new DBOrgRegistration(orgId);
-  orgRegistration.registrationType = body.registrationNumber;
-  orgRegistration.registrationNumber = body.registrationNumber;
+  setValuesInOrgRegistration(body, orgRegistration);
   orgRegistration.registrationCertificateLink = getOrgRegistrationDocumentPath(
     orgId,
     body.registrationCertificate
@@ -120,9 +115,7 @@ export const createOrgDocumentFunction = async (
   orgId: ObjectId
 ) => {
   const orgDocument = new DBOrgDocument(orgId);
-  orgDocument.documentNumber = body.documentNumber;
-  orgDocument.documentValidUpto = body.documentValidUpto;
-  orgDocument.documentType = body.documentType;
+  setValuesInOrgDocument(body, orgDocument);
   orgDocument.documentLink = getOrgRegistrationDocumentPath(
     orgId,
     body.document
@@ -138,8 +131,7 @@ export const createOrgSettingsFunction = async (
   orgId: ObjectId
 ) => {
   const orgSettings = new DBOrgSettings(orgId);
-  orgSettings.otp = body.otp;
-  orgSettings.password = body.password;
+  setValuesInOrgSettings(body, orgSettings);
   return processDynamoDBResponse(DynamoDBActions.putItem(orgSettings));
 };
 
@@ -147,13 +139,9 @@ export const createOrgSubscriptionFunction = async (
   body: CreateOrgSubscriptionRequest,
   orgId: ObjectId
 ) => {
-  const orgSettings = new DBOrgSubscription(orgId);
-  orgSettings.moduleId = body.moduleId;
-  orgSettings.subscriptionPackageId = body.subscriptionPackageId;
-  orgSettings.subscriptionFrom = body.subscriptionFrom;
-  orgSettings.subscriptionUpto = body.subscriptionUpto;
-  orgSettings.subscriptionTypeId = body.subscriptionTypeId;
-  return processDynamoDBResponse(DynamoDBActions.putItem(orgSettings));
+  const orgSubscription = new DBOrgSubscription(orgId);
+  setValuesInOrgSubscription(body, orgSubscription);
+  return processDynamoDBResponse(DynamoDBActions.putItem(orgSubscription));
 };
 
 export const createOrgAffiliationFunction = async (
@@ -161,12 +149,7 @@ export const createOrgAffiliationFunction = async (
   orgId: ObjectId
 ) => {
   const orgAffiliation = new DBOrgAffiliation(orgId);
-  orgAffiliation.affiliationStartDate = body.affiliationStartDate;
-  orgAffiliation.affiliationEndDate = body.affiliationEndDate;
-  orgAffiliation.affiliationAuthority = body.affiliationAuthority;
-  orgAffiliation.affiliationGrade = body.affiliationGrade;
-  orgAffiliation.affiliationStatus = body.affiliationStatus;
-  orgAffiliation.affiliationType = body.affiliationType;
+  setValuesInOrgAffiliation(body, orgAffiliation);
   orgAffiliation.certificationDocumentLink = getAffiliationDocumentPath(
     orgId,
     body.certificationDocument
@@ -179,7 +162,7 @@ export const createOrgAffiliationFunction = async (
 
 export const listAllNTAAuthoritiesFunction = async () => {
   return processDynamoDBResponse(
-    getContentsByType(TABLE_NAMES.instituteTable, 'NTA_AUTHORITY')
+    getContentsByType(TABLE_NAMES.instituteTable, "NTA_AUTHORITY")
   );
 };
 
@@ -191,7 +174,7 @@ export const listNTAAuthorityFunction = async (ntaId: ObjectId) => {
 export const getNTAByIDFunction = (ntaId: string) => {
   return DynamoDBActions.getItemById(
     ntaId,
-    'NTA_AUTHORITY',
+    "NTA_AUTHORITY",
     TABLE_NAMES.instituteTable
   );
 };
@@ -204,7 +187,7 @@ export const insertCognitoUserInNTAFunction = async (
   const ntaUser = new NTAUser();
   ntaUser.username = cognitoUserSub;
   ntaUser.orgId = orgId;
-  ntaUser.tableType = '#' + orgId;
+  ntaUser.tableType = "#" + orgId;
   ntaUser.picture = getProfilePicturePath(orgId, picture, cognitoUserSub);
   ntaUser.id = `#USER#ADMIN#${cognitoUserSub}`;
   return processDynamoDBResponse(
@@ -221,7 +204,7 @@ export const insertCognitoUserIninstituteFunction = async (
   const instituteUser = new InstituteUser();
   instituteUser.instituteId = orgId;
   instituteUser.cognitoUserId = cognitoUserSub;
-  instituteUser.tableType = '#' + orgId;
+  instituteUser.tableType = "#" + orgId;
   instituteUser.picture = getProfilePicturePath(orgId, picture, cognitoUserSub);
   return processDynamoDBResponse(
     DynamoDBActions.putItem(instituteUser),
@@ -232,7 +215,7 @@ export const insertCognitoUserIninstituteFunction = async (
 export const getNTAIdofUser = async (event: APIGatewayProxyEvent) => {
   const cognitoUser = await getCognitoUserFromToken(event);
   const userId =
-    cognitoUser.UserAttributes.find((attr) => attr.Name === 'sub')?.Value + '';
+    cognitoUser.UserAttributes.find((attr) => attr.Name === "sub")?.Value + "";
   const user: NTAUser = await DynamoDBActions.get(
     { id: userId },
     TABLE_NAMES.instituteTable
@@ -249,10 +232,8 @@ export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
   return nta;
 };
 
-export const getNTAById = (ntaId: string) =>
-  DynamoDBActions.get({ id: ntaId }, TABLE_NAMES.instituteTable).then(
-    (nta) => nta.Item
-  );
+export const getNTAById = (orgId: string) =>
+  DynamoDBActions.get({ tableType: orgId }).then((org) => org.Item);
 
 export const createInstituteMasterUserFunction = async (
   body: CreateInstituteUserRequest,
@@ -263,12 +244,12 @@ export const createInstituteMasterUserFunction = async (
     .then((user) =>
       insertCognitoUserIninstituteFunction(
         orgId,
-        user.User?.Attributes?.find((attr) => attr.Name === 'sub')?.Value + '',
+        user.User?.Attributes?.find((attr) => attr.Name === "sub")?.Value + "",
         body.picture
       )
     );
 
-// *Helpers
+// *Get File Paths
 export const getOrgLogoPath = (
   organization: DBOrganization,
   body: CreateOrganizationRequest
@@ -276,7 +257,7 @@ export const getOrgLogoPath = (
   const extension = getFileExtension(body.organizationIcon);
   const logoUrl = CreateS3FolderStructure.getLogoPath(
     organization.tableType,
-    'logo.' + extension
+    "logo." + extension
   );
   return logoUrl;
 };
