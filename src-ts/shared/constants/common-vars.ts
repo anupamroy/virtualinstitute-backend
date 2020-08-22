@@ -87,7 +87,8 @@ export const S3_FOLDER_STRUCTURE = {
   ORGANIZATION: "org_meta",
   IMAGES: "/images",
   REGISTRATION_DOCUMENTS: "/registration-documents",
-  AFFILIATION_DOCUMENTS: '/affiliation-documents',
+  AFFILIATION_DOCUMENTS: "/affiliation-documents",
+  PROFILE_META: "/profile_meta",
+  PROFILE_PICTURE: "/profile-picture",
   LOGO: "/logo",
-  
-}
+};

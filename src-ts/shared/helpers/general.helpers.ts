@@ -217,4 +217,23 @@ export class CreateS3FolderStructure {
       documentExtension
     );
   }
+
+  static getProfilePicturePath(
+    orgId: string,
+    documentExtension: string,
+    profileId: string
+  ) {
+    return (
+      S3_FOLDER_STRUCTURE.ORGANIZATION +
+      "/" +
+      orgId.replace(/#/g, "") +
+      S3_FOLDER_STRUCTURE.PROFILE_META +
+      "/" +
+      profileId +
+      S3_FOLDER_STRUCTURE.PROFILE_PICTURE +
+      "/profile" +
+      "." +
+      documentExtension
+    );
+  }
 }

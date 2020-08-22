@@ -47,7 +47,6 @@ export const createOrganizationFunction = async (
   organization.orgInstituteType = body.organizationType;
   organization.orgShortCode =
     body.organizationShortCode || organization.getShortCode();
-  // const { logoUrl, S3Url } =
   organization.orgLogo = getOrgLogoPath(organization, body);
   return processDynamoDBResponse(
     DynamoDBActions.putItem(organization),
@@ -195,16 +194,19 @@ export const getNTAByIDFunction = (ntaId: string) => {
 };
 
 export const insertCognitoUserInNTAFunction = async (
-  ntaId: string,
-  username: string
+  orgId: string,
+  cognitoUserSub: string,
+  picture: FileMetaData
 ) => {
   const ntaUser = new NTAUser();
-  ntaUser.username = username;
-  ntaUser.ntaId = ntaId;
-  ntaUser.tableType = `#NTA#${ntaId}`;
-  ntaUser.id = `#USER#ADMIN#${username}`;
+  ntaUser.username = cognitoUserSub;
+  ntaUser.orgId = orgId;
+  ntaUser.tableType = orgId;
+  ntaUser.picture = getProfilePicturePath(orgId, picture, cognitoUserSub);
+  ntaUser.id = `#USER#ADMIN#${cognitoUserSub}`;
   return processDynamoDBResponse(
-    DynamoDBActions.putItem(ntaUser, TABLE_NAMES.instituteTable)
+    DynamoDBActions.putItem(ntaUser, TABLE_NAMES.instituteTable),
+    new FileUrlObject(cognitoUserSub, ntaUser.picture)
   );
 };
 
@@ -216,7 +218,7 @@ export const getNTAIdofUser = async (event: APIGatewayProxyEvent) => {
     { id: userId },
     TABLE_NAMES.instituteTable
   );
-  return user.ntaId;
+  return user.orgId;
 };
 
 export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
@@ -260,4 +262,17 @@ export const getAffiliationDocumentPath = (
 ) => {
   const extension = getFileExtension(fileMetaData);
   return CreateS3FolderStructure.getAffiliationDocumentPath(orgId, extension);
+};
+
+export const getProfilePicturePath = (
+  orgId: string,
+  fileMetaData: FileMetaData,
+  profileId: string
+) => {
+  const extension = getFileExtension(fileMetaData);
+  return CreateS3FolderStructure.getProfilePicturePath(
+    orgId,
+    extension,
+    profileId
+  );
 };

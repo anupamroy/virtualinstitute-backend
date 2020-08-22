@@ -246,7 +246,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /user
+            Path:  /organization/{orgId}/masteruser
             Method: POST
             RestApiId: !Ref NtaApi
 

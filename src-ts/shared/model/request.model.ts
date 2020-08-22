@@ -1,4 +1,5 @@
 import { CreateInstituteUser } from '../services/nta-institute.service';
+import { FileMetaData } from './request-method.model';
 export class CreatePersonRequest {
   phone_number: string = '';
   password: string = '';
@@ -7,6 +8,7 @@ export class CreatePersonRequest {
   name: string = '';
   family_name: string = '';
   middle_name: string = '';
+  picture: FileMetaData = new FileMetaData();
 }
 
 export class CreateStudentRequest extends CreatePersonRequest {

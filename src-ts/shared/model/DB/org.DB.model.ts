@@ -6,13 +6,26 @@ export class DBOrganization extends GeneralDBItem {
   tableType = "#ORG" + uuid();
   id = this.tableType + "#META";
   name: string = "";
+
   // TODO: Create completely another table where it has masters. With PK ORGTYPE
   orgType: "SELLER" | "INSTITUTE" = "SELLER";
   orgLogo: LinkURL = "";
   orgInstituteType: ObjectId = "";
   parentId: ObjectId = "";
   sellerId: ObjectId = "";
-  orgShortCode: string = "";
+  orgCode: string = "";
+  private _orgShortCode: string = "";
+  public get orgShortCode(): string {
+    return this._orgShortCode;
+  }
+  public set orgShortCode(value: string) {
+    this._orgShortCode = value;
+    this.orgCode =
+      "#ORG" +
+      this.orgShortCode +
+      this.orgType +
+      (new Date().getTime() + "").slice(1, 10);
+  }
   isDraft: boolean = true;
   getShortCode() {
     return (this.orgShortCode = this.name?.match(/\b([A-Z])/g)?.join("") || "");
@@ -23,7 +36,7 @@ export class DBOrgItem extends GeneralDBItem {
   constructor(orgTableType: string, objectType: DBOrgObjectType) {
     super();
     this.id = "#" + orgTableType + "#" + objectType;
-    this.tableType = orgTableType;
+    this.tableType = "#" + orgTableType;
   }
 }
 
