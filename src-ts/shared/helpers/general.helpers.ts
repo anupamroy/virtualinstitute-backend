@@ -15,6 +15,7 @@ import { GeneralDBItem } from "../model/DB/imports/DB.model";
 import { GeneralMasterItem } from "../model/DB/imports/misc.DB.model";
 import { FileMetaData } from "../model/request-method.model";
 import { v4 as uuid } from "uuid";
+import { DBOrganization } from "../model/DB/org.DB.model";
 
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
@@ -42,7 +43,7 @@ export const getCognitoUserFromToken = (event: APIGatewayProxyEvent) => {
 
 export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {
   const ntaId = getNTAIdFromEvent(event);
-  const nta: NTA = await getNTAById(ntaId);
+  const nta: DBOrganization = await getNTAById(ntaId);
   return nta;
 };
 

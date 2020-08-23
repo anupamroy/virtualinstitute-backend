@@ -36,7 +36,10 @@ import {
   DBOrgSubscription,
 } from "../model/DB/org.DB.model";
 import { FileUrlObject } from "../model/response.model";
-import { CreateInstituteUserRequest } from "../model/request.model";
+import {
+  CreateInstituteUserRequest,
+  CreatePersonRequest,
+} from "../model/request.model";
 import { cognitoActions } from "../helpers/cognito/cognito.actions";
 import { InstituteUser } from "../model/DB/institute.DB.model";
 import {
@@ -50,6 +53,7 @@ import {
   setValuesInOrgSubscription,
   setValuesInOrgAffiliation,
 } from "../transforms/nta-authority.transform";
+import { createErrorResponse } from "../helpers/handler-common";
 
 // *Create NTA Authority
 export const createOrganizationFunction = async (
@@ -179,6 +183,20 @@ export const getNTAByIDFunction = (ntaId: string) => {
   );
 };
 
+export const createOrganizationMasterUserFunction = async (
+  body: CreatePersonRequest,
+  orgId: string
+) => {
+  const org = await getNTAById(orgId);
+  console.log("createOrganizationMasterUserFunction", org);
+  if (!org) {
+    return createErrorResponse("No Such Organization");
+  }
+  return org.orgType === "SELLER"
+    ? cognitoActions.addNTAUser(body, org.tableType)
+    : createInstituteMasterUserFunction(body, orgId);
+};
+
 export const insertCognitoUserInNTAFunction = async (
   orgId: string,
   cognitoUserSub: string,
@@ -233,13 +251,16 @@ export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getNTAById = (orgId: string) =>
-  DynamoDBActions.get({ tableType: orgId }).then((org) => org.Item);
+  DynamoDBActions.get({
+    tableType: "#" + orgId,
+    id: "#" + orgId + "#META",
+  }).then((org) => org.Item as DBOrganization);
 
 export const createInstituteMasterUserFunction = async (
-  body: CreateInstituteUserRequest,
+  body: CreatePersonRequest,
   orgId: ObjectId
-) =>
-  cognitoActions
+) => {
+  return cognitoActions
     .addInstituteUserFunction(body)
     .then((user) =>
       insertCognitoUserIninstituteFunction(
@@ -248,6 +269,7 @@ export const createInstituteMasterUserFunction = async (
         body.picture
       )
     );
+};
 
 // *Get File Paths
 export const getOrgLogoPath = (

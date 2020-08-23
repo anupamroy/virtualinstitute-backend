@@ -26,7 +26,8 @@ export const setValuesInOrg = (
   organization: DBOrganization
 ) => {
   organization.name = body.organizationName;
-  organization.orgInstituteType = body.organizationType;
+  organization.orgType = body.organizationType;
+  organization.orgInstituteType = body.institutionType;
   organization.orgShortCode =
     body.organizationShortCode || organization.getShortCode();
 };
@@ -75,29 +76,38 @@ export const setValuesInOrgDocument = (
   body: CreateOrgDocumentRequest,
   orgDocument: DBOrgDocument
 ) => {
-    orgDocument.documentNumber = body.documentNumber;
+  orgDocument.documentNumber = body.documentNumber;
   orgDocument.documentValidUpto = body.documentValidUpto;
   orgDocument.documentType = body.documentType;
 };
 
-export const setValuesInOrgSettings = (body: CreateOrgSettingsRequest, orgSettings: DBOrgSettings) => {
-    orgSettings.otp = body.otp;
-    orgSettings.password = body.password;
-}
+export const setValuesInOrgSettings = (
+  body: CreateOrgSettingsRequest,
+  orgSettings: DBOrgSettings
+) => {
+  orgSettings.otp = body.otp;
+  orgSettings.password = body.password;
+};
 
-export const setValuesInOrgSubscription = (body: CreateOrgSubscriptionRequest, orgSubscription: DBOrgSubscription) => {
-    orgSubscription.moduleId = body.moduleId;
-    orgSubscription.subscriptionPackageId = body.subscriptionPackageId;
-    orgSubscription.subscriptionFrom = body.subscriptionFrom;
-    orgSubscription.subscriptionUpto = body.subscriptionUpto;
-    orgSubscription.subscriptionTypeId = body.subscriptionTypeId;
-}
+export const setValuesInOrgSubscription = (
+  body: CreateOrgSubscriptionRequest,
+  orgSubscription: DBOrgSubscription
+) => {
+  orgSubscription.moduleId = body.moduleId;
+  orgSubscription.subscriptionPackageId = body.subscriptionPackageId;
+  orgSubscription.subscriptionFrom = body.subscriptionFrom;
+  orgSubscription.subscriptionUpto = body.subscriptionUpto;
+  orgSubscription.subscriptionTypeId = body.subscriptionTypeId;
+};
 
-export const setValuesInOrgAffiliation = (body: CreateOrgAffiliationRequest, orgAffiliation: DBOrgAffiliation) => {
-    orgAffiliation.affiliationStartDate = body.affiliationStartDate;
+export const setValuesInOrgAffiliation = (
+  body: CreateOrgAffiliationRequest,
+  orgAffiliation: DBOrgAffiliation
+) => {
+  orgAffiliation.affiliationStartDate = body.affiliationStartDate;
   orgAffiliation.affiliationEndDate = body.affiliationEndDate;
   orgAffiliation.affiliationAuthority = body.affiliationAuthority;
   orgAffiliation.affiliationGrade = body.affiliationGrade;
   orgAffiliation.affiliationStatus = body.affiliationStatus;
   orgAffiliation.affiliationType = body.affiliationType;
-}
+};

@@ -1,7 +1,6 @@
 import { AWSHandler } from '../shared/helpers/handler-common';
 import {
   listAllNTAAuthorities,
-  createNTAUser,
   deleteNTAUser,
   newPasswordChallenge,
   CreateOrgAddress,
@@ -11,6 +10,7 @@ import {
   CreateOrgDocument,
   CreateOrgSettings,
   CreateOrgAffiliation,
+  createOrganizationMasterUser,
 } from '../shared/services/nta-authority.service';
 import {
   createOrganization,
@@ -32,7 +32,7 @@ const CreateOrgDocumentHandler = AWSHandler('POST', CreateOrgDocument);
 const CreateOrgSettingsHandler = AWSHandler('POST', CreateOrgSettings);
 const CreateOrgAffiliationHandler = AWSHandler('POST', CreateOrgAffiliation);
 
-const createNTAUserHandler = AWSHandler('POST', createNTAUser);
+const CreateOrganizationMasterUserHandler = AWSHandler('POST', createOrganizationMasterUser);
 const deleteNTAUserHandler = AWSHandler('DELETE', deleteNTAUser);
 
 const CreateInstituteMasterUserHandler = AWSHandler(
@@ -47,7 +47,7 @@ export {
   CreateOrganizationHandler,
   listNTAAuthorityHandler,
   listAllNTAAuthoritiesHandler,
-  createNTAUserHandler,
+  CreateOrganizationMasterUserHandler,
   deleteNTAUserHandler,
   checkTokenHandler,
   newPasswordChallengeHandler,

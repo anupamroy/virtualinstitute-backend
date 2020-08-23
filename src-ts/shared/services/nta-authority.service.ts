@@ -1,7 +1,7 @@
 import {
   requestValidatorGuard,
   NTATokenGuard,
-} from '../../shared/helpers/requests/guard';
+} from "../../shared/helpers/requests/guard";
 import {
   createOrganizationFunction,
   listNTAAuthorityFunction,
@@ -14,9 +14,10 @@ import {
   createOrgSettingsFunction,
   createOrgAffiliationFunction,
   createInstituteMasterUserFunction,
-} from '../functions/nta-authority.functions';
-import { APIGatewayProxyEvent } from 'aws-lambda';
-import { parseBody } from '../../shared/helpers/handler-common';
+  createOrganizationMasterUserFunction,
+} from "../functions/nta-authority.functions";
+import { APIGatewayProxyEvent } from "aws-lambda";
+import { parseBody } from "../../shared/helpers/handler-common";
 import {
   CreateOrganizationRequest,
   CreateOrgAddressRequest,
@@ -26,9 +27,12 @@ import {
   CreateOrgDocumentRequest,
   CreateOrgSettingsRequest,
   CreateOrgAffiliationRequest,
-} from '../../shared/model/request-method.model';
-import { cognitoActions } from '../../shared/helpers/cognito/cognito.actions';
-import { CreateInstituteUserRequest } from '../model/request.model';
+} from "../../shared/model/request-method.model";
+import { cognitoActions } from "../../shared/helpers/cognito/cognito.actions";
+import {
+  CreateInstituteUserRequest,
+  CreatePersonRequest,
+} from "../model/request.model";
 
 export const createOrganization = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrganizationRequest>(event.body);
@@ -122,7 +126,7 @@ export const CreateOrgAffiliation = async (event: APIGatewayProxyEvent) => {
 export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
   return await NTATokenGuard(
     event,
-    async () => await listNTAAuthorityFunction(event.pathParameters?.id + '')
+    async () => await listNTAAuthorityFunction(event.pathParameters?.id + "")
   );
 };
 
@@ -133,8 +137,22 @@ export const listAllNTAAuthorities = async (event: APIGatewayProxyEvent) => {
   );
 };
 
-export const createNTAUser = async (event: APIGatewayProxyEvent) =>
-  await cognitoActions.addNTAUser(event);
+// export const createNTAUser = async (event: APIGatewayProxyEvent) =>
+//   await cognitoActions.addNTAUser(event);
+
+export const createOrganizationMasterUser = async (
+  event: APIGatewayProxyEvent
+) => {
+  const body = parseBody<CreatePersonRequest>(event.body);
+  const orgId = event.pathParameters?.orgId;
+  const result = await requestValidatorGuard(
+    body,
+    new CreatePersonRequest(),
+    createOrganizationMasterUserFunction,
+    [body, orgId]
+  );
+  return await result();
+};
 
 export const deleteNTAUser = async (event: APIGatewayProxyEvent) =>
   await cognitoActions.deleteNTAUser(event);
