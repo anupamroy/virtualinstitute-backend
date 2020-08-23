@@ -411,12 +411,6 @@ Resources:
             Path: /masters/institute/type
             Method: GET
             RestApiId: !Ref InstituteApi
-        NTAApi:
-          Type: Api
-          Properties:
-            Path: /masters/institute/type
-            Method: GET
-            RestApiId: !Ref NtaApi
 
   # Get Organization By Id
   GetFeesHeadByIDFunction:
