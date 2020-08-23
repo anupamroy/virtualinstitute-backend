@@ -171,16 +171,28 @@ export const listAllNTAAuthoritiesFunction = async () => {
 };
 
 // TODO: Later
-export const listNTAAuthorityFunction = async (ntaId: ObjectId) => {
+export const GetOrganizationByIdFunction = async (ntaId: ObjectId) => {
   return processDynamoDBResponse(getNTAByIDFunction(ntaId));
 };
 
-export const getNTAByIDFunction = (ntaId: string) => {
-  return DynamoDBActions.getItemById(
-    ntaId,
-    "NTA_AUTHORITY",
-    TABLE_NAMES.instituteTable
+export const GetOrgOfCurrentUserFunction = (cognitoUserSub: string) => {
+  return DynamoDBActions.scan(TABLE_NAMES.instituteTable, {
+    ScanFilter: {
+      id: {
+        ComparisonOperator: "EQ",
+        AttributeValueList: ["#USER#ADMIN#" + cognitoUserSub],
+      },
+    },
+  }).then((result) =>
+    result.Items ? (result.Items[0] as DBOrganization) : null
   );
+};
+
+export const getNTAByIDFunction = (orgId: string) => {
+  return DynamoDBActions.get({
+    id: "#" + orgId + "#META",
+    tableType: "#" + orgId,
+  });
 };
 
 export const createOrganizationMasterUserFunction = async (
@@ -205,7 +217,7 @@ export const insertCognitoUserInNTAFunction = async (
   const ntaUser = new NTAUser();
   ntaUser.username = cognitoUserSub;
   ntaUser.orgId = orgId;
-  ntaUser.tableType = "#" + orgId;
+  ntaUser.tableType = orgId;
   ntaUser.picture = getProfilePicturePath(orgId, picture, cognitoUserSub);
   ntaUser.id = `#USER#ADMIN#${cognitoUserSub}`;
   return processDynamoDBResponse(

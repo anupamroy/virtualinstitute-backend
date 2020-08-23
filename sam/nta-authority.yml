@@ -56,7 +56,7 @@ Resources:
       #     - /institute
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
-        DefaultAuthorizer: InstituteCognitoAuthorizer
+        DefaultAuthorizer: NTACognitoAuthorizer
         Authorizers:
           InstituteCognitoAuthorizer:
             UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_GYBsglFix
@@ -202,10 +202,10 @@ Resources:
             Method: POST
             RestApiId: !Ref NtaApi
 
-  ListOrganizationFunction:
+  GetOrgOfCurrentUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-authority.listNTAAuthorityHandler
+      Handler: src/handlers/nta-authority.GetOrgOfCurrentUserHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -214,9 +214,9 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /authority/{id}
+            Path: /organization/{id}
             Method: GET
-            RestApiId: !Ref NtaApi
+            RestApiId: !Ref InstituteApi
 
   ListAllNTAAuthoritiesFunction:
     Type: AWS::Serverless::Function

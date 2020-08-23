@@ -4,7 +4,7 @@ import {
 } from "../../shared/helpers/requests/guard";
 import {
   createOrganizationFunction,
-  listNTAAuthorityFunction,
+  GetOrganizationByIdFunction,
   listAllNTAAuthoritiesFunction,
   createOrgAddressFunction,
   createOrgPhoneNumberFunction,
@@ -15,6 +15,7 @@ import {
   createOrgAffiliationFunction,
   createInstituteMasterUserFunction,
   createOrganizationMasterUserFunction,
+  GetOrgOfCurrentUserFunction,
 } from "../functions/nta-authority.functions";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { parseBody } from "../../shared/helpers/handler-common";
@@ -33,6 +34,7 @@ import {
   CreateInstituteUserRequest,
   CreatePersonRequest,
 } from "../model/request.model";
+import { processDynamoDBResponse } from "../helpers/db-handler";
 
 export const createOrganization = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrganizationRequest>(event.body);
@@ -123,10 +125,17 @@ export const CreateOrgAffiliation = async (event: APIGatewayProxyEvent) => {
   return await result();
 };
 
-export const listNTAAuthority = async (event: APIGatewayProxyEvent) => {
+export const GetOrganizationById = async (event: APIGatewayProxyEvent) => {
   return await NTATokenGuard(
     event,
-    async () => await listNTAAuthorityFunction(event.pathParameters?.id + "")
+    async () => await GetOrganizationByIdFunction(event.pathParameters?.id + "")
+  );
+};
+
+export const GetOrgOfCurrentUser = async (event: APIGatewayProxyEvent) => {
+  const cognitoUserSub = event.headers.username;
+  return await processDynamoDBResponse(
+    GetOrgOfCurrentUserFunction(cognitoUserSub)
   );
 };
 
