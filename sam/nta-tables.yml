@@ -25,23 +25,23 @@ Resources:
         WriteCapacityUnits: 2
       TableName: InstituteTableV1
 
-    GlobalMastersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: 'tableType'
-            AttributeType: 'S'
-          - AttributeName: 'id'
-            AttributeType: 'S'
-        KeySchema:
-          - AttributeName: 'tableType'
-            KeyType: 'HASH'
-          - AttributeName: 'id'
-            KeyType: 'RANGE'
-        ProvisionedThroughput:
-          ReadCapacityUnits: 2
-          WriteCapacityUnits: 2
-        TableName: GlobalMastersTable
+  GlobalMastersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'tableType'
+          AttributeType: 'S'
+        - AttributeName: 'id'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'tableType'
+          KeyType: 'HASH'
+        - AttributeName: 'id'
+          KeyType: 'RANGE'
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TableName: GlobalMastersTable
 
 
   # ErrorsTable:
