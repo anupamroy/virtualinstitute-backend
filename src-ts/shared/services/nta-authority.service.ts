@@ -16,6 +16,7 @@ import {
   createInstituteMasterUserFunction,
   createOrganizationMasterUserFunction,
   GetOrgOfCurrentUserFunction,
+  GetCurrentUserDetailsFunction,
 } from '../functions/nta-authority.functions';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import { parseBody } from '../../shared/helpers/handler-common';
@@ -134,7 +135,6 @@ export const GetOrganizationById = async (event: APIGatewayProxyEvent) => {
 
 export const GetOrgOfCurrentUser = async (event: APIGatewayProxyEvent) => {
   const cognitoUserSub = event.headers.username || event.headers.Username;
-  console.log('cognitoUserSub', cognitoUserSub);
   return await processDynamoDBResponse(
     GetOrgOfCurrentUserFunction(cognitoUserSub)
   );
@@ -146,6 +146,13 @@ export const listAllNTAAuthorities = async (event: APIGatewayProxyEvent) => {
     async () => await listAllNTAAuthoritiesFunction()
   );
 };
+
+export const GetCurrentUserDetails = async (event: APIGatewayProxyEvent) => {
+  const cognitoUserSub = event.headers.username || event.headers.Username;
+  return await processDynamoDBResponse(
+    GetCurrentUserDetailsFunction(cognitoUserSub)
+  );
+}
 
 // export const createNTAUser = async (event: APIGatewayProxyEvent) =>
 //   await cognitoActions.addNTAUser(event);

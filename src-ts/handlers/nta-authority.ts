@@ -1,4 +1,4 @@
-import { AWSHandler } from "../shared/helpers/handler-common";
+import { AWSHandler } from '../shared/helpers/handler-common';
 import {
   listAllNTAAuthorities,
   deleteNTAUser,
@@ -12,42 +12,45 @@ import {
   CreateOrgAffiliation,
   createOrganizationMasterUser,
   GetOrgOfCurrentUser,
-} from "../shared/services/nta-authority.service";
+  GetCurrentUserDetails,
+} from '../shared/services/nta-authority.service';
 import {
   createOrganization,
   GetOrganizationById,
-} from "../shared/services/nta-authority.service";
-import { checkToken } from "../shared/services/nta-institute.service";
-import { createInstituteMasterUser } from "../shared/services/nta-authority.service";
+} from '../shared/services/nta-authority.service';
+import { checkToken } from '../shared/services/nta-institute.service';
+import { createInstituteMasterUser } from '../shared/services/nta-authority.service';
 
 // NTA Authority
-const listAllNTAAuthoritiesHandler = AWSHandler("GET", listAllNTAAuthorities);
-const GetOrganizationByIdHandler = AWSHandler("GET", GetOrganizationById);
-const CreateOrganizationHandler = AWSHandler("POST", createOrganization);
+const listAllNTAAuthoritiesHandler = AWSHandler('GET', listAllNTAAuthorities);
+const GetOrganizationByIdHandler = AWSHandler('GET', GetOrganizationById);
+const CreateOrganizationHandler = AWSHandler('POST', createOrganization);
 
-const GetOrgOfCurrentUserHandler = AWSHandler("GET", GetOrgOfCurrentUser);
+const GetOrgOfCurrentUserHandler = AWSHandler('GET', GetOrgOfCurrentUser);
 
-const CreateOrgAddressHandler = AWSHandler("POST", CreateOrgAddress);
-const CreateOrgPhoneNumberHandler = AWSHandler("POST", CreateOrgPhoneNumber);
-const CreateOrgEmailIdHandler = AWSHandler("POST", CreateOrgEmailId);
-const CreateOrgRegistrationHandler = AWSHandler("POST", CreateOrgRegistration);
-const CreateOrgDocumentHandler = AWSHandler("POST", CreateOrgDocument);
-const CreateOrgSettingsHandler = AWSHandler("POST", CreateOrgSettings);
-const CreateOrgAffiliationHandler = AWSHandler("POST", CreateOrgAffiliation);
+const CreateOrgAddressHandler = AWSHandler('POST', CreateOrgAddress);
+const CreateOrgPhoneNumberHandler = AWSHandler('POST', CreateOrgPhoneNumber);
+const CreateOrgEmailIdHandler = AWSHandler('POST', CreateOrgEmailId);
+const CreateOrgRegistrationHandler = AWSHandler('POST', CreateOrgRegistration);
+const CreateOrgDocumentHandler = AWSHandler('POST', CreateOrgDocument);
+const CreateOrgSettingsHandler = AWSHandler('POST', CreateOrgSettings);
+const CreateOrgAffiliationHandler = AWSHandler('POST', CreateOrgAffiliation);
 
 const CreateOrganizationMasterUserHandler = AWSHandler(
-  "POST",
+  'POST',
   createOrganizationMasterUser
 );
-const deleteNTAUserHandler = AWSHandler("DELETE", deleteNTAUser);
+const deleteNTAUserHandler = AWSHandler('DELETE', deleteNTAUser);
 
 const CreateInstituteMasterUserHandler = AWSHandler(
-  "POST",
+  'POST',
   createInstituteMasterUser
 );
 
-const checkTokenHandler = AWSHandler("GET", checkToken);
-const newPasswordChallengeHandler = AWSHandler("POST", newPasswordChallenge);
+const checkTokenHandler = AWSHandler('GET', checkToken);
+const newPasswordChallengeHandler = AWSHandler('POST', newPasswordChallenge);
+
+const GetCurrentUserDetailsHandler = AWSHandler('GET', GetCurrentUserDetails);
 
 export {
   CreateOrganizationHandler,
@@ -66,4 +69,5 @@ export {
   CreateOrgAffiliationHandler,
   CreateInstituteMasterUserHandler,
   GetOrgOfCurrentUserHandler,
+  GetCurrentUserDetailsHandler,
 };

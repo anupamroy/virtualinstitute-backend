@@ -235,6 +235,22 @@ Resources:
             Method: GET
             RestApiId: !Ref InstituteApi
 
+  GetCurrentUserDetailsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-authority.GetCurrentUserDetailsHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /my-user
+            Method: GET
+            RestApiId: !Ref InstituteApi
+
   ListAllNTAAuthoritiesFunction:
     Type: AWS::Serverless::Function
     Properties:

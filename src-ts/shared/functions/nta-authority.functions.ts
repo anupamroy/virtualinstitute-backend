@@ -180,7 +180,14 @@ export const GetOrganizationByIdFunction = async (ntaId: ObjectId) => {
 
 export const GetOrgOfCurrentUserFunction = async (cognitoUserSub: string) => {
   const user = await scanItemById<NTAUser>('#USER#ADMIN#' + cognitoUserSub);
-  return getOrgItemById<DBOrganization>(user?.tableType + '', user?.tableType + '#META');
+  return getOrgItemById<DBOrganization>(
+    user?.tableType + '',
+    user?.tableType + '#META'
+  );
+};
+
+export const GetCurrentUserDetailsFunction = async (cognitoUserSub: string) => {
+  return scanItemById<NTAUser>('#USER#ADMIN#' + cognitoUserSub);
 };
 
 export const getNTAByIDFunction = (orgId: string) => {
