@@ -202,7 +202,8 @@ Resources:
             Method: POST
             RestApiId: !Ref NtaApi
 
-  GetOrgOfCurrentUserFunction:
+  # TODO:
+  GetOrganizationById:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/nta-authority.GetOrgOfCurrentUserHandler
@@ -215,6 +216,22 @@ Resources:
           Type: Api
           Properties:
             Path: /organization/{id}
+            Method: GET
+            RestApiId: !Ref InstituteApi
+
+  GetOrgOfCurrentUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-authority.GetOrgOfCurrentUserHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /my-org
             Method: GET
             RestApiId: !Ref InstituteApi
 

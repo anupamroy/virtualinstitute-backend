@@ -1,7 +1,7 @@
 import {
   requestValidatorGuard,
   NTATokenGuard,
-} from "../../shared/helpers/requests/guard";
+} from '../../shared/helpers/requests/guard';
 import {
   createOrganizationFunction,
   GetOrganizationByIdFunction,
@@ -16,9 +16,9 @@ import {
   createInstituteMasterUserFunction,
   createOrganizationMasterUserFunction,
   GetOrgOfCurrentUserFunction,
-} from "../functions/nta-authority.functions";
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { parseBody } from "../../shared/helpers/handler-common";
+} from '../functions/nta-authority.functions';
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import { parseBody } from '../../shared/helpers/handler-common';
 import {
   CreateOrganizationRequest,
   CreateOrgAddressRequest,
@@ -28,13 +28,13 @@ import {
   CreateOrgDocumentRequest,
   CreateOrgSettingsRequest,
   CreateOrgAffiliationRequest,
-} from "../../shared/model/request-method.model";
-import { cognitoActions } from "../../shared/helpers/cognito/cognito.actions";
+} from '../../shared/model/request-method.model';
+import { cognitoActions } from '../../shared/helpers/cognito/cognito.actions';
 import {
   CreateInstituteUserRequest,
   CreatePersonRequest,
-} from "../model/request.model";
-import { processDynamoDBResponse } from "../helpers/db-handler";
+} from '../model/request.model';
+import { processDynamoDBResponse } from '../helpers/db-handler';
 
 export const createOrganization = async (event: APIGatewayProxyEvent) => {
   const body = parseBody<CreateOrganizationRequest>(event.body);
@@ -128,12 +128,13 @@ export const CreateOrgAffiliation = async (event: APIGatewayProxyEvent) => {
 export const GetOrganizationById = async (event: APIGatewayProxyEvent) => {
   return await NTATokenGuard(
     event,
-    async () => await GetOrganizationByIdFunction(event.pathParameters?.id + "")
+    async () => await GetOrganizationByIdFunction(event.pathParameters?.id + '')
   );
 };
 
 export const GetOrgOfCurrentUser = async (event: APIGatewayProxyEvent) => {
-  const cognitoUserSub = event.headers.username;
+  const cognitoUserSub = event.headers.username || event.headers.Username;
+  console.log('cognitoUserSub', cognitoUserSub);
   return await processDynamoDBResponse(
     GetOrgOfCurrentUserFunction(cognitoUserSub)
   );

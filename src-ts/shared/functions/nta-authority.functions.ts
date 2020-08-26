@@ -1,9 +1,9 @@
-import { NTA, NTAUser } from "../model/DB/nta.DB.model";
+import { NTA, NTAUser } from '../model/DB/nta.DB.model';
 import {
   DynamoDBActions,
   processDynamoDBResponse,
-} from "../helpers/db-handler";
-import { TABLE_NAMES } from "../constants/common-vars";
+} from '../helpers/db-handler';
+import { TABLE_NAMES } from '../constants/common-vars';
 import {
   CreateOrganizationRequest,
   CreateOrgPhoneNumberRequest,
@@ -15,15 +15,16 @@ import {
   CreateOrgAffiliationRequest,
   CreateOrgSubscriptionRequest,
   FileMetaData,
-} from "../model/request-method.model";
+} from '../model/request-method.model';
 import {
   getContentsByType,
   getCognitoUserFromToken,
   getFileExtension,
   CreateS3FolderStructure,
-} from "../helpers/general.helpers";
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { ObjectId } from "../model/DB/imports/types.DB.model";
+  scanItemById,
+} from '../helpers/general.helpers';
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import { ObjectId } from '../model/DB/imports/types.DB.model';
 import {
   DBOrganization,
   DBOrgPhone,
@@ -34,14 +35,14 @@ import {
   DBOrgAffiliation,
   DBOrgDocument,
   DBOrgSubscription,
-} from "../model/DB/org.DB.model";
-import { FileUrlObject } from "../model/response.model";
+} from '../model/DB/org.DB.model';
+import { FileUrlObject } from '../model/response.model';
 import {
   CreateInstituteUserRequest,
   CreatePersonRequest,
-} from "../model/request.model";
-import { cognitoActions } from "../helpers/cognito/cognito.actions";
-import { InstituteUser } from "../model/DB/institute.DB.model";
+} from '../model/request.model';
+import { cognitoActions } from '../helpers/cognito/cognito.actions';
+import { InstituteUser } from '../model/DB/institute.DB.model';
 import {
   setValuesInOrg,
   setValuesInOrgAddress,
@@ -52,8 +53,10 @@ import {
   setValuesInOrgSettings,
   setValuesInOrgSubscription,
   setValuesInOrgAffiliation,
-} from "../transforms/nta-authority.transform";
-import { createErrorResponse } from "../helpers/handler-common";
+} from '../transforms/nta-authority.transform';
+import { createErrorResponse } from '../helpers/handler-common';
+import { getParentItemById } from './nta-masters.functions';
+import { getOrgItemById } from '../helpers/general.helpers';
 
 // *Create NTA Authority
 export const createOrganizationFunction = async (
@@ -65,7 +68,7 @@ export const createOrganizationFunction = async (
   return processDynamoDBResponse(
     DynamoDBActions.putItem(organization),
     new FileUrlObject(
-      organization.tableType.replace("#", ""),
+      organization.tableType.replace('#', ''),
       organization.orgLogo
     )
   );
@@ -166,7 +169,7 @@ export const createOrgAffiliationFunction = async (
 
 export const listAllNTAAuthoritiesFunction = async () => {
   return processDynamoDBResponse(
-    getContentsByType(TABLE_NAMES.instituteTable, "NTA_AUTHORITY")
+    getContentsByType(TABLE_NAMES.instituteTable, 'NTA_AUTHORITY')
   );
 };
 
@@ -175,23 +178,15 @@ export const GetOrganizationByIdFunction = async (ntaId: ObjectId) => {
   return processDynamoDBResponse(getNTAByIDFunction(ntaId));
 };
 
-export const GetOrgOfCurrentUserFunction = (cognitoUserSub: string) => {
-  return DynamoDBActions.scan(TABLE_NAMES.instituteTable, {
-    ScanFilter: {
-      id: {
-        ComparisonOperator: "EQ",
-        AttributeValueList: ["#USER#ADMIN#" + cognitoUserSub],
-      },
-    },
-  }).then((result) =>
-    result.Items ? (result.Items[0] as DBOrganization) : null
-  );
+export const GetOrgOfCurrentUserFunction = async (cognitoUserSub: string) => {
+  const user = await scanItemById<NTAUser>('#USER#ADMIN#' + cognitoUserSub);
+  return getOrgItemById<DBOrganization>(user?.tableType + '', user?.tableType + '#META');
 };
 
 export const getNTAByIDFunction = (orgId: string) => {
   return DynamoDBActions.get({
-    id: "#" + orgId + "#META",
-    tableType: "#" + orgId,
+    id: '#' + orgId + '#META',
+    tableType: '#' + orgId,
   });
 };
 
@@ -200,11 +195,11 @@ export const createOrganizationMasterUserFunction = async (
   orgId: string
 ) => {
   const org = await getNTAById(orgId);
-  console.log("createOrganizationMasterUserFunction", org);
+  console.log('createOrganizationMasterUserFunction', org);
   if (!org) {
-    return createErrorResponse("No Such Organization");
+    return createErrorResponse('No Such Organization');
   }
-  return org.orgType === "SELLER"
+  return org.orgType === 'SELLER'
     ? cognitoActions.addNTAUser(body, org.tableType)
     : createInstituteMasterUserFunction(body, orgId);
 };
@@ -234,7 +229,7 @@ export const insertCognitoUserIninstituteFunction = async (
   const instituteUser = new InstituteUser();
   instituteUser.instituteId = orgId;
   instituteUser.cognitoUserId = cognitoUserSub;
-  instituteUser.tableType = "#" + orgId;
+  instituteUser.tableType = '#' + orgId;
   instituteUser.picture = getProfilePicturePath(orgId, picture, cognitoUserSub);
   return processDynamoDBResponse(
     DynamoDBActions.putItem(instituteUser),
@@ -245,7 +240,7 @@ export const insertCognitoUserIninstituteFunction = async (
 export const getNTAIdofUser = async (event: APIGatewayProxyEvent) => {
   const cognitoUser = await getCognitoUserFromToken(event);
   const userId =
-    cognitoUser.UserAttributes.find((attr) => attr.Name === "sub")?.Value + "";
+    cognitoUser.UserAttributes.find((attr) => attr.Name === 'sub')?.Value + '';
   const user: NTAUser = await DynamoDBActions.get(
     { id: userId },
     TABLE_NAMES.instituteTable
@@ -264,8 +259,8 @@ export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
 
 export const getNTAById = (orgId: string) =>
   DynamoDBActions.get({
-    tableType: "#" + orgId,
-    id: "#" + orgId + "#META",
+    tableType: '#' + orgId,
+    id: '#' + orgId + '#META',
   }).then((org) => org.Item as DBOrganization);
 
 export const createInstituteMasterUserFunction = async (
@@ -277,7 +272,7 @@ export const createInstituteMasterUserFunction = async (
     .then((user) =>
       insertCognitoUserIninstituteFunction(
         orgId,
-        user.User?.Attributes?.find((attr) => attr.Name === "sub")?.Value + "",
+        user.User?.Attributes?.find((attr) => attr.Name === 'sub')?.Value + '',
         body.picture
       )
     );
@@ -291,7 +286,7 @@ export const getOrgLogoPath = (
   const extension = getFileExtension(body.organizationIcon);
   const logoUrl = CreateS3FolderStructure.getLogoPath(
     organization.tableType,
-    "logo." + extension
+    'logo.' + extension
   );
   return logoUrl;
 };
