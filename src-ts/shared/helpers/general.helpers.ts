@@ -3,12 +3,12 @@ import {
   cognito,
   EVENT_HEADERS,
   S3_FOLDER_STRUCTURE,
-} from '../constants/common-vars';
+} from '../constants/common.const';
 import { TableName, ObjectId } from '../model/DB/imports/types.DB.model';
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { NTA } from '../model/DB/nta.DB.model';
 import { getNTAById } from '../functions/nta-authority.functions';
-import { EVENT_HEADERS_LOCAL } from '../constants/common-vars';
+import { EVENT_HEADERS_LOCAL } from '../constants/common.const';
 import { GeneralDBItem } from '../model/DB/imports/DB.model';
 import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
 import { FileMetaData } from '../model/request-method.model';

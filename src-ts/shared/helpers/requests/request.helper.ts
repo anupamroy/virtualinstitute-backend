@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { EVENT_HEADERS } from '../../constants/common-vars';
+import { EVENT_HEADERS } from '../../constants/common.const';
 import { CONFIG } from '../../constants/config';
 const parser = require('lambda-multipart-parser');
 

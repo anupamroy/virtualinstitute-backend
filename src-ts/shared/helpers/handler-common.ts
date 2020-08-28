@@ -3,7 +3,7 @@ import {
   APIGatewayProxyResult,
 } from 'aws-lambda/trigger/api-gateway-proxy';
 import { RequestMethod, APIResponse } from '../model/request-method.model';
-import { CORS_HEADERS } from '../constants/common-vars';
+import { CORS_HEADERS } from '../constants/common.const';
 
 export const AWSHandler = (requestMethod: RequestMethod, callback: any) => {
   return async (

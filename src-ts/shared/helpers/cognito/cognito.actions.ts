@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { cognito } from '../../constants/common-vars';
+import { cognito } from '../../constants/common.const';
 import { keysMissingResponse } from '../response.helper';
 import { parseBody, createResponse } from '../handler-common';
 import {

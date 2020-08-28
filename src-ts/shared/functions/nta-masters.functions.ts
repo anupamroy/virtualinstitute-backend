@@ -14,7 +14,7 @@ import {
   processDynamoDBResponse,
   DynamoDBActions,
 } from '../helpers/db-handler';
-import { ERRORS } from '../constants/common-vars';
+import { ERRORS } from '../constants/common.const';
 import { CreateAccountsHeadMasterRequest } from '../model/request-method.model';
 import {
   parseBody,

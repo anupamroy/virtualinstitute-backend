@@ -1,6 +1,6 @@
 import { createResponse } from './handler-common';
 import { APIResponse } from '../model/request-method.model';
-import { ERRORS } from '../constants/common-vars';
+import { ERRORS } from '../constants/common.const';
 
 export const unauthorisedAccessResponse = () =>
   createResponse(403, new APIResponse(true, ERRORS.GENERAL_UNAUTHORISED_ACCESS));
