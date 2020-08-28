@@ -1,6 +1,5 @@
 import { DynamoDBActions } from './db-handler';
 import {
-  NTA_MASTER_SET_ID,
   TABLE_NAMES,
   cognito,
   EVENT_HEADERS,
@@ -16,9 +15,6 @@ import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
 import { FileMetaData } from '../model/request-method.model';
 import { v4 as uuid } from 'uuid';
 import { DBOrganization } from '../model/DB/org.DB.model';
-
-export const checkIFNTAMastersExist = () =>
-  DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
 
 export const getContentsByType = (
   tablename: string,
@@ -254,7 +250,5 @@ export const scanItemById = async <T>(itemId: string) => {
         AttributeValueList: [itemId],
       },
     },
-  }).then((result) =>
-    result.Items ? (result.Items[0] as T) : null
-  );
+  }).then((result) => (result.Items ? (result.Items[0] as T) : null));
 };
