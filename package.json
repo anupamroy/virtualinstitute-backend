@@ -26,6 +26,7 @@
     "sam:nta": "cd sam && sam local start-api -t nta-authority.yml -p 3001 && cd ..",
     "sam:institute": "cd sam && sam local start-api -t nta-institute.yml -p 3002 && cd ..",
     "sam:student": "cd sam && sam local start-api -t nta-student.yml -p 3003 && cd ..",
+    "sam:global": "cd sam && sam local start-api -t nta-global.yml -p 3004 && cd ..",
     "dynamoDB": "docker run -p 8000:8000 amazon/dynamodb-local",
     "sam:deploy": "cd sam && sam deploy && cd ..",
     "sam:release": "npm run sam:build && npm run sam:deploy",

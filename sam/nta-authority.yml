@@ -429,22 +429,6 @@ Resources:
             Method: GET
             RestApiId: !Ref InstituteApi
 
-  ListInstituteType:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/nta-masters.getInstituteTypeListHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: "*"
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /masters/institute/type
-            Method: GET
-            RestApiId: !Ref InstituteApi
-
   # Get Organization By Id
   GetFeesHeadByIDFunction:
     Type: AWS::Serverless::Function
