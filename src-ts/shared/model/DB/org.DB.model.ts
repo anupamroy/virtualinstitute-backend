@@ -1,38 +1,54 @@
 import { GeneralDBItem } from "./imports/DB.model";
 import { v4 as uuid } from "uuid";
-import { LinkURL, ObjectId } from "./imports/types.DB.model";
+import { LinkURL, ObjectId, DBOrgObjectType } from "./imports/types.DB.model";
 
 export class DBOrganization extends GeneralDBItem {
   tableType = "#ORG" + uuid();
   id = this.tableType + "#META";
-  private _name: string = "";
-  public get name(): string {
-    return this._name;
-  }
-  public set name(value: string) {
-    this._name = value;
-    // TODO: Show the Suggestion in FE, but keep it editable. This will be commented out here, and only in FE.
-    this.orgShortCode = this.name?.match(/\b([A-Z])/g)?.join("") || "";
-  }
+  name: string = "";
+
   // TODO: Create completely another table where it has masters. With PK ORGTYPE
   orgType: "SELLER" | "INSTITUTE" = "SELLER";
   orgLogo: LinkURL = "";
+  orgInstituteType: ObjectId = "";
   parentId: ObjectId = "";
   sellerId: ObjectId = "";
-  orgShortCode: string = "";
-}
-
-export class DBORGAddress extends GeneralDBItem {
-  address: string = "";
-  addressText: string = "";
-  constructor(orgPK: string) {
-    super();
-    this.id = orgPK + "#ADDRESS" + uuid();
-    this.tableType = orgPK;
+  orgCode: string = "";
+  private _orgShortCode: string = "";
+  public get orgShortCode(): string {
+    return this._orgShortCode;
+  }
+  public set orgShortCode(value: string) {
+    this._orgShortCode = value;
+    this.orgCode =
+      "#ORG" +
+      this.orgShortCode +
+      this.orgType +
+      (new Date().getTime() + "").slice(1, 10);
+  }
+  isDraft: boolean = true;
+  getShortCode() {
+    return (this.orgShortCode = this.name?.match(/\b([A-Z])/g)?.join("") || "");
   }
 }
 
-export class DBOrgPhone extends GeneralDBItem {
+export class DBOrgItem extends GeneralDBItem {
+  constructor(orgTableType: string, objectType: DBOrgObjectType) {
+    super();
+    this.id = "#" + orgTableType + "#" + objectType;
+    this.tableType = "#" + orgTableType;
+  }
+}
+
+export class DBORGAddress extends DBOrgItem {
+  address: string = "";
+  addressText: string = "";
+  constructor(orgPK: string) {
+    super(orgPK, "ADDRESS");
+  }
+}
+
+export class DBOrgPhone extends DBOrgItem {
   phoneText: string = "";
   phone: string = "";
   phoneType: string = "";
@@ -41,58 +57,70 @@ export class DBOrgPhone extends GeneralDBItem {
   phoneShift: string = "";
   associatedPost: string = "";
   constructor(orgPK: string) {
-    super();
-    this.id = orgPK + "#PHONE" + uuid();
-    this.tableType = orgPK;
+    super(orgPK, "PHONE");
   }
 }
 
-export class DBOrgEmail extends GeneralDBItem {
+export class DBOrgEmail extends DBOrgItem {
   emailText: string = "";
   emailId: string = "";
   emailType: string = "";
   emailDays: string = "";
   associatedPost: string = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = orgTableType + "#EMAIL" + uuid();
-    this.tableType = orgTableType;
+  constructor(orgPK: string) {
+    super(orgPK, "EMAIL");
   }
 }
 
 // TODO: ORG Social
 
-export class DBOrgSettings extends GeneralDBItem {
-  otp: boolean = false;
-  password: boolean = false;
-  constructor(orgTableType: string) {
-    super();
-    this.id = orgTableType + "#SOCIAL";
-    this.tableType = orgTableType;
+export class DBOrgRegistration extends DBOrgItem {
+  registrationType: ObjectId = "";
+  registrationNumber: string = "";
+  registrationCertificateLink: LinkURL = "";
+  constructor(orgPK: string) {
+    super(orgPK, "REGISTRATION");
   }
 }
 
-export class DBOrgAffiliation extends GeneralDBItem {
+export class DBOrgDocument extends DBOrgItem {
+  documentLink: LinkURL = "";
+  documentType: string = "";
+  documentNumber: string = "";
+  documentValidUpto: Date = new Date();
+  constructor(orgPK: string) {
+    super(orgPK, "DOCUMENT");
+  }
+}
+
+export class DBOrgSettings extends DBOrgItem {
+  otp: boolean = false;
+  password: boolean = false;
+  constructor(orgPK: string) {
+    super(orgPK, "SETTINGS");
+  }
+}
+
+export class DBOrgSubscription extends DBOrgItem {
+  moduleId: ObjectId = "";
+  subscriptionPackageId: ObjectId = "";
+  subscriptionFrom: string = new Date().toISOString();
+  subscriptionUpto: string = new Date().toISOString();
+  subscriptionTypeId: ObjectId = "";
+  constructor(orgPK: string) {
+    super(orgPK, "SUBSCRIPTION");
+  }
+}
+
+export class DBOrgAffiliation extends DBOrgItem {
   affiliationStartDate: Date = new Date();
   affiliationEndDate: Date = new Date();
   affiliationAuthority: string = "";
   affiliationGrade: string = "";
-  certificationDocument: LinkURL = "";
+  certificationDocumentLink: LinkURL = "";
   affiliationStatus: string = "";
   affiliationType: string = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = orgTableType + "#AFFILIATION";
-    this.tableType = orgTableType;
-  }
-}
-
-export class DBOrganizationDocument extends GeneralDBItem {
-  documentLink: LinkURL = "";
-  documentType: string = "";
-  constructor(orgTableType: string) {
-    super();
-    this.id = orgTableType + "#DOCUMENT" + uuid();
-    this.tableType = orgTableType;
+  constructor(orgPK: string) {
+    super(orgPK, "AFFILIATION");
   }
 }

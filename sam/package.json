@@ -5,6 +5,9 @@
   "private": true,
   "dependencies": {
     "aws-sdk": "^2.437.0",
+    "formidable": "^1.2.2",
+    "lambda-multipart-parser": "0.0.2",
+    "parse-multipart": "^1.0.4",
     "uuid": "^8.2.0"
   },
   "devDependencies": {

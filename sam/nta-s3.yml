@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nta-master
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Resources:
+  # S3 Buckets
+  NTAS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: virtualinstitutestorage
+      # TODO: Enable this configuration
+      # CorsConfiguration:
+      #   AllowedHeaders: "'*'"
+      #   AllowedOrigins: "'*'"
+      #   AllowedMethods: "'*'"

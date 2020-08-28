@@ -35,3 +35,8 @@ Resources:
     Type: AWS::Serverless::Application
     Properties:
       Location: ./nta-student.yml
+
+  NTAS3:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: ./nta-s3.yml

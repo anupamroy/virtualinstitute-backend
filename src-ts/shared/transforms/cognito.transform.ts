@@ -1,10 +1,10 @@
 import {
   CreatePersonRequest,
   CreateInstituteUserRequest,
-} from '../model/request.model';
-import { CognitoConfig } from '../constants/common-vars';
-import { AdminCreateUserRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
-import { CreateStudentRequest } from '../model/request.model';
+} from "../model/request.model";
+import { CognitoConfig } from "../constants/common-vars";
+import { AdminCreateUserRequest } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { CreateStudentRequest } from "../model/request.model";
 
 export const createCognitoUserObject = (
   UserPoolId: string,
@@ -24,7 +24,7 @@ export const createCognitoUserObject = (
         Value: body[attribute],
       })),
       ...customAttributes.map((attribute) => ({
-        Name: 'custom:' + attribute,
+        Name: "custom:" + attribute,
         Value: body[attribute],
       })),
     ],
@@ -39,21 +39,21 @@ export const createCognitoStudentObject = (
   registrationNumber: string,
   body: CreateStudentRequest
 ) => {
-  body.TYPE = 'STUDENT';
+  body.TYPE = "STUDENT";
   return createCognitoUserObject(
     CognitoConfig.studentInstituteUserPoolId,
     registrationNumber,
     body.password,
     [
-      'email',
-      'gender',
-      'name',
-      'family_name',
-      'middle_name',
-      'phone_number',
-      'picture',
+      "email",
+      "gender",
+      "name",
+      "family_name",
+      "middle_name",
+      "phone_number",
+      "picture",
     ],
-    ['TYPE'],
+    ["TYPE"],
     body
   );
 };
@@ -61,21 +61,21 @@ export const createCognitoStudentObject = (
 export const createCognitoInstituteUserObject = (
   body: CreateInstituteUserRequest
 ) => {
-  body.TYPE = 'INSTITUTE';
+  body.TYPE = "INSTITUTE";
   return createCognitoUserObject(
     CognitoConfig.studentInstituteUserPoolId,
     body.phone_number,
     body.password,
     [
-      'email',
-      'gender',
-      'name',
-      'family_name',
-      'middle_name',
-      'phone_number',
-      'picture',
+      "email",
+      "gender",
+      "name",
+      "family_name",
+      "middle_name",
+      "phone_number",
+      "picture",
     ],
-    ['TYPE'],
+    ["TYPE"],
     body
   );
 };
@@ -85,7 +85,7 @@ export const createCognitoNTAUserObject = (body: CreatePersonRequest) =>
     CognitoConfig.ntaUserPoolId,
     body.phone_number,
     body.password,
-    ['email', 'gender', 'name', 'family_name', 'middle_name'],
+    ["email", "gender", "name", "family_name", "middle_name"],
     [],
     body
   );

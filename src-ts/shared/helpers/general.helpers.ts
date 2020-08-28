@@ -1,17 +1,21 @@
-import { DynamoDBActions } from './db-handler';
+import { DynamoDBActions } from "./db-handler";
 import {
   NTA_MASTER_SET_ID,
   TABLE_NAMES,
   cognito,
   EVENT_HEADERS,
-} from '../constants/common-vars';
-import { TableName, ObjectId } from '../model/DB/imports/types.DB.model';
-import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
-import { NTA } from '../model/DB/nta.DB.model';
-import { getNTAById } from '../functions/nta-authority.functions';
-import { EVENT_HEADERS_LOCAL } from '../constants/common-vars';
-import { GeneralDBItem } from '../model/DB/imports/DB.model';
-import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
+  S3_FOLDER_STRUCTURE,
+} from "../constants/common-vars";
+import { TableName, ObjectId } from "../model/DB/imports/types.DB.model";
+import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
+import { NTA } from "../model/DB/nta.DB.model";
+import { getNTAById } from "../functions/nta-authority.functions";
+import { EVENT_HEADERS_LOCAL } from "../constants/common-vars";
+import { GeneralDBItem } from "../model/DB/imports/DB.model";
+import { GeneralMasterItem } from "../model/DB/imports/misc.DB.model";
+import { FileMetaData } from "../model/request-method.model";
+import { v4 as uuid } from "uuid";
+import { DBOrganization } from "../model/DB/org.DB.model";
 
 export const checkIFNTAMastersExist = () =>
   DynamoDBActions.get({ id: NTA_MASTER_SET_ID }, TABLE_NAMES.instituteTable);
@@ -21,9 +25,9 @@ export const getContentsByType = (
   tableType: TableName
 ): Promise<any[]> => {
   const params = {
-    FilterExpression: 'tableType = :tableType',
+    FilterExpression: "tableType = :tableType",
     ExpressionAttributeValues: {
-      ':tableType': tableType,
+      ":tableType": tableType,
     },
   };
   return DynamoDBActions.scan(tablename, params);
@@ -32,14 +36,14 @@ export const getContentsByType = (
 export const getCognitoUserFromToken = (event: APIGatewayProxyEvent) => {
   return cognito
     .getUser({
-      AccessToken: event.headers['Access-Token'],
+      AccessToken: event.headers["Access-Token"],
     })
     .promise();
 };
 
 export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {
   const ntaId = getNTAIdFromEvent(event);
-  const nta: NTA = await getNTAById(ntaId);
+  const nta: DBOrganization = await getNTAById(ntaId);
   return nta;
 };
 
@@ -51,7 +55,7 @@ export const getNTAIdFromEvent = (event: APIGatewayProxyEvent) => {
 };
 
 export const sanitizeString = (inputString: string) =>
-  (inputString || '').trim().replace(/[^\w\s]/gi, '');
+  (inputString || "").trim().replace(/[^\w\s]/gi, "");
 
 export const getNTAMasterRangeKey = (
   tableType: TableName,
@@ -75,10 +79,10 @@ export const getNTAMasterList = async <T>(
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
     KeyConditionExpression:
-      'tableType = :ntaItem and  begins_with(id, :master) ',
+      "tableType = :ntaItem and  begins_with(id, :master) ",
     ExpressionAttributeValues: {
-      ':ntaItem': `#NTA#${ntaId}`,
-      ':master': `#MASTER#MASTER_TYPE#${tableType}`,
+      ":ntaItem": `#NTA#${ntaId}`,
+      ":master": `#MASTER#MASTER_TYPE#${tableType}`,
     },
   }).then((result: { Items: T[] }) =>
     result.Items.filter(
@@ -109,10 +113,10 @@ export const checkIfMasterExistsByIdQuery = async (
   id: string
 ) => {
   return await DynamoDBActions.query({
-    KeyConditionExpression: 'tableType = :ntaItem and  id = :master',
+    KeyConditionExpression: "tableType = :ntaItem and  id = :master",
     ExpressionAttributeValues: {
-      ':ntaItem': `#NTA#${ntaId}`,
-      ':master': id,
+      ":ntaItem": `#NTA#${ntaId}`,
+      ":master": id,
     },
     TableName: TABLE_NAMES.instituteTable,
   });
@@ -126,17 +130,17 @@ export const checkIfMasterListItemExistsByName = async (
 ) => {
   return await DynamoDBActions.query({
     TableName: TABLE_NAMES.instituteTable,
-    KeyConditionExpression: 'tableType = :ntaItem and begins_with(id, :id)',
-    FilterExpression: '#name = :masterName',
+    KeyConditionExpression: "tableType = :ntaItem and begins_with(id, :id)",
+    FilterExpression: "#name = :masterName",
     ExpressionAttributeValues: {
-      ':ntaItem': `#NTA#${ntaId}`,
-      ':id':
+      ":ntaItem": `#NTA#${ntaId}`,
+      ":id":
         `#MASTER#MASTER_TYPE#${tableType}` +
         (!!institutionTypeId ? `#INSTITUTION_TYPE#${institutionTypeId}` : ``),
-      ':masterName': masterName,
+      ":masterName": masterName,
     },
     ExpressionAttributeNames: {
-      '#name': 'name',
+      "#name": "name",
     },
   }).then(
     (result) => !!result.Items.filter((item: any) => !item?.isDeleted).length
@@ -144,7 +148,7 @@ export const checkIfMasterListItemExistsByName = async (
 };
 
 export const getIdFromURLEvent = (event: APIGatewayProxyEvent) => {
-  return decodeURIComponent(event.pathParameters?.id || '');
+  return decodeURIComponent(event.pathParameters?.id || "");
 };
 
 export const getNTAObjectById = async <T>(
@@ -170,3 +174,67 @@ export const setUpdationDetailsOfObject = (
   object.updated_by = userId;
   object.updated_at = new Date().toISOString();
 };
+
+export const base64Decode = (b64Encoded: string) =>
+  Buffer.from(b64Encoded, "base64").toString();
+
+export const getFileExtension = (file: FileMetaData) =>
+  file.name.split(".").slice(-1).pop() || "";
+
+export class CreateS3FolderStructure {
+  static getLogoPath(orgId: string, imageName: string) {
+    return (
+      S3_FOLDER_STRUCTURE.ORGANIZATION +
+      "/" +
+      orgId.replace(/#/g, "") +
+      S3_FOLDER_STRUCTURE.IMAGES +
+      S3_FOLDER_STRUCTURE.LOGO +
+      "/" +
+      imageName
+    );
+  }
+  static getRegistrationDocumentPath(orgId: string, documentExtension: string) {
+    return (
+      S3_FOLDER_STRUCTURE.ORGANIZATION +
+      "/" +
+      orgId.replace(/#/g, "") +
+      S3_FOLDER_STRUCTURE.REGISTRATION_DOCUMENTS +
+      "/" +
+      uuid() +
+      "." +
+      documentExtension
+    );
+  }
+
+  static getAffiliationDocumentPath(orgId: string, documentExtension: string) {
+    return (
+      S3_FOLDER_STRUCTURE.ORGANIZATION +
+      "/" +
+      orgId.replace(/#/g, "") +
+      S3_FOLDER_STRUCTURE.AFFILIATION_DOCUMENTS +
+      "/" +
+      uuid() +
+      "." +
+      documentExtension
+    );
+  }
+
+  static getProfilePicturePath(
+    orgId: string,
+    documentExtension: string,
+    profileId: string
+  ) {
+    return (
+      S3_FOLDER_STRUCTURE.ORGANIZATION +
+      "/" +
+      orgId.replace(/#/g, "") +
+      S3_FOLDER_STRUCTURE.PROFILE_META +
+      "/" +
+      profileId +
+      S3_FOLDER_STRUCTURE.PROFILE_PICTURE +
+      "/profile" +
+      "." +
+      documentExtension
+    );
+  }
+}
