@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nta-master
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowHeaders: "'Content-Type, Authorization, nta-authority-id, username, access-token'"
+      AllowMethods: "'POST,GET,PATCH,PUT,DELETE'"
+      AllowOrigin: "'*'"
+
+  Function:
+    Runtime: nodejs12.x
+    MemorySize: 128
+    Timeout: 100
+
+Resources:
+  NtaApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        AddDefaultAuthorizerToCorsPreflight: False
+        DefaultAuthorizer: NTACognitoAuthorizer
+        Authorizers:
+          NTACognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:725755216375:userpool/ap-south-1_YOsP7cTUw
+
+  GatewayResponseDefault4XX:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type, Authorization'"
+        gatewayresponse.header.Access-Control-Allow-Methods: "'POST,GET,PATCH,PUT,DELETE'"
+      ResponseType: DEFAULT_4XX
+      RestApiId: !Ref NtaApi
+
+  # # NTA Section
+  CreateNTAAuthorityFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/nta-authority.createNTAAuthorityHandler
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+            RestApiId: !Ref NtaApi

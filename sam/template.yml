@@ -16,6 +16,11 @@ Resources:
     Properties:
       Location: ./nta-tables.yml
 
+  NTAGlobal:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: ./nta-global.yml
+
   NTAAuthority:
     Type: AWS::Serverless::Application
     Properties:
