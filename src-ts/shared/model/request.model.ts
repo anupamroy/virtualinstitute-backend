@@ -19,3 +19,9 @@ export class CreateStudentRequest extends CreatePersonRequest {
 export class CreateInstituteUserRequest extends CreatePersonRequest {
   TYPE: string = 'INSTITUTE';
 }
+
+export interface EventHeaders {
+  accessToken: string;
+  ntaAuthorityId: string;
+  ntaAPIPasskey: string;
+}

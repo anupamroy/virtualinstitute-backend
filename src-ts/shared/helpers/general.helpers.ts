@@ -15,6 +15,7 @@ import { FileMetaData } from '../model/request-method.model';
 import { v4 as uuid } from 'uuid';
 import { DBOrganization } from '../model/DB/org.DB.model';
 import { CONFIG } from '../constants/config';
+import { EventHeaders } from '../model/request.model';
 
 export const getContentsByType = (
   tablename: string,
@@ -44,9 +45,7 @@ export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getNTAIdFromEvent = (event: APIGatewayProxyEvent) => {
-  const ntaId =
-    event.headers[EVENT_HEADERS.ntaAuthorityId] ||
-    event.headers[EVENT_HEADERS_LOCAL.ntaAuthorityId];
+  const ntaId = getEventHeaders(event, 'ntaAuthorityId');
   return ntaId;
 };
 
@@ -252,3 +251,10 @@ export const scanItemById = async <T>(itemId: string) => {
     },
   }).then((result) => (result.Items ? (result.Items[0] as T) : null));
 };
+
+export const getEventHeaders = (
+  event: APIGatewayProxyEvent,
+  headerKey: keyof EventHeaders
+) =>
+  event.headers[EVENT_HEADERS[headerKey]] ||
+  event.headers[EVENT_HEADERS_LOCAL[headerKey]];

@@ -1,4 +1,5 @@
 import * as aws from 'aws-sdk';
+import { EventHeaders } from '../model/request.model';
 
 export const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -8,13 +9,13 @@ export const CORS_HEADERS = {
 
 export const cognito = new aws.CognitoIdentityServiceProvider();
 
-export const EVENT_HEADERS = {
+export const EVENT_HEADERS: EventHeaders = {
   accessToken: 'access-token',
   ntaAuthorityId: 'nta-authority-id',
   ntaAPIPasskey: 'nta-api-pass-key',
 };
 
-export const EVENT_HEADERS_LOCAL = {
+export const EVENT_HEADERS_LOCAL: EventHeaders = {
   accessToken: 'Access-Token',
   ntaAuthorityId: 'Nta-Authority-Id',
   ntaAPIPasskey: 'Nta-Api-Pass-Key',
@@ -51,4 +52,3 @@ export const S3_FOLDER_STRUCTURE = {
   PROFILE_PICTURE: '/profile-picture',
   LOGO: '/logo',
 };
-
