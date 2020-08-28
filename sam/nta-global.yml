@@ -54,7 +54,7 @@ Resources:
   CreateAddressTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createAddressTextHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -70,7 +70,7 @@ Resources:
   CreatePhoneTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createPhoneTextHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -86,7 +86,7 @@ Resources:
   CreatePhoneAssociatedPostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createPhoneAssociatedPostHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -102,7 +102,7 @@ Resources:
   CreatePhoneTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createPhoneTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -118,7 +118,7 @@ Resources:
   CreateEmailTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createEmailTextHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -134,7 +134,7 @@ Resources:
   CreateEmailAssociatedPostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createEmailAssociatedPostHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -150,7 +150,7 @@ Resources:
   CreateEmailTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createEmailTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -166,7 +166,7 @@ Resources:
   CreateSocialMediaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createSocialMediaHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -182,7 +182,7 @@ Resources:
   CreateRegistrationTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createRegistrationTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -198,7 +198,7 @@ Resources:
   CreateRegistrationDocumentTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createRegistrationDocumentTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -214,7 +214,7 @@ Resources:
   CreateInstitutionAffiliationGradeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createInstitutionAffiliationGradeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -230,7 +230,7 @@ Resources:
   CreateInstitutionAffiliationStatusFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createInstitutionAffiliationStatusHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -246,7 +246,7 @@ Resources:
   CreateInstitutionAffiliationTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createInstitutionAffiliationTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -262,7 +262,7 @@ Resources:
   CreateInstitutionAffiliationAuthorityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.createInstitutionAffiliationAuthorityHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -275,10 +275,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListInstituteTypeListFunction:
+  ListInstituteTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listInstituteTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -291,10 +291,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListAddressTextListFunction:
+  ListAddressTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listAddressTextHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -307,10 +307,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListPhoneTextListFunction:
+  ListPhoneTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listPhoneTextHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -323,10 +323,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListPhoneAssociatedPostListFunction:
+  ListPhoneAssociatedPostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listPhoneAssociatedPostHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -339,10 +339,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListPhoneTypeListFunction:
+  ListPhoneTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listPhoneTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -355,10 +355,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListEmailTextListFunction:
+  ListEmailTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listEmailTextHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -371,10 +371,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListEmailAssociatedPostListFunction:
+  ListEmailAssociatedPostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listEmailAssociatedPostHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -387,10 +387,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListEmailTypeListFunction:
+  ListEmailTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listEmailTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -403,10 +403,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListSocialMediaListFunction:
+  ListSocialMediaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listSocialMediaHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -419,10 +419,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListRegistrationTypeListFunction:
+  ListRegistrationTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listRegistrationTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -435,10 +435,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListRegistrationDocumentTypeListFunction:
+  ListRegistrationDocumentTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listRegistrationDocumentTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -451,10 +451,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListInstitutionAffiliationGradeListFunction:
+  ListInstitutionAffiliationGradeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listInstitutionAffiliationGradeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -467,10 +467,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListInstitutionAffiliationStatusListFunction:
+  ListInstitutionAffiliationStatusFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listInstitutionAffiliationStatusHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -483,10 +483,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListInstitutionAffiliationTypeListFunction:
+  ListInstitutionAffiliationTypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listInstitutionAffiliationTypeHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
@@ -499,10 +499,10 @@ Resources:
             Method: POST
             RestApiId: !Ref GlobalsApi
 
-  ListInstitutionAffiliationAuthorityListFunction:
+  ListInstitutionAffiliationAuthorityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/nta-global.createInstituteTypeHandler
+      Handler: src/handlers/nta-global.listInstitutionAffiliationAuthorityHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:

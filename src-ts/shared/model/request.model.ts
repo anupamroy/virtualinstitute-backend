@@ -1,5 +1,6 @@
 import { CreateInstituteUser } from '../services/nta-institute.service';
 import { FileMetaData } from './request-method.model';
+import { LinkURL } from './DB/imports/types.DB.model';
 export class CreatePersonRequest {
   phone_number: string = '';
   password: string = '';
@@ -24,4 +25,12 @@ export interface EventHeaders {
   ACCESS_TOKEN: string;
   SELLER_ID: string;
   SUPER_ADMIN_PASS_KEY: string;
+}
+
+export class GlobalMasterCreateRequest {
+  name: string = '';
+}
+
+export class SocialMediaMasterCreateRequest extends GlobalMasterCreateRequest {
+  icon: LinkURL = '';
 }
