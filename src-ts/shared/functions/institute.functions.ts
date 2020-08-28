@@ -1,16 +1,16 @@
-import { Institute, InstituteUser } from "../model/DB/institute.DB.model";
+import { Institute, InstituteUser } from '../model/DB/institute.DB.model';
 import {
   processDynamoDBResponse,
   DynamoDBActions,
-} from "../helpers/db-handler";
-import { TABLE_NAMES } from "../constants/common-vars";
-import { ObjectId } from "../model/DB/imports/types.DB.model";
-import { APIGatewayProxyEvent } from "aws-lambda/trigger/api-gateway-proxy";
-import { getContentsByType } from "../helpers/general.helpers";
+} from '../helpers/db-handler';
+import { ObjectId } from '../model/DB/imports/types.DB.model';
+import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
+import { getContentsByType } from '../helpers/general.helpers';
+import { CONFIG } from '../constants/config';
 export const createInstitute = (ntaId: ObjectId) => {
   const institute = new Institute();
   return processDynamoDBResponse(
-    DynamoDBActions.putItem(institute, TABLE_NAMES.instituteTable),
+    DynamoDBActions.putItem(institute, CONFIG.TABLE_NAMES.instituteTable),
     institute
   );
 };
@@ -26,8 +26,8 @@ export const createInstituteUser = (
 
 export const getInstituteIdByUser = async (event: APIGatewayProxyEvent) => {
   const instituteUsers = await getContentsByType(
-    TABLE_NAMES.instituteTable,
-    "INSTITUTE_USER"
+    CONFIG.TABLE_NAMES.instituteTable,
+    'INSTITUTE_USER'
   );
   const currentUser = instituteUsers.find(
     (user: InstituteUser) =>
@@ -38,8 +38,8 @@ export const getInstituteIdByUser = async (event: APIGatewayProxyEvent) => {
 
 export const getInstituteById = async (instituteId: ObjectId) => {
   const institutes = await getContentsByType(
-    TABLE_NAMES.instituteTable,
-    "INSTITUTE"
+    CONFIG.TABLE_NAMES.instituteTable,
+    'INSTITUTE'
   );
   return institutes.find(
     (institute: Institute) => institute.id === instituteId

@@ -1,6 +1,5 @@
 import { DynamoDBActions } from './db-handler';
 import {
-  TABLE_NAMES,
   cognito,
   EVENT_HEADERS,
   S3_FOLDER_STRUCTURE,
@@ -15,6 +14,7 @@ import { GeneralMasterItem } from '../model/DB/imports/misc.DB.model';
 import { FileMetaData } from '../model/request-method.model';
 import { v4 as uuid } from 'uuid';
 import { DBOrganization } from '../model/DB/org.DB.model';
+import { CONFIG } from '../constants/config';
 
 export const getContentsByType = (
   tablename: string,
@@ -73,7 +73,7 @@ export const getNTAMasterList = async <T>(
   tableType: TableName
 ) => {
   return await DynamoDBActions.query({
-    TableName: TABLE_NAMES.instituteTable,
+    TableName: CONFIG.TABLE_NAMES.instituteTable,
     KeyConditionExpression:
       'tableType = :ntaItem and  begins_with(id, :master) ',
     ExpressionAttributeValues: {
@@ -100,7 +100,7 @@ export const checkIfMasterListitemExistsById = async (
       tableType: `#NTA#${ntaId}`,
       id,
     },
-    TABLE_NAMES.instituteTable
+    CONFIG.TABLE_NAMES.instituteTable
   ).then((result: { Item: GeneralMasterItem }) => !!result.Item);
 };
 
@@ -114,7 +114,7 @@ export const checkIfMasterExistsByIdQuery = async (
       ':ntaItem': `#NTA#${ntaId}`,
       ':master': id,
     },
-    TableName: TABLE_NAMES.instituteTable,
+    TableName: CONFIG.TABLE_NAMES.instituteTable,
   });
 };
 
@@ -125,7 +125,7 @@ export const checkIfMasterListItemExistsByName = async (
   institutionTypeId?: string
 ) => {
   return await DynamoDBActions.query({
-    TableName: TABLE_NAMES.instituteTable,
+    TableName: CONFIG.TABLE_NAMES.instituteTable,
     KeyConditionExpression: 'tableType = :ntaItem and begins_with(id, :id)',
     FilterExpression: '#name = :masterName',
     ExpressionAttributeValues: {
@@ -156,7 +156,7 @@ export const getNTAObjectById = async <T>(
       tableType: `#NTA#${ntaId}`,
       id: masterId,
     },
-    TABLE_NAMES.instituteTable
+    CONFIG.TABLE_NAMES.instituteTable
   ).then((result: { Item: T }) =>
     !(result.Item as any)?.isDeleted ? result.Item : null
   );
@@ -243,7 +243,7 @@ export const getOrgItemById = async <T>(orgId: string, itemId: string) => {
 };
 
 export const scanItemById = async <T>(itemId: string) => {
-  return DynamoDBActions.scan(TABLE_NAMES.instituteTable, {
+  return DynamoDBActions.scan(CONFIG.TABLE_NAMES.instituteTable, {
     ScanFilter: {
       id: {
         ComparisonOperator: 'EQ',

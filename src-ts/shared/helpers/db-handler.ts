@@ -1,7 +1,7 @@
-import { TABLE_NAMES } from '../constants/common-vars';
-import { createResponse } from './handler-common';
 import { APIResponse } from '../model/request-method.model';
 import { TableName } from '../model/DB/imports/types.DB.model';
+import { CONFIG } from '../constants/config';
+import { createResponse } from './handler-common';
 
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
@@ -9,14 +9,14 @@ const dynamodb = require('aws-sdk/clients/dynamodb');
 const documentClient = new dynamodb.DocumentClient();
 
 export const DynamoDBActions = {
-  putItem: (Item: any, TableName = TABLE_NAMES.instituteTable): Promise<any> =>
+  putItem: (Item: any, TableName = CONFIG.TABLE_NAMES.instituteTable): Promise<any> =>
     documentClient.put({ TableName, Item }).promise(),
-  get: (Key: any, TableName = TABLE_NAMES.instituteTable): Promise<any> =>
+  get: (Key: any, TableName = CONFIG.TABLE_NAMES.instituteTable): Promise<any> =>
     documentClient.get({ TableName, Key }).promise(),
   getItemById: (
     id: string,
     tableType: TableName,
-    TableName = TABLE_NAMES.instituteTable
+    TableName = CONFIG.TABLE_NAMES.instituteTable
   ) =>
     documentClient
       .query({

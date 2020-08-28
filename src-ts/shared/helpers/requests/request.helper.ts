@@ -1,5 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { REQUEST_HEADERS, CognitoConfig } from '../../constants/common-vars';
+import { EVENT_HEADERS } from '../../constants/common-vars';
+import { CONFIG } from '../../constants/config';
 const parser = require('lambda-multipart-parser');
 
 export const requestValidator = (object: any, classInstance: any) =>
@@ -8,7 +9,8 @@ export const requestValidator = (object: any, classInstance: any) =>
 
 export const checkIfNTATokenValid = (event: APIGatewayProxyEvent) => {
   return (
-    event.headers[REQUEST_HEADERS.ntaAPIPasskey] === CognitoConfig.ntaAPIPasskey
+    event.headers[EVENT_HEADERS.ntaAPIPasskey] ===
+    CONFIG.CognitoConfig.ntaAPIPasskey
   );
 };
 

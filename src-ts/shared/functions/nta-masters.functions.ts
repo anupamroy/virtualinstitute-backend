@@ -14,7 +14,7 @@ import {
   processDynamoDBResponse,
   DynamoDBActions,
 } from '../helpers/db-handler';
-import { TABLE_NAMES, ERRORS } from '../constants/common-vars';
+import { ERRORS } from '../constants/common-vars';
 import { CreateAccountsHeadMasterRequest } from '../model/request-method.model';
 import {
   parseBody,
@@ -49,6 +49,7 @@ import {
   conditionsAccountsHeadCreate,
   conditionFeesTypeEdit,
 } from '../conditions/nta-masters.conditions';
+import { CONFIG } from '../constants/config';
 
 export const createFeesHeadFunction = async (
   body: CreateFeesHeadRequest,
@@ -64,7 +65,7 @@ export const createFeesHeadFunction = async (
     feesHead.id = getFeesHeadRangeKey(feesHead);
     feesHead.tableType = `#NTA#${ntaId}`;
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(feesHead, CONFIG.TABLE_NAMES.instituteTable)
     );
   }
 };
@@ -82,7 +83,7 @@ export const createFeesTypeFunction = async (
     feeType.id = getFeesTypeRangeKey(feeType);
     feeType.tableType = `#NTA#${ntaId}`;
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feeType, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(feeType, CONFIG.TABLE_NAMES.instituteTable)
     );
   }
 };
@@ -100,7 +101,7 @@ export const createAccountHeadFunction = async (
     accountHead.id = getAccountsHeadRangeKey(accountHead);
     accountHead.tableType = `#NTA#${ntaId}`;
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(accountHead, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(accountHead, CONFIG.TABLE_NAMES.instituteTable)
     );
   }
 };
@@ -258,7 +259,7 @@ export const deleteFeesHeadByIdFunction = async (
     feesHead.isDeleted = true;
     setUpdationDetailsOfObject(feesHead, event);
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(feesHead, CONFIG.TABLE_NAMES.instituteTable)
     );
   } else {
     return createErrorResponse(ERRORS.FEES_HEAD_NO_EXISTS);
@@ -272,7 +273,7 @@ export const deleteFeesTypeByIdFunction = async (
     feesType.isDeleted = true;
     setUpdationDetailsOfObject(feesType, event);
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(feesType, CONFIG.TABLE_NAMES.instituteTable)
     );
   } else {
     return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
@@ -286,7 +287,7 @@ export const deleteAccountsHeadByIdFunction = async (
     accountsHead.isDeleted = true;
     setUpdationDetailsOfObject(accountsHead, event);
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(accountsHead, CONFIG.TABLE_NAMES.instituteTable)
     );
   } else {
     return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
@@ -311,7 +312,7 @@ export const editFeesHeadByIdFunction = async (
       feesHead.parentId = body.parentId;
       setUpdationDetailsOfObject(feesHead, event);
       return await processDynamoDBResponse(
-        DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+        DynamoDBActions.putItem(feesHead, CONFIG.TABLE_NAMES.instituteTable)
       );
     }
   } else {
@@ -332,7 +333,7 @@ export const editFeesTypeByIdFunction = async (
       feesType.name = body.name;
       setUpdationDetailsOfObject(feesType, event);
       return await processDynamoDBResponse(
-        DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+        DynamoDBActions.putItem(feesType, CONFIG.TABLE_NAMES.instituteTable)
       );
     }
   } else {
@@ -354,7 +355,7 @@ export const editAccountsHeadByIdFunction = async (
       accountsHead.parentId = body.parentId;
       setUpdationDetailsOfObject(accountsHead, event);
       return await processDynamoDBResponse(
-        DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+        DynamoDBActions.putItem(accountsHead, CONFIG.TABLE_NAMES.instituteTable)
       );
     }
   } else {
@@ -372,7 +373,7 @@ export const statusChangeofFeesHeadByIdFunction = async (
     feesHead.isActive = body.isActive;
     setUpdationDetailsOfObject(feesHead, event);
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesHead, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(feesHead, CONFIG.TABLE_NAMES.instituteTable)
     );
   } else {
     return createErrorResponse(ERRORS.FEES_HEAD_NO_EXISTS);
@@ -387,7 +388,7 @@ export const statusChangeofFeesTypeByIdFunction = async (
     feesType.isActive = body.isActive;
     setUpdationDetailsOfObject(feesType, event);
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(feesType, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(feesType, CONFIG.TABLE_NAMES.instituteTable)
     );
   } else {
     return createErrorResponse(ERRORS.FEES_TYPE_NO_EXIST);
@@ -402,7 +403,7 @@ export const statusChangeofAccountHeadByIdFunction = async (
     accountsHead.isActive = body.isActive;
     setUpdationDetailsOfObject(accountsHead, event);
     return await processDynamoDBResponse(
-      DynamoDBActions.putItem(accountsHead, TABLE_NAMES.instituteTable)
+      DynamoDBActions.putItem(accountsHead, CONFIG.TABLE_NAMES.instituteTable)
     );
   } else {
     return createErrorResponse(ERRORS.ACCOUNTS_HEAD_NO_EXISTS);
@@ -444,7 +445,7 @@ export const getParentItemById = async (
 ) => {
   const parentId = decodeURI(parentIdURI);
   return await DynamoDBActions.query({
-    TableName: TABLE_NAMES.instituteTable,
+    TableName: CONFIG.TABLE_NAMES.instituteTable,
     KeyConditionExpression: 'tableType = :ntaItem and id = :id',
     ExpressionAttributeValues: {
       ':ntaItem': `#NTA#${ntaId}`,
@@ -459,7 +460,7 @@ export const getInstituteById = async (
 ) => {
   const instituteId = decodeURI(instituteIdURI);
   return await DynamoDBActions.query({
-    TableName: TABLE_NAMES.instituteTable,
+    TableName: CONFIG.TABLE_NAMES.instituteTable,
     KeyConditionExpression: 'tableType = :ntaItem and id = :id',
     ExpressionAttributeValues: {
       ':ntaItem': `#NTA#${ntaId}`,
@@ -475,7 +476,10 @@ export const deleteNTAObjectFromEvent = async (event: APIGatewayProxyEvent) => {
   const params = {
     Key: { id: objectId, tableType: `#NTA#${ntaId}` },
   };
-  return await DynamoDBActions.delete(params, TABLE_NAMES.instituteTable);
+  return await DynamoDBActions.delete(
+    params,
+    CONFIG.TABLE_NAMES.instituteTable
+  );
 };
 
 // TODO Write this function

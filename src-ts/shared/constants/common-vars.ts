@@ -1,9 +1,4 @@
 import * as aws from 'aws-sdk';
-// Create clients and set shared const values outside of the handler.
-
-// Create a DocumentClient that represents the query to add an item
-
-export const DYNAMO_DB_URL = '';
 
 export const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -11,37 +6,18 @@ export const CORS_HEADERS = {
   'Access-Control-Allow-Methods': 'POST,GET,PATCH,PUT,DELETE',
 };
 
-export const CognitoConfig = {
-  studentInstituteUserPoolId: 'ap-south-1_GYBsglFix',
-  studentInstituteAppId: '66ruh82hd778bev05dtqp8ahlp',
-  ntaUserPoolId: 'ap-south-1_YOsP7cTUw',
-  ntaAPIPasskey:
-    '426b5e01-ba0f-42bf-8da9-2143f19ec57a-c909bce0-f3a4-4e67-8a3f-63958c77fdc8',
-  ntaAppId: '59pt1p4ldhrceiv3qtkvthq88t',
-};
-
-export const REQUEST_HEADERS = {
-  ntaAPIPasskey: 'Nta-Api-Pass-Key',
-};
-
-export const USER_PASSWORD =
-  'e9dd7046-d1af-11ea-b33d-976e79865d9c-eaf73d4a-d1af-11ea-bb68-6350c5c6f354';
-
-export const TABLE_NAMES = {
-  instituteTable: 'InstituteTableV1',
-  globalMastersTable: 'GlobalMastersTable',
-};
-
 export const cognito = new aws.CognitoIdentityServiceProvider();
 
 export const EVENT_HEADERS = {
   accessToken: 'access-token',
   ntaAuthorityId: 'nta-authority-id',
+  ntaAPIPasskey: 'nta-api-pass-key',
 };
 
 export const EVENT_HEADERS_LOCAL = {
   accessToken: 'Access-Token',
   ntaAuthorityId: 'Nta-Authority-Id',
+  ntaAPIPasskey: 'Nta-Api-Pass-Key',
 };
 
 export const ERRORS = {
@@ -66,10 +42,6 @@ export const ERRORS = {
   GENERAL_KEYS_MISSING: 'Some keys Missing',
 };
 
-export const S3_BUCKETS = {
-  PRIMARY: 'virtualinstitutestorage',
-};
-
 export const S3_FOLDER_STRUCTURE = {
   ORGANIZATION: 'org_meta',
   IMAGES: '/images',
@@ -79,3 +51,4 @@ export const S3_FOLDER_STRUCTURE = {
   PROFILE_PICTURE: '/profile-picture',
   LOGO: '/logo',
 };
+

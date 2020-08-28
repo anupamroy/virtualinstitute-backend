@@ -3,7 +3,6 @@ import {
   DynamoDBActions,
   processDynamoDBResponse,
 } from '../helpers/db-handler';
-import { TABLE_NAMES } from '../constants/common-vars';
 import {
   CreateOrganizationRequest,
   CreateOrgPhoneNumberRequest,
@@ -57,6 +56,7 @@ import {
 import { createErrorResponse } from '../helpers/handler-common';
 import { getParentItemById } from './nta-masters.functions';
 import { getOrgItemById } from '../helpers/general.helpers';
+import { CONFIG } from '../constants/config';
 
 // *Create NTA Authority
 export const createOrganizationFunction = async (
@@ -169,7 +169,7 @@ export const createOrgAffiliationFunction = async (
 
 export const listAllNTAAuthoritiesFunction = async () => {
   return processDynamoDBResponse(
-    getContentsByType(TABLE_NAMES.instituteTable, 'NTA_AUTHORITY')
+    getContentsByType(CONFIG.TABLE_NAMES.instituteTable, 'NTA_AUTHORITY')
   );
 };
 
@@ -223,7 +223,7 @@ export const insertCognitoUserInNTAFunction = async (
   ntaUser.picture = getProfilePicturePath(orgId, picture, cognitoUserSub);
   ntaUser.id = `#USER#ADMIN#${cognitoUserSub}`;
   return processDynamoDBResponse(
-    DynamoDBActions.putItem(ntaUser, TABLE_NAMES.instituteTable),
+    DynamoDBActions.putItem(ntaUser, CONFIG.TABLE_NAMES.instituteTable),
     new FileUrlObject(cognitoUserSub, ntaUser.picture)
   );
 };
@@ -250,7 +250,7 @@ export const getNTAIdofUser = async (event: APIGatewayProxyEvent) => {
     cognitoUser.UserAttributes.find((attr) => attr.Name === 'sub')?.Value + '';
   const user: NTAUser = await DynamoDBActions.get(
     { id: userId },
-    TABLE_NAMES.instituteTable
+    CONFIG.TABLE_NAMES.instituteTable
   );
   return user.orgId;
 };
@@ -259,7 +259,7 @@ export const getNTAofUser = async (event: APIGatewayProxyEvent) => {
   const ntaId = getNTAIdofUser(event);
   const nta: NTA = await DynamoDBActions.get(
     { id: ntaId },
-    TABLE_NAMES.instituteTable
+    CONFIG.TABLE_NAMES.instituteTable
   );
   return nta;
 };

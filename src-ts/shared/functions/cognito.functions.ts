@@ -5,10 +5,10 @@ import {
 } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import { createResponse } from '../helpers/handler-common';
 import { APIResponse } from '../model/request-method.model';
-import { CognitoConfig, cognito } from '../constants/common-vars';
+import { cognito } from '../constants/common-vars';
 import { processDynamoDBResponse } from '../helpers/db-handler';
 import { PromiseResult } from 'aws-sdk/lib/request';
-
+import { CONFIG } from '../constants/config';
 
 export const ProcessCognitoUserResponse = (
   event: Promise<
@@ -40,7 +40,7 @@ export const setUserPassword = (USERNAME: string, Session: string) => {
       NEW_PASSWORD: '12345678',
       USERNAME,
     },
-    ClientId: CognitoConfig.ntaAppId,
+    ClientId: CONFIG.CognitoConfig.ntaAppId,
     Session,
   };
   return processDynamoDBResponse(
