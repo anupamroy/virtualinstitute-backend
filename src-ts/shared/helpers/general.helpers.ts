@@ -45,7 +45,7 @@ export const getNTAFromEvent = async (event: APIGatewayProxyEvent) => {
 };
 
 export const getNTAIdFromEvent = (event: APIGatewayProxyEvent) => {
-  const ntaId = getEventHeaders(event, 'ntaAuthorityId');
+  const ntaId = getEventHeaders(event, 'SELLER_ID');
   return ntaId;
 };
 

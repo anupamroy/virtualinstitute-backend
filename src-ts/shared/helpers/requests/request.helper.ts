@@ -8,8 +8,8 @@ export const requestValidator = (object: any, classInstance: any) =>
   object &&
   Object.keys(classInstance).every((key) => object[key] !== undefined);
 
-export const checkIfNTATokenValid = (event: APIGatewayProxyEvent) =>
-  getEventHeaders(event, 'ntaAPIPasskey') ===
+export const checkIfSuperAdminTokenValid = (event: APIGatewayProxyEvent) =>
+  getEventHeaders(event, 'SUPER_ADMIN_PASS_KEY') ===
   CONFIG.CognitoConfig.ntaAPIPasskey;
 
 export const parseMultiPart = async <T>(event: APIGatewayProxyEvent) => {

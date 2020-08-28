@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { checkIfNTATokenValid, requestValidator } from "./request.helper";
+import { checkIfSuperAdminTokenValid, requestValidator } from "./request.helper";
 import {
   unauthorisedAccessResponse,
   keysMissingResponse,
@@ -9,7 +9,7 @@ export const NTATokenGuard = async (
   event: APIGatewayProxyEvent,
   callback: Function
 ) => {
-  return checkIfNTATokenValid(event)
+  return checkIfSuperAdminTokenValid(event)
     ? await callback(event)
     : unauthorisedAccessResponse();
 };

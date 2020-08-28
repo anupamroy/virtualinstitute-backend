@@ -21,7 +21,7 @@ export class CreateInstituteUserRequest extends CreatePersonRequest {
 }
 
 export interface EventHeaders {
-  accessToken: string;
-  ntaAuthorityId: string;
-  ntaAPIPasskey: string;
+  ACCESS_TOKEN: string;
+  SELLER_ID: string;
+  SUPER_ADMIN_PASS_KEY: string;
 }

@@ -10,15 +10,15 @@ export const CORS_HEADERS = {
 export const cognito = new aws.CognitoIdentityServiceProvider();
 
 export const EVENT_HEADERS: EventHeaders = {
-  accessToken: 'access-token',
-  ntaAuthorityId: 'nta-authority-id',
-  ntaAPIPasskey: 'nta-api-pass-key',
+  ACCESS_TOKEN: 'access-token',
+  SELLER_ID: 'nta-authority-id',
+  SUPER_ADMIN_PASS_KEY: 'nta-api-pass-key',
 };
 
 export const EVENT_HEADERS_LOCAL: EventHeaders = {
-  accessToken: 'Access-Token',
-  ntaAuthorityId: 'Nta-Authority-Id',
-  ntaAPIPasskey: 'Nta-Api-Pass-Key',
+  ACCESS_TOKEN: 'Access-Token',
+  SELLER_ID: 'Nta-Authority-Id',
+  SUPER_ADMIN_PASS_KEY: 'Nta-Api-Pass-Key',
 };
 
 export const ERRORS = {
