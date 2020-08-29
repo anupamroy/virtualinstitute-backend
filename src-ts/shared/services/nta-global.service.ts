@@ -26,24 +26,22 @@ import {
 } from '../model/request.model';
 import { parseBody } from '../helpers/handler-common';
 
-export const createInstituteType = (event: APIGatewayEvent) => {
+export const createInstituteType = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
-  return NTATokenGuard(
+  return await NTATokenGuard(
     event,
-    async () =>
-      await requestValidatorGuard(
-        body,
-        new GlobalMasterCreateRequest(),
-        createInstituteTypeFunction,
-        [body]
-      )
+    await requestValidatorGuard(
+      body,
+      new GlobalMasterCreateRequest(),
+      createInstituteTypeFunction,
+      [body]
+    )
   );
 };
-export const createAddressText = (event: APIGatewayEvent) => {
+export const createAddressText = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -52,11 +50,10 @@ export const createAddressText = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createPhoneText = (event: APIGatewayEvent) => {
+export const createPhoneText = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -65,11 +62,10 @@ export const createPhoneText = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createPhoneAssociatedPost = (event: APIGatewayEvent) => {
+export const createPhoneAssociatedPost = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -78,11 +74,10 @@ export const createPhoneAssociatedPost = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createPhoneType = (event: APIGatewayEvent) => {
+export const createPhoneType = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -91,11 +86,10 @@ export const createPhoneType = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createEmailText = (event: APIGatewayEvent) => {
+export const createEmailText = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -104,11 +98,10 @@ export const createEmailText = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createEmailAssociatedPost = (event: APIGatewayEvent) => {
+export const createEmailAssociatedPost = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -117,11 +110,10 @@ export const createEmailAssociatedPost = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createEmailType = (event: APIGatewayEvent) => {
+export const createEmailType = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -130,11 +122,10 @@ export const createEmailType = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createSocialMedia = (event: APIGatewayEvent) => {
+export const createSocialMedia = async (event: APIGatewayEvent) => {
   const body = parseBody<SocialMediaMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new SocialMediaMasterCreateRequest(),
@@ -143,11 +134,10 @@ export const createSocialMedia = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createRegistrationType = (event: APIGatewayEvent) => {
+export const createRegistrationType = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -156,11 +146,10 @@ export const createRegistrationType = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createRegistrationDocumentType = (event: APIGatewayEvent) => {
+export const createRegistrationDocumentType = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -169,11 +158,10 @@ export const createRegistrationDocumentType = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createInstitutionAffiliationGrade = (event: APIGatewayEvent) => {
+export const createInstitutionAffiliationGrade = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -182,11 +170,10 @@ export const createInstitutionAffiliationGrade = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createInstitutionAffiliationStatus = (event: APIGatewayEvent) => {
+export const createInstitutionAffiliationStatus = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -195,11 +182,10 @@ export const createInstitutionAffiliationStatus = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createInstitutionAffiliationType = (event: APIGatewayEvent) => {
+export const createInstitutionAffiliationType = async (event: APIGatewayEvent) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -208,13 +194,12 @@ export const createInstitutionAffiliationType = (event: APIGatewayEvent) => {
       )
   );
 };
-export const createInstitutionAffiliationAuthority = (
+export const createInstitutionAffiliationAuthority = async (
   event: APIGatewayEvent
 ) => {
   const body = parseBody<GlobalMasterCreateRequest>(event.body);
   return NTATokenGuard(
     event,
-    async () =>
       await requestValidatorGuard(
         body,
         new GlobalMasterCreateRequest(),
@@ -223,8 +208,8 @@ export const createInstitutionAffiliationAuthority = (
       )
   );
 };
-export const listInstituteType = (event: APIGatewayEvent) => {};
-export const listAddressText = (event: APIGatewayEvent) => {};
+export const listInstituteType = async (event: APIGatewayEvent) => {};
+export const listAddressText = async (event: APIGatewayEvent) => {};
 export const listPhoneText = (event: APIGatewayEvent) => {};
 export const listPhoneAssociatedPost = (event: APIGatewayEvent) => {};
 export const listPhoneType = (event: APIGatewayEvent) => {};

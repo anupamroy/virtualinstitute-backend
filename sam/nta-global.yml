@@ -63,7 +63,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/address/text
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -79,7 +79,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/phone/text
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -95,7 +95,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/phone/associated-post
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -111,7 +111,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/phone/type
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -127,7 +127,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/email/text
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -143,7 +143,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/email/associated-post
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -159,7 +159,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/email/type
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -175,7 +175,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/social-media
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -191,7 +191,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/registration/type
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -207,7 +207,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/registration/document
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -223,7 +223,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/institute/affiliation/grade
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -239,7 +239,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/institute/affiliation/status
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -255,7 +255,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/institute/affiliation/type
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -271,7 +271,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /masters/institute/type
+            Path: /masters/institute/affiliation/authority
             Method: POST
             RestApiId: !Ref GlobalsApi
 
@@ -514,3 +514,8 @@ Resources:
             Path: /masters/institute/type
             Method: POST
             RestApiId: !Ref GlobalsApi
+
+Outputs:
+  WebEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${GlobalsApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
